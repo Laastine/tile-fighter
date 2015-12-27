@@ -26,7 +26,7 @@
     ]
   },
   "scripts": {
-    "build-js": "node_modules/browserify/bin/cmd.js --entry src/app.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle > .generated/bundle.js",
-    "watch-js": "node_modules/watchify/bin/cmd.js src/app.js --debug -o .generated/bundle.js -v"
+    "build-js": "node node_modules/browserify/bin/cmd.js --entry src/app.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle > .generated/bundle.js",
+    "watch-js": "node node_modules/watchify/bin/cmd.js src/app.js --debug -o .generated/bundle.js -v"
   }
 }
