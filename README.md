@@ -6,4 +6,5 @@ Build & run app:
 ```
 npm install
 npm run watch-js
+open index.html in browser
 ```
