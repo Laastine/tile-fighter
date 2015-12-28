@@ -1,9 +1,7 @@
-require('babel-core/register')
-require('colors')
-import pixi from './pixi'
+import pixi from './map-generator'
 
 pixi.initRenderer()
-var loader = new PIXI.loaders.Loader()
+const loader = new PIXI.loaders.Loader()
 loader.add("./assets/ground-tiles.json")
 loader.once('complete', pixi.loadTileMap)
 loader.load()
