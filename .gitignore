@@ -2,3 +2,4 @@ node_modules/
 .idea/
 .generated/bundle.js
 *.psd
+.DS_Store
