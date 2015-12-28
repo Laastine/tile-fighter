@@ -1,6 +1,10 @@
 require('babel-core/register')
 require('colors')
+import pixi from './pixi'
 
-const pixi = require('./pixi')
 pixi.initRenderer()
-pixi.renderLoop(pixi.loadTexture('assets/gravel.jpg'))
+var loader = new PIXI.loaders.Loader()
+loader.add("./assets/ground-tiles.json")
+loader.once('complete', pixi.loadTileMap)
+loader.load()
+pixi.renderLoop()
