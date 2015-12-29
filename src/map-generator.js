@@ -9,6 +9,7 @@ const tilesX = 64
 const tilesY = 36
 let tilemap = null
 let menu = null
+const generator = new MersenneTwister(1337)
 
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
@@ -64,10 +65,10 @@ function Tilemap(width, height) {
 
             let mouseoverTileCoords = [Math.floor(mouseOverPoint[0] / (this.tileSize * this.zoom)),
                 Math.floor(mouseOverPoint[1] / (this.tileSize * this.zoom))]
-            let upperLeft = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
-            let upperRight = [mouseoverTileCoords[0] * this.tileSize + this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
-            let lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
-            let lowerRight = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
+            const upperLeft = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
+            const upperRight = [mouseoverTileCoords[0] * this.tileSize + this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
+            const lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
+            const lowerRight = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
 
             this.mouseoverGraphics.clear()
             this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
@@ -105,7 +106,6 @@ Tilemap.prototype.getTile = function (x, y) {
 }
 
 Tilemap.prototype.generateMap = function () {
-    let generator = new MersenneTwister(1337)
     const GRAVEL = 0
     const GRASS = 1
     const ASPHALT = 2
@@ -120,8 +120,8 @@ Tilemap.prototype.generateMap = function () {
     for (var j = 0; j < 7; j++) {
         for (var i = 0; i < 11; i++) {
             this.spawnChunks(Math.floor(i / 2) + 1,
-                Math.floor(Math.random() * this.tilesWidth),
-                Math.floor(Math.random() * this.tilesHeight),
+                Math.floor(generator.random() * this.tilesWidth),
+                Math.floor(generator.random() * this.tilesHeight),
             WATER);
         }
     }
@@ -139,8 +139,8 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
     }
 
     for (var i = 0; i < size; i++) {
-        var horizontal = Math.floor(Math.random() * 3) - 1;
-        var vertical = Math.floor(Math.random() * 3) - 1;
+        var horizontal = Math.floor(generator.random() * 3) - 1;
+        var vertical = Math.floor(generator.random() * 3) - 1;
         this.spawnChunks(size - 1, x + horizontal, y + vertical, element);
     }
 }
@@ -148,10 +148,10 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
 Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
     menu.selectedTileText.text = "Tile: " + this.selectedTileCoords
-    let upperLeft = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
-    let upperRight = [this.selectedTileCoords[0] * this.tileSize + this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
-    let lowerLeft = [this.selectedTileCoords[0] * this.tileSize + 2 - this.tileSize, this.selectedTileCoords[1] * this.tileSize - 3 + this.tileSize]
-    let lowerRight = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize + this.tileSize - 3]
+    const upperLeft = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
+    const upperRight = [this.selectedTileCoords[0] * this.tileSize + this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
+    const lowerLeft = [this.selectedTileCoords[0] * this.tileSize + 2 - this.tileSize, this.selectedTileCoords[1] * this.tileSize - 3 + this.tileSize]
+    const lowerRight = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize + this.tileSize - 3]
 
     this.selectedGraphics.clear()
     this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
