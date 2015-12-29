@@ -19,7 +19,7 @@ function Tilemap(width, height) {
     this.tilesHeight = height
 
     this.tileSize = 16
-    this.zoom = 3
+    this.zoom = 2
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = {x: 0, y: 0}
@@ -105,16 +105,22 @@ Tilemap.prototype.generateMap = function () {
 Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
     menu.selectedTileText.text = "Tile: " + this.selectedTileCoords
+    let upperLeft = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
+    let upperRight = [this.selectedTileCoords[0] * this.tileSize + this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
+    let lowerLeft = [this.selectedTileCoords[0] * this.tileSize + 2 - this.tileSize, this.selectedTileCoords[1] * this.tileSize - 3 + this.tileSize]
+    let lowerRight = [this.selectedTileCoords[0] * this.tileSize  + 2, this.selectedTileCoords[1] * this.tileSize+ this.tileSize - 3]
+
     this.selectedGraphics.clear()
     this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
-    this.selectedGraphics.beginFill(0x000000, 0)
-    this.selectedGraphics.drawRoundedRect(this.selectedTileCoords[0] * this.tileSize,
-        this.selectedTileCoords[1] * this.tileSize,
-        this.tileSize,
-        this.tileSize, 1)
-
+    this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
+    this.selectedGraphics.lineTo(upperRight[0], upperRight[1])
+    this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
+    this.selectedGraphics.lineTo(lowerLeft[0], lowerLeft[1])
+    this.selectedGraphics.moveTo(upperRight[0], upperRight[1])
+    this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
+    this.selectedGraphics.moveTo(lowerLeft[0], lowerLeft[1])
+    this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
     this.selectedGraphics.endFill()
-    this.selectedGraphics.skew.x = 2
 }
 
 Tilemap.prototype.zoomIn = function () {
