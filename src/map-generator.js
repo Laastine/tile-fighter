@@ -252,17 +252,18 @@ Menubar.prototype.addMenuButton = (that, text, x, y, obj, callback) => {
     that.addChild(button)
 }
 
-module.exports = {
+export default {
     initRenderer: () => {
         renderer = PIXI.autoDetectRenderer(screenX, screenY)
         document.body.appendChild(renderer.view)
         container = new PIXI.Container()
     },
 
-    loadTexture: (filePath) => {
-        const texture = PIXI.Texture.fromImage(filePath, false, PIXI.SCALE_MODES.LINEAR)
-        tilingSprite = new PIXI.extras.TilingSprite(texture, renderer.width, renderer.height)
-        container.addChild(tilingSprite)
+    loadTexture: function (filePath) {
+        const loader = new PIXI.loaders.Loader()
+        loader.add(filePath)
+        loader.once('complete', this.loadTileMap)
+        loader.load()
     },
 
     loadTileMap: () => {
