@@ -1,7 +1,8 @@
-const PIXI = require('pixi.js')
+import PIXI from 'pixi.js'
+import MersenneTwister from 'mersenne-twister'
 
 let renderer, container, tilingSprite
-let menuBarWidth = 80
+const menuBarWidth = 80
 const screenX = 1280;
 const screenY = 720;
 let tilemap = null
@@ -18,7 +19,7 @@ function Tilemap(width, height) {
     this.tilesHeight = height
 
     this.tileSize = 16
-    this.zoom = 2
+    this.zoom = 3
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = {x: 0, y: 0}
@@ -61,13 +62,21 @@ function Tilemap(width, height) {
 
             let mouseoverTileCoords = [Math.floor(mouseOverPoint[0] / (this.tileSize * this.zoom)),
                 Math.floor(mouseOverPoint[1] / (this.tileSize * this.zoom))]
+            let upperLeft = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
+            let upperRight = [mouseoverTileCoords[0] * this.tileSize + this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
+            let lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
+            let lowerRight = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
+
             this.mouseoverGraphics.clear()
-            this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 1)
-            this.mouseoverGraphics.beginFill(0x000000, 0)
-            this.mouseoverGraphics.drawRect(mouseoverTileCoords[0] * this.tileSize,
-                mouseoverTileCoords[1] * this.tileSize,
-                this.tileSize - 1,
-                this.tileSize - 1)
+            this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
+            this.mouseoverGraphics.moveTo(upperLeft[0], upperLeft[1])
+            this.mouseoverGraphics.lineTo(upperRight[0], upperRight[1])
+            this.mouseoverGraphics.moveTo(upperLeft[0], upperLeft[1])
+            this.mouseoverGraphics.lineTo(lowerLeft[0], lowerLeft[1])
+            this.mouseoverGraphics.moveTo(upperRight[0], upperRight[1])
+            this.mouseoverGraphics.lineTo(lowerRight[0], lowerRight[1])
+            this.mouseoverGraphics.moveTo(lowerRight[0], lowerRight[1])
+            this.mouseoverGraphics.lineTo(lowerLeft[0], lowerLeft[1])
             this.mouseoverGraphics.endFill()
         }
     }
@@ -77,6 +86,7 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
     var tile = PIXI.Sprite.fromFrame(terrain)
     tile.position.x = x * this.tileSize
     tile.position.y = y * this.tileSize
+    tile.skew.x = 0.8
     tile.tileX = x
     tile.tileY = y
     tile.terrain = terrain
@@ -84,9 +94,10 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
 }
 
 Tilemap.prototype.generateMap = function () {
-    for (var i = 0; i < this.tilesWidth; ++i) {
-        for (var j = 0; j < this.tilesHeight; j++) {
-            this.addTile(i, j, Math.floor(Math.random() * 4))
+    let generator = new MersenneTwister(777)
+    for (var x = 0; x < this.tilesWidth; ++x) {
+        for (var y = 0; y < this.tilesHeight; y++) {
+            this.addTile(x, y, Math.floor(generator.random() * 3))
         }
     }
 }
@@ -95,13 +106,15 @@ Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
     menu.selectedTileText.text = "Tile: " + this.selectedTileCoords
     this.selectedGraphics.clear()
-    this.selectedGraphics.lineStyle(2, 0xFFFF00, 1)
+    this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
     this.selectedGraphics.beginFill(0x000000, 0)
-    this.selectedGraphics.drawRect(this.selectedTileCoords[0] * this.tileSize,
+    this.selectedGraphics.drawRoundedRect(this.selectedTileCoords[0] * this.tileSize,
         this.selectedTileCoords[1] * this.tileSize,
         this.tileSize,
-        this.tileSize)
+        this.tileSize, 1)
+
     this.selectedGraphics.endFill()
+    this.selectedGraphics.skew.x = 2
 }
 
 Tilemap.prototype.zoomIn = function () {

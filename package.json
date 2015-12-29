@@ -2,6 +2,7 @@
   "name": "tile-fighter",
   "private": true,
   "dependencies": {
+    "mersenne-twister": "^1.0.1",
     "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.9.tar.gz"
   },
   "devDependencies": {
