@@ -3,8 +3,10 @@ import MersenneTwister from 'mersenne-twister'
 
 let renderer, container, tilingSprite
 const menuBarWidth = 80
-const screenX = 1280;
-const screenY = 720;
+const screenX = 1280
+const screenY = 720
+const tilesX = 64
+const tilesY = 36
 let tilemap = null
 let menu = null
 
@@ -19,7 +21,7 @@ function Tilemap(width, height) {
     this.tilesHeight = height
 
     this.tileSize = 16
-    this.zoom = 2
+    this.zoom = 1
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = {x: 0, y: 0}
@@ -93,12 +95,53 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
     this.addChildAt(tile, x * this.tilesHeight + y)
 }
 
+Tilemap.prototype.changeTile = function (x, y, terrain) {
+    this.removeChild(this.getTile(x, y));
+    this.addTile(x, y, terrain);
+}
+
+Tilemap.prototype.getTile = function (x, y) {
+    return this.getChildAt(x * this.tilesHeight + y);
+}
+
 Tilemap.prototype.generateMap = function () {
-    let generator = new MersenneTwister(777)
-    for (var x = 0; x < this.tilesWidth; ++x) {
-        for (var y = 0; y < this.tilesHeight; y++) {
-            this.addTile(x, y, Math.floor(generator.random() * 3))
+    let generator = new MersenneTwister(1337)
+    const GRAVEL = 0
+    const GRASS = 1
+    const ASPHALT = 2
+    const WATER = 3
+
+    for (let x = 0; x < this.tilesWidth; ++x) {
+        for (let y = 0; y < this.tilesHeight; y++) {
+            this.addTile(x, y, GRASS)
         }
+    }
+
+    for (var j = 0; j < 7; j++) {
+        for (var i = 0; i < 11; i++) {
+            this.spawnChunks(Math.floor(i / 2) + 1,
+                Math.floor(Math.random() * this.tilesWidth),
+                Math.floor(Math.random() * this.tilesHeight),
+            WATER);
+        }
+    }
+
+}
+
+Tilemap.prototype.spawnChunks = function (size, x, y, element) {
+    x = Math.max(x, 0);
+    x = Math.min(x, this.tilesWidth - 1);
+    y = Math.max(y, 0);
+    y = Math.min(y, this.tilesHeight - 1);
+
+    if (this.getTile(x, y).terrain < size) {
+        this.changeTile(x, y, element);
+    }
+
+    for (var i = 0; i < size; i++) {
+        var horizontal = Math.floor(Math.random() * 3) - 1;
+        var vertical = Math.floor(Math.random() * 3) - 1;
+        this.spawnChunks(size - 1, x + horizontal, y + vertical, element);
     }
 }
 
@@ -108,7 +151,7 @@ Tilemap.prototype.selectTile = function (x, y) {
     let upperLeft = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
     let upperRight = [this.selectedTileCoords[0] * this.tileSize + this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
     let lowerLeft = [this.selectedTileCoords[0] * this.tileSize + 2 - this.tileSize, this.selectedTileCoords[1] * this.tileSize - 3 + this.tileSize]
-    let lowerRight = [this.selectedTileCoords[0] * this.tileSize  + 2, this.selectedTileCoords[1] * this.tileSize+ this.tileSize - 3]
+    let lowerRight = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize + this.tileSize - 3]
 
     this.selectedGraphics.clear()
     this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
@@ -223,12 +266,11 @@ module.exports = {
     },
 
     loadTileMap: () => {
-        tilemap = new Tilemap(64, 36)
+        tilemap = new Tilemap(tilesX, tilesY)
         tilemap.position.x = 0
         container.addChild(tilemap)
 
         menu = new Menubar()
-
         container.addChild(menu)
 
         tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
