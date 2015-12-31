@@ -105,11 +105,12 @@ Tilemap.prototype.getTile = function (x, y) {
     return this.getChildAt(x * this.tilesHeight + y);
 }
 
+const GRAVEL = 0
+const GRASS = 1
+const ASPHALT = 2
+const WATER = 3
+
 Tilemap.prototype.generateMap = function () {
-    const GRAVEL = 0
-    const GRASS = 1
-    const ASPHALT = 2
-    const WATER = 3
 
     for (let x = 0; x < this.tilesWidth; ++x) {
         for (let y = 0; y < this.tilesHeight; y++) {
@@ -117,13 +118,35 @@ Tilemap.prototype.generateMap = function () {
         }
     }
 
-    for (var j = 0; j < 7; j++) {
-        for (var i = 0; i < 11; i++) {
+    for (let j = 0; j < 7; j++) {
+        for (let i = 0; i < 11; i++) {
             this.spawnChunks(Math.floor(i / 2) + 1,
                 Math.floor(generator.random() * this.tilesWidth),
                 Math.floor(generator.random() * this.tilesHeight),
-            WATER);
+                WATER);
         }
+    }
+
+    this.spawnRoads()
+
+}
+
+Tilemap.prototype.spawnRoads = function () {
+    let startingPosition = [0, Math.round(generator.random() * this.tilesHeight)]
+    this.spawnStraightLine(startingPosition, true, ASPHALT)
+}
+
+const accentedWeight = (scale = 1) => Math.round(generator.random() * scale) === 0
+
+
+Tilemap.prototype.spawnStraightLine = function(position, directionX, element) {
+    const y = directionX ? position[1] : position[1] + 1
+
+    this.changeTile(position[0] + 1, y, element)
+    if(position[0] === this.tilesWidth || position[1] === this.tilesHeight) {
+        return
+    } else {
+        this.spawnStraightLine([position[0] + 1, y], accentedWeight(1), ASPHALT)
     }
 
 }
@@ -134,13 +157,13 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
     y = Math.max(y, 0);
     y = Math.min(y, this.tilesHeight - 1);
 
-    if (this.getTile(x, y).terrain < size) {
+    if (this.getTile(x, y).terrain < size - 1) {
         this.changeTile(x, y, element);
     }
 
-    for (var i = 0; i < size; i++) {
-        var horizontal = Math.floor(generator.random() * 3) - 1;
-        var vertical = Math.floor(generator.random() * 3) - 1;
+    for (let i = 0; i < size; i++) {
+        let horizontal = Math.floor(generator.random() * 3) - 1;
+        let vertical = Math.floor(generator.random() * 3) - 1;
         this.spawnChunks(size - 1, x + horizontal, y + vertical, element);
     }
 }
