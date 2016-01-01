@@ -11,6 +11,12 @@ let tilemap = null
 let menu = null
 const generator = new MersenneTwister(1337)
 
+const GRAVEL = 0
+const GRASS = 1
+const ASPHALT = 2
+const WATER = 3
+
+
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
 
@@ -105,11 +111,6 @@ Tilemap.prototype.getTile = function (x, y) {
     return this.getChildAt(x * this.tilesHeight + y);
 }
 
-const GRAVEL = 0
-const GRASS = 1
-const ASPHALT = 2
-const WATER = 3
-
 Tilemap.prototype.generateMap = function () {
 
     for (let x = 0; x < this.tilesWidth; ++x) {
@@ -127,28 +128,28 @@ Tilemap.prototype.generateMap = function () {
         }
     }
 
-    this.spawnRoads()
-
-}
-
-Tilemap.prototype.spawnRoads = function () {
-    let startingPosition = [0, Math.round(generator.random() * this.tilesHeight)]
-    this.spawnStraightLine(startingPosition, true, ASPHALT)
+    this.spawnYLine([Math.round(generator.random() * this.tilesWidth), 0], false, ASPHALT)
+    this.spawnXLine([0, Math.round(generator.random() * this.tilesWidth)], true, ASPHALT)
 }
 
 const accentedWeight = (scale = 1) => Math.round(generator.random() * scale) === 0
 
-
-Tilemap.prototype.spawnStraightLine = function(position, directionX, element) {
-    const y = directionX ? position[1] : position[1] + 1
-
-    this.changeTile(position[0] + 1, y, element)
-    if(position[0] === this.tilesWidth || position[1] === this.tilesHeight) {
-        return
-    } else {
-        this.spawnStraightLine([position[0] + 1, y], accentedWeight(1), ASPHALT)
+Tilemap.prototype.spawnXLine = function (position, directionX, element) {
+    this.changeTile(position[0], position[1], element)
+    let x = directionX ? position[0] + 1 : position[0] - 1
+    let y = directionX ? position[1] : position[1] + 1
+    if (x < this.tilesWidth && y < this.tilesHeight - 1 && x >= 0 && y >= 0) {
+        this.spawnXLine([x, y], !accentedWeight(3), element)
     }
+}
 
+Tilemap.prototype.spawnYLine = function (position, directionX, element) {
+    this.changeTile(position[0], position[1], element)
+    let x = directionX ? position[0] + 1 : position[0] - 1
+    let y = directionX ? position[1] : position[1] + 1
+    if (x < this.tilesWidth && y < this.tilesHeight - 1 && x >= 0 && y >= 0) {
+        this.spawnXLine([x, y], accentedWeight(3), element)
+    }
 }
 
 Tilemap.prototype.spawnChunks = function (size, x, y, element) {
