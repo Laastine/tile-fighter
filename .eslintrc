@@ -1,0 +1,30 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jquery": false
+  },
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "plugins": [],
+  "rules": {
+    "quotes": [2, "single"],
+    "no-use-before-define": [2, "nofunc"],
+    "no-console": [0],
+    "no-underscore-dangle": [0],
+    "no-unused-vars": [2, {"args": "none"}],
+    "no-unused-expressions": [0],
+    "camelcase": [0],
+    "new-cap": [0],
+    "space-infix-ops": [0],
+    "no-loop-func": [0],
+    "semi": [2, "never"],
+    "quotes": [0],
+    "no-alert": [0],
+    "no-extra-bind": [0],
+    "no-sequences": [0]
+  },
+  "globals": {
+  }
+}

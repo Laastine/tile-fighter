@@ -11,11 +11,9 @@ let tilemap = null
 let menu = null
 const generator = new MersenneTwister(1337)
 
-const GRAVEL = 0
 const GRASS = 1
 const ASPHALT = 2
 const WATER = 3
-
 
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
@@ -103,12 +101,12 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
 }
 
 Tilemap.prototype.changeTile = function (x, y, terrain) {
-    this.removeChild(this.getTile(x, y));
-    this.addTile(x, y, terrain);
+    this.removeChild(this.getTile(x, y))
+    this.addTile(x, y, terrain)
 }
 
 Tilemap.prototype.getTile = function (x, y) {
-    return this.getChildAt(x * this.tilesHeight + y);
+    return this.getChildAt(x * this.tilesHeight + y)
 }
 
 Tilemap.prototype.generateMap = function () {
@@ -124,7 +122,7 @@ Tilemap.prototype.generateMap = function () {
             this.spawnChunks(Math.floor(i / 2) + 1,
                 Math.floor(generator.random() * this.tilesWidth),
                 Math.floor(generator.random() * this.tilesHeight),
-                WATER);
+                WATER)
         }
     }
 
@@ -153,19 +151,19 @@ Tilemap.prototype.spawnYLine = function (position, directionX, element) {
 }
 
 Tilemap.prototype.spawnChunks = function (size, x, y, element) {
-    x = Math.max(x, 0);
-    x = Math.min(x, this.tilesWidth - 1);
-    y = Math.max(y, 0);
-    y = Math.min(y, this.tilesHeight - 1);
+    x = Math.max(x, 0)
+    x = Math.min(x, this.tilesWidth - 1)
+    y = Math.max(y, 0)
+    y = Math.min(y, this.tilesHeight - 1)
 
     if (this.getTile(x, y).terrain < size - 1) {
-        this.changeTile(x, y, element);
+        this.changeTile(x, y, element)
     }
 
     for (let i = 0; i < size; i++) {
-        let horizontal = Math.floor(generator.random() * 3) - 1;
-        let vertical = Math.floor(generator.random() * 3) - 1;
-        this.spawnChunks(size - 1, x + horizontal, y + vertical, element);
+        let horizontal = Math.floor(generator.random() * 3) - 1
+        let vertical = Math.floor(generator.random() * 3) - 1
+        this.spawnChunks(size - 1, x + horizontal, y + vertical, element)
     }
 }
 
@@ -276,6 +274,11 @@ Menubar.prototype.addMenuButton = (that, text, x, y, obj, callback) => {
     that.addChild(button)
 }
 
+const animate = () => {
+    renderer.render(container)
+    requestAnimationFrame(animate)
+}
+
 export default {
     initRenderer: () => {
         renderer = PIXI.autoDetectRenderer(screenX, screenY)
@@ -307,9 +310,4 @@ export default {
     renderLoop: () => {
         animate()
     }
-}
-
-const animate = () => {
-    renderer.render(container)
-    requestAnimationFrame(animate)
 }
