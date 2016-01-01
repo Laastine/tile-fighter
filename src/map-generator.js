@@ -1,10 +1,10 @@
 import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
 
-let renderer, container, tilingSprite
+let renderer, container
 const menuBarWidth = 80
-const screenX = 1280
-const screenY = 720
+const screenX = window.innerWidth
+const screenY = window.innerHeight
 const tilesX = 64
 const tilesY = 36
 let tilemap = null
