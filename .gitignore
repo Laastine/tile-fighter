@@ -3,3 +3,4 @@ node_modules/
 .generated/bundle.js
 *.psd
 .DS_Store
+/npm-debug.log
