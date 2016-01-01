@@ -1,10 +1,10 @@
 # Tile-fighter
 
 Hobby project for testing pixi.js capabilities.
-Goal turn based strategy game. 
 
 TODO:
 - [x] random map genration with grass, road and water
+- [ ] More terrain elements 
 - [ ] "Height differencies"
 - [ ] Render player units
 - [ ] LOS calculation and visualization
@@ -24,4 +24,4 @@ open index.html in browser
 Linter:
 ```
 npm run lint
-``
+```
