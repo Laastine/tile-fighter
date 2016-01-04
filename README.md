@@ -3,7 +3,7 @@
 Hobby project for testing pixi.js capabilities.
 
 TODO:
-- [x] random map genration with grass, road and water
+- [x] random map generation with grass, road and water
 - [ ] More terrain elements 
 - [ ] "Height differencies"
 - [ ] Render player units
