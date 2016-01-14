@@ -2,6 +2,8 @@
 
 Hobby project for testing pixi.js capabilities.
 
+![alt tag](http://laastine.kapsi.fi/screenshot.png)
+
 TODO:
 - [x] random map generation with grass, road and water
 - [ ] More terrain elements 
