@@ -11,7 +11,7 @@ let tilemap = null
 let menu = null
 const generator = new MersenneTwister(1337)
 
-const GRASS = 1
+const GRASS = 5
 const ASPHALT = 2
 const WATER = 3
 
@@ -25,7 +25,7 @@ function Tilemap(width, height) {
     this.tilesWidth = width
     this.tilesHeight = height
 
-    this.tileSize = 50
+    this.tileSize = 51
     this.zoom = 1
     this.scale.x = this.scale.y = this.zoom
 
@@ -45,6 +45,7 @@ function Tilemap(width, height) {
             this.dragging = true
             this.mousePressPoint[0] = event.data.global.x - this.position.x
             this.mousePressPoint[1] = event.data.global.y - this.position.y
+            console.log(this.mousePressPoint[0],this.mousePressPoint[1])
             this.selectTile(Math.floor(this.mousePressPoint[0] / (this.tileSize * this.zoom)),
                 Math.floor(this.mousePressPoint[1] / (this.tileSize * this.zoom)))
         }
@@ -68,9 +69,10 @@ function Tilemap(width, height) {
 
             let mouseoverTileCoords = [Math.floor(mouseOverPoint[0] / (this.tileSize * this.zoom)),
                 Math.floor(mouseOverPoint[1] / (this.tileSize * this.zoom))]
+
             const upperLeft = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
             const upperRight = [mouseoverTileCoords[0] * this.tileSize + this.tileSize, mouseoverTileCoords[1] * this.tileSize]
-            const lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize, mouseoverTileCoords[1] * this.tileSize + this.tileSize]
+            const lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize*2, mouseoverTileCoords[1] * this.tileSize + this.tileSize]
             const lowerRight = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize + this.tileSize]
 
             this.mouseoverGraphics.clear()
@@ -107,14 +109,14 @@ Tilemap.prototype.getTile = function (x, y) {
 }
 
 Tilemap.prototype.isometricToCartesian = function isoTo2D(pointX, pointY) {
-    var x = (2 * pointY + pointX) / 2
-    var y = (2 * pointY - pointX) / 2
+    const x = (2 * pointY + pointX) / 2
+    const y = (2 * pointY - pointX) / 2
     return {x, y}
 }
 
 Tilemap.prototype.cartesianToIsometric = function (pointX, pointY) {
-    var x = pointX - pointY
-    var y = (pointX + pointY) / 2
+    const x = pointX - pointY
+    const y = (pointX + pointY) / 2
     return {x, y}
 }
 
@@ -183,7 +185,7 @@ Tilemap.prototype.selectTile = function (x, y) {
     const upperRight = [this.selectedTileCoords[0] * this.tileSize + this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
     const lowerLeft = [this.selectedTileCoords[0] * this.tileSize + 2 - this.tileSize, this.selectedTileCoords[1] * this.tileSize - 3 + this.tileSize]
     const lowerRight = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize + this.tileSize - 3]
-
+/*
     this.selectedGraphics.clear()
     this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
     this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
@@ -195,6 +197,7 @@ Tilemap.prototype.selectTile = function (x, y) {
     this.selectedGraphics.moveTo(lowerLeft[0], lowerLeft[1])
     this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
     this.selectedGraphics.endFill()
+    */
 }
 
 Tilemap.prototype.zoomIn = function () {
@@ -225,10 +228,10 @@ Tilemap.prototype.centerOnSelectedTile = function () {
 }
 
 Tilemap.prototype.constrainTilemap = function () {
-    this.position.x = Math.max(this.position.x, -1 * this.tileSize * this.tilesWidth * this.zoom + screenX)
-    this.position.x = Math.min(this.position.x, menuBarWidth)
-    this.position.y = Math.max(this.position.y, -1 * this.tileSize * this.tilesHeight * this.zoom + screenY)
-    this.position.y = Math.min(this.position.y, 0)
+    this.position.x = Math.max(this.position.x, -2 * this.tileSize * this.tilesWidth * this.zoom + screenX)
+    this.position.x = Math.min(this.position.x, this.tileSize * this.tilesWidth * this.zoom + screenX)
+    this.position.y = Math.max(this.position.y, -2 * this.tileSize * this.tilesHeight * this.zoom + screenY)
+    this.position.y = Math.min(this.position.y, +menuBarWidth)
 }
 
 Menubar.prototype = new PIXI.Container()
