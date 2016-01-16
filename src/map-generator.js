@@ -25,7 +25,7 @@ function Tilemap(width, height) {
     this.tilesWidth = width
     this.tilesHeight = height
 
-    this.tileSize = 16
+    this.tileSize = 50
     this.zoom = 1
     this.scale.x = this.scale.y = this.zoom
 
@@ -45,7 +45,6 @@ function Tilemap(width, height) {
             this.dragging = true
             this.mousePressPoint[0] = event.data.global.x - this.position.x
             this.mousePressPoint[1] = event.data.global.y - this.position.y
-
             this.selectTile(Math.floor(this.mousePressPoint[0] / (this.tileSize * this.zoom)),
                 Math.floor(this.mousePressPoint[1] / (this.tileSize * this.zoom)))
         }
@@ -69,10 +68,10 @@ function Tilemap(width, height) {
 
             let mouseoverTileCoords = [Math.floor(mouseOverPoint[0] / (this.tileSize * this.zoom)),
                 Math.floor(mouseOverPoint[1] / (this.tileSize * this.zoom))]
-            const upperLeft = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
-            const upperRight = [mouseoverTileCoords[0] * this.tileSize + this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3]
-            const lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
-            const lowerRight = [mouseoverTileCoords[0] * this.tileSize + 2, mouseoverTileCoords[1] * this.tileSize - 3 + this.tileSize]
+            const upperLeft = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+            const upperRight = [mouseoverTileCoords[0] * this.tileSize + this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+            const lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize, mouseoverTileCoords[1] * this.tileSize + this.tileSize]
+            const lowerRight = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize + this.tileSize]
 
             this.mouseoverGraphics.clear()
             this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
@@ -91,9 +90,7 @@ function Tilemap(width, height) {
 
 Tilemap.prototype.addTile = function (x, y, terrain) {
     var tile = PIXI.Sprite.fromFrame(terrain)
-    tile.position.x = x * this.tileSize
-    tile.position.y = y * this.tileSize
-    tile.skew.x = 0.8
+    tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
     tile.tileX = x
     tile.tileY = y
     tile.terrain = terrain
@@ -107,6 +104,18 @@ Tilemap.prototype.changeTile = function (x, y, terrain) {
 
 Tilemap.prototype.getTile = function (x, y) {
     return this.getChildAt(x * this.tilesHeight + y)
+}
+
+Tilemap.prototype.isometricToCartesian = function isoTo2D(pointX, pointY) {
+    var x = (2 * pointY + pointX) / 2
+    var y = (2 * pointY - pointX) / 2
+    return {x, y}
+}
+
+Tilemap.prototype.cartesianToIsometric = function (pointX, pointY) {
+    var x = pointX - pointY
+    var y = (pointX + pointY) / 2
+    return {x, y}
 }
 
 Tilemap.prototype.generateMap = function () {

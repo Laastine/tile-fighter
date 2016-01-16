@@ -1,0 +1,1741 @@
+{
+  "frames": [
+    {
+      "filename": "bridgeEast.png",
+      "frame": {
+        "x": 103,
+        "y": 824,
+        "w": 100,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "bridgeNorth.png",
+      "frame": {
+        "x": 402,
+        "y": 687,
+        "w": 100,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "crossroad.png",
+      "frame": {
+        "x": 307,
+        "y": 219,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "dirt.png",
+      "frame": {
+        "x": 1,
+        "y": 825,
+        "w": 100,
+        "h": 58
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 58
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 58
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "dirtHigh.png",
+      "frame": {
+        "x": 205,
+        "y": 83,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "grass.png",
+      "frame": {
+        "x": 409,
+        "y": 219,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillCornerEast.png",
+      "frame": {
+        "x": 207,
+        "y": 1,
+        "w": 100,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillCornerNW.png",
+      "frame": {
+        "x": 307,
+        "y": 286,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillCornerSE.png",
+      "frame": {
+        "x": 205,
+        "y": 287,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillCornerWest.png",
+      "frame": {
+        "x": 409,
+        "y": 286,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillEast.png",
+      "frame": {
+        "x": 309,
+        "y": 1,
+        "w": 100,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillNorth.png",
+      "frame": {
+        "x": 411,
+        "y": 1,
+        "w": 100,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillRoadEast.png",
+      "frame": {
+        "x": 1,
+        "y": 68,
+        "w": 100,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillRoadNorth.png",
+      "frame": {
+        "x": 103,
+        "y": 68,
+        "w": 100,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillRoadSouth.png",
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 101,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillRoadWest.png",
+      "frame": {
+        "x": 104,
+        "y": 1,
+        "w": 101,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 101,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 101,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillSouth.png",
+      "frame": {
+        "x": 307,
+        "y": 353,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "hillWest.png",
+      "frame": {
+        "x": 409,
+        "y": 353,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lot.png",
+      "frame": {
+        "x": 1,
+        "y": 150,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotCornerEast.png",
+      "frame": {
+        "x": 1,
+        "y": 354,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotCornerNorth.png",
+      "frame": {
+        "x": 103,
+        "y": 150,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotCornerSouth.png",
+      "frame": {
+        "x": 307,
+        "y": 83,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotCornerWest.png",
+      "frame": {
+        "x": 409,
+        "y": 83,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotEast.png",
+      "frame": {
+        "x": 103,
+        "y": 354,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotExitEast.png",
+      "frame": {
+        "x": 205,
+        "y": 151,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotExitNorth.png",
+      "frame": {
+        "x": 1,
+        "y": 218,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotExitSouth.png",
+      "frame": {
+        "x": 103,
+        "y": 218,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotExitWest.png",
+      "frame": {
+        "x": 307,
+        "y": 151,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotNorth.png",
+      "frame": {
+        "x": 205,
+        "y": 354,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotPark.png",
+      "frame": {
+        "x": 307,
+        "y": 420,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotSouth.png",
+      "frame": {
+        "x": 409,
+        "y": 420,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "lotWest.png",
+      "frame": {
+        "x": 1,
+        "y": 421,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadCornerES.png",
+      "frame": {
+        "x": 103,
+        "y": 421,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadCornerNE.png",
+      "frame": {
+        "x": 205,
+        "y": 421,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadCornerNW.png",
+      "frame": {
+        "x": 307,
+        "y": 487,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadCornerWS.png",
+      "frame": {
+        "x": 409,
+        "y": 487,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadEast.png",
+      "frame": {
+        "x": 1,
+        "y": 488,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadEndEast.png",
+      "frame": {
+        "x": 103,
+        "y": 488,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadEndNorth.png",
+      "frame": {
+        "x": 205,
+        "y": 488,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadEndSouth.png",
+      "frame": {
+        "x": 307,
+        "y": 554,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadEndWest.png",
+      "frame": {
+        "x": 409,
+        "y": 554,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadNorth.png",
+      "frame": {
+        "x": 1,
+        "y": 621,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadTEast.png",
+      "frame": {
+        "x": 1,
+        "y": 723,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadTNorth.png",
+      "frame": {
+        "x": 103,
+        "y": 555,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadTSouth.png",
+      "frame": {
+        "x": 205,
+        "y": 555,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "roadTWest.png",
+      "frame": {
+        "x": 68,
+        "y": 634,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "treeConiferShort.png",
+      "frame": {
+        "x": 117,
+        "y": 803,
+        "w": 14,
+        "h": 35
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 14,
+        "h": 35
+      },
+      "sourceSize": {
+        "w": 14,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "treeConiferTall.png",
+      "frame": {
+        "x": 68,
+        "y": 803,
+        "w": 19,
+        "h": 47
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 19,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 19,
+        "h": 48
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "treeShort.png",
+      "frame": {
+        "x": 68,
+        "y": 621,
+        "w": 11,
+        "h": 32
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 11,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 11,
+        "h": 33
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "treeShort_autumn.png",
+      "frame": {
+        "x": 199,
+        "y": 804,
+        "w": 11,
+        "h": 32
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 11,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 11,
+        "h": 33
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "treeTall.png",
+      "frame": {
+        "x": 154,
+        "y": 803,
+        "w": 11,
+        "h": 43
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 11,
+        "h": 43
+      },
+      "sourceSize": {
+        "w": 11,
+        "h": 44
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "treeTall_autumn.png",
+      "frame": {
+        "x": 199,
+        "y": 791,
+        "w": 11,
+        "h": 43
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 11,
+        "h": 43
+      },
+      "sourceSize": {
+        "w": 11,
+        "h": 44
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "water.png",
+      "frame": {
+        "x": 1,
+        "y": 555,
+        "w": 100,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachCornerEast.png",
+      "frame": {
+        "x": 68,
+        "y": 736,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachCornerNorth.png",
+      "frame": {
+        "x": 307,
+        "y": 790,
+        "w": 100,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachCornerSouth.png",
+      "frame": {
+        "x": 409,
+        "y": 151,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachCornerWest.png",
+      "frame": {
+        "x": 135,
+        "y": 622,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachEast.png",
+      "frame": {
+        "x": 272,
+        "y": 724,
+        "w": 100,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachNorth.png",
+      "frame": {
+        "x": 336,
+        "y": 621,
+        "w": 100,
+        "h": 64
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachSouth.png",
+      "frame": {
+        "x": 205,
+        "y": 219,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterBeachWest.png",
+      "frame": {
+        "x": 1,
+        "y": 286,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterCornerEast.png",
+      "frame": {
+        "x": 170,
+        "y": 724,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterCornerNorth.png",
+      "frame": {
+        "x": 402,
+        "y": 621,
+        "w": 100,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterCornerSouth.png",
+      "frame": {
+        "x": 103,
+        "y": 286,
+        "w": 100,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterCornerWest.png",
+      "frame": {
+        "x": 202,
+        "y": 622,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterEast.png",
+      "frame": {
+        "x": 409,
+        "y": 752,
+        "w": 100,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterNorth.png",
+      "frame": {
+        "x": 409,
+        "y": 817,
+        "w": 100,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterSouth.png",
+      "frame": {
+        "x": 269,
+        "y": 622,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "waterWest.png",
+      "frame": {
+        "x": 205,
+        "y": 817,
+        "w": 100,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  ],
+  "meta": {
+    "app": "http://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "sprite-sheet.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 512,
+      "h": 888
+    },
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:ba55acd76583dbd2d12b7a84cbb5cff0:856b7a097a83b12cb6d958a31312eee6:7fa955c556d4cd9669f4239a44fb48fd$"
+  }
+}
