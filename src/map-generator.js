@@ -22,10 +22,13 @@ function Tilemap(width, height) {
     PIXI.Container.call(this)
     this.interactive = true
 
-    this.tilesWidth = width
-    this.tilesHeight = height
+    this.tilesAmountX = width
+    this.tilesAmountY = height
 
     this.tileSize = 51
+    this.tileWidthHalf = this.tileSize / 2
+    this.tileHeightHalf = this.tileSize / 4
+
     this.zoom = 1
     this.scale.x = this.scale.y = this.zoom
 
@@ -43,11 +46,13 @@ function Tilemap(width, height) {
     this.mousedown = this.touchstart = function (event) {
         if (event.data.global.x > menuBarWidth) {
             this.dragging = true
-            this.mousePressPoint[0] = event.data.global.x - this.position.x
+            console.log('event.data.global', event.data.global)
+            this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
             this.mousePressPoint[1] = event.data.global.y - this.position.y
-            console.log(this.mousePressPoint[0],this.mousePressPoint[1])
-            this.selectTile(Math.floor(this.mousePressPoint[0] / (this.tileSize * this.zoom)),
-                Math.floor(this.mousePressPoint[1] / (this.tileSize * this.zoom)))
+            console.log('this.mousePressPoint', this.mousePressPoint)
+            this.selectTile(Math.floor(
+                    (this.mousePressPoint[0] / this.tileWidthHalf + this.mousePressPoint[1] / this.tileHeightHalf) / 2 / 4),
+                Math.floor((this.mousePressPoint[1] / this.tileHeightHalf - (this.mousePressPoint[0] / this.tileWidthHalf)) / 2 / 4))
         }
     }
     this.mouseup = this.mouseupoutside =
@@ -63,29 +68,37 @@ function Tilemap(width, height) {
             this.constrainTilemap()
         }
         else {
-            let mouseOverPoint = [0, 0]
-            mouseOverPoint[0] = event.data.global.x - this.position.x
-            mouseOverPoint[1] = event.data.global.y - this.position.y
 
-            let mouseoverTileCoords = [Math.floor(mouseOverPoint[0] / (this.tileSize * this.zoom)),
-                Math.floor(mouseOverPoint[1] / (this.tileSize * this.zoom))]
+            let mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
 
-            const upperLeft = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
-            const upperRight = [mouseoverTileCoords[0] * this.tileSize + this.tileSize, mouseoverTileCoords[1] * this.tileSize]
-            const lowerLeft = [mouseoverTileCoords[0] * this.tileSize - this.tileSize*2, mouseoverTileCoords[1] * this.tileSize + this.tileSize]
-            const lowerRight = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize + this.tileSize]
+            let mouseoverTileCoords = [Math.floor(
+                (mouseOverPoint[0] / this.tileWidthHalf + mouseOverPoint[1] / this.tileHeightHalf) / 2 / 4),
+                Math.floor((mouseOverPoint[1] / this.tileHeightHalf - (mouseOverPoint[0] / this.tileWidthHalf)) / 2 / 4)]
+
+            //console.log('mouseOverPoint',mouseOverPoint[0],mouseOverPoint[1])
+
+            //console.log('mouseoverTileCoords', mouseoverTileCoords[0], mouseoverTileCoords[1])
+
+            const up = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+
+            const right = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+
+            const left = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+
+            const down = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize+this.tileSize]
 
             this.mouseoverGraphics.clear()
             this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
-            this.mouseoverGraphics.moveTo(upperLeft[0], upperLeft[1])
-            this.mouseoverGraphics.lineTo(upperRight[0], upperRight[1])
-            this.mouseoverGraphics.moveTo(upperLeft[0], upperLeft[1])
-            this.mouseoverGraphics.lineTo(lowerLeft[0], lowerLeft[1])
-            this.mouseoverGraphics.moveTo(upperRight[0], upperRight[1])
-            this.mouseoverGraphics.lineTo(lowerRight[0], lowerRight[1])
-            this.mouseoverGraphics.moveTo(lowerRight[0], lowerRight[1])
-            this.mouseoverGraphics.lineTo(lowerLeft[0], lowerLeft[1])
+            this.mouseoverGraphics.moveTo(up[0], up[1])
+            this.mouseoverGraphics.lineTo(right[0], right[1])
+            this.mouseoverGraphics.moveTo(up[0], up[1])
+            this.mouseoverGraphics.lineTo(left[0], left[1])
+            this.mouseoverGraphics.moveTo(right[0], right[1])
+            this.mouseoverGraphics.lineTo(down[0], down[1])
+            this.mouseoverGraphics.moveTo(down[0], down[1])
+            this.mouseoverGraphics.lineTo(left[0], left[1])
             this.mouseoverGraphics.endFill()
+
         }
     }
 }
@@ -93,10 +106,11 @@ function Tilemap(width, height) {
 Tilemap.prototype.addTile = function (x, y, terrain) {
     var tile = PIXI.Sprite.fromFrame(terrain)
     tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
+    tile.position.x -= this.tileSize / 2
     tile.tileX = x
     tile.tileY = y
     tile.terrain = terrain
-    this.addChildAt(tile, x * this.tilesHeight + y)
+    this.addChildAt(tile, x * this.tilesAmountY + y)
 }
 
 Tilemap.prototype.changeTile = function (x, y, terrain) {
@@ -105,7 +119,7 @@ Tilemap.prototype.changeTile = function (x, y, terrain) {
 }
 
 Tilemap.prototype.getTile = function (x, y) {
-    return this.getChildAt(x * this.tilesHeight + y)
+    return this.getChildAt(x * this.tilesAmountY + y)
 }
 
 Tilemap.prototype.isometricToCartesian = function isoTo2D(pointX, pointY) {
@@ -122,8 +136,8 @@ Tilemap.prototype.cartesianToIsometric = function (pointX, pointY) {
 
 Tilemap.prototype.generateMap = function () {
 
-    for (let x = 0; x < this.tilesWidth; ++x) {
-        for (let y = 0; y < this.tilesHeight; y++) {
+    for (let x = 0; x < this.tilesAmountX; ++x) {
+        for (let y = 0; y < this.tilesAmountY; y++) {
             this.addTile(x, y, GRASS)
         }
     }
@@ -131,14 +145,14 @@ Tilemap.prototype.generateMap = function () {
     for (let j = 0; j < 7; j++) {
         for (let i = 0; i < 11; i++) {
             this.spawnChunks(Math.floor(i / 2) + 1,
-                Math.floor(generator.random() * this.tilesWidth),
-                Math.floor(generator.random() * this.tilesHeight),
+                Math.floor(generator.random() * this.tilesAmountX),
+                Math.floor(generator.random() * this.tilesAmountY),
                 WATER)
         }
     }
 
-    this.spawnYLine([Math.round(generator.random() * this.tilesWidth), 0], false, ASPHALT)
-    this.spawnXLine([0, Math.round(generator.random() * this.tilesWidth)], true, ASPHALT)
+    this.spawnYLine([Math.round(generator.random() * this.tilesAmountX), 0], false, ASPHALT)
+    this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX)], true, ASPHALT)
 }
 
 const accentedWeight = (scale = 1) => Math.round(generator.random() * scale) === 0
@@ -147,7 +161,7 @@ Tilemap.prototype.spawnXLine = function (position, directionX, element) {
     this.changeTile(position[0], position[1], element)
     let x = directionX ? position[0] + 1 : position[0] - 1
     let y = directionX ? position[1] : position[1] + 1
-    if (x < this.tilesWidth && y < this.tilesHeight - 1 && x >= 0 && y >= 0) {
+    if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
         this.spawnXLine([x, y], !accentedWeight(3), element)
     }
 }
@@ -156,16 +170,16 @@ Tilemap.prototype.spawnYLine = function (position, directionX, element) {
     this.changeTile(position[0], position[1], element)
     let x = directionX ? position[0] + 1 : position[0] - 1
     let y = directionX ? position[1] : position[1] + 1
-    if (x < this.tilesWidth && y < this.tilesHeight - 1 && x >= 0 && y >= 0) {
+    if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
         this.spawnXLine([x, y], accentedWeight(3), element)
     }
 }
 
 Tilemap.prototype.spawnChunks = function (size, x, y, element) {
     x = Math.max(x, 0)
-    x = Math.min(x, this.tilesWidth - 1)
+    x = Math.min(x, this.tilesAmountX - 1)
     y = Math.max(y, 0)
-    y = Math.min(y, this.tilesHeight - 1)
+    y = Math.min(y, this.tilesAmountY - 1)
 
     if (this.getTile(x, y).terrain < size - 1) {
         this.changeTile(x, y, element)
@@ -185,19 +199,19 @@ Tilemap.prototype.selectTile = function (x, y) {
     const upperRight = [this.selectedTileCoords[0] * this.tileSize + this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
     const lowerLeft = [this.selectedTileCoords[0] * this.tileSize + 2 - this.tileSize, this.selectedTileCoords[1] * this.tileSize - 3 + this.tileSize]
     const lowerRight = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize + this.tileSize - 3]
-/*
-    this.selectedGraphics.clear()
-    this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
-    this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
-    this.selectedGraphics.lineTo(upperRight[0], upperRight[1])
-    this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
-    this.selectedGraphics.lineTo(lowerLeft[0], lowerLeft[1])
-    this.selectedGraphics.moveTo(upperRight[0], upperRight[1])
-    this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
-    this.selectedGraphics.moveTo(lowerLeft[0], lowerLeft[1])
-    this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
-    this.selectedGraphics.endFill()
-    */
+    /*
+     this.selectedGraphics.clear()
+     this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
+     this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
+     this.selectedGraphics.lineTo(upperRight[0], upperRight[1])
+     this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
+     this.selectedGraphics.lineTo(lowerLeft[0], lowerLeft[1])
+     this.selectedGraphics.moveTo(upperRight[0], upperRight[1])
+     this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
+     this.selectedGraphics.moveTo(lowerLeft[0], lowerLeft[1])
+     this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
+     this.selectedGraphics.endFill()
+     */
 }
 
 Tilemap.prototype.zoomIn = function () {
@@ -228,9 +242,9 @@ Tilemap.prototype.centerOnSelectedTile = function () {
 }
 
 Tilemap.prototype.constrainTilemap = function () {
-    this.position.x = Math.max(this.position.x, -2 * this.tileSize * this.tilesWidth * this.zoom + screenX)
-    this.position.x = Math.min(this.position.x, this.tileSize * this.tilesWidth * this.zoom + screenX)
-    this.position.y = Math.max(this.position.y, -2 * this.tileSize * this.tilesHeight * this.zoom + screenY)
+    this.position.x = Math.max(this.position.x, -2 * this.tileSize * this.tilesAmountX * this.zoom + screenX)
+    this.position.x = Math.min(this.position.x, this.tileSize * this.tilesAmountX * this.zoom + screenX)
+    this.position.y = Math.max(this.position.y, -2 * this.tileSize * this.tilesAmountY * this.zoom + screenY)
     this.position.y = Math.min(this.position.y, +menuBarWidth)
 }
 
