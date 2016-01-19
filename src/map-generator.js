@@ -46,10 +46,8 @@ function Tilemap(width, height) {
     this.mousedown = this.touchstart = function (event) {
         if (event.data.global.x > menuBarWidth) {
             this.dragging = true
-            console.log('event.data.global', event.data.global)
             this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
             this.mousePressPoint[1] = event.data.global.y - this.position.y
-            console.log('this.mousePressPoint', this.mousePressPoint)
             this.selectTile(Math.floor(
                     (this.mousePressPoint[0] / this.tileWidthHalf + this.mousePressPoint[1] / this.tileHeightHalf) / 2 / 4),
                 Math.floor((this.mousePressPoint[1] / this.tileHeightHalf - (this.mousePressPoint[0] / this.tileWidthHalf)) / 2 / 4))
@@ -79,18 +77,24 @@ function Tilemap(width, height) {
             const yValue = (mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
             mouseoverTileCoords[0] * this.tileSize : mouseoverTileCoords[1] * this.tileSize) - Math.abs(mouseoverTileCoords[0]-mouseoverTileCoords[1]) * 0.5 *this.tileSize
 
-            const up = [xValue, yValue]
+            const up = [xValue-25, yValue+25]
 
-            const right = [xValue + this.tileSize, yValue]
+            const left = [xValue + this.tileSize-25, yValue-this.tileSize/2+25]
 
-            const left = [xValue, yValue]
+            const right = [xValue + this.tileSize+25, yValue+25]
 
-            const down = [xValue, yValue + this.tileSize]
+            const down = [xValue+25, yValue + this.tileSize]
 
             this.mouseoverGraphics.clear()
             this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
             this.mouseoverGraphics.moveTo(up[0], up[1])
+            this.mouseoverGraphics.lineTo(left[0], left[1])
+            this.mouseoverGraphics.moveTo(up[0], up[1])
+            this.mouseoverGraphics.lineTo(down[0], down[1])
+            this.mouseoverGraphics.moveTo(down[0], down[1])
             this.mouseoverGraphics.lineTo(right[0], right[1])
+            this.mouseoverGraphics.moveTo(right[0], right[1])
+            this.mouseoverGraphics.lineTo(left[0], left[1])
             this.mouseoverGraphics.endFill()
 
         }
@@ -189,23 +193,32 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
 Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
     menu.selectedTileText.text = "Tile: " + this.selectedTileCoords
-    const upperLeft = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
-    const upperRight = [this.selectedTileCoords[0] * this.tileSize + this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize - 3]
-    const lowerLeft = [this.selectedTileCoords[0] * this.tileSize + 2 - this.tileSize, this.selectedTileCoords[1] * this.tileSize - 3 + this.tileSize]
-    const lowerRight = [this.selectedTileCoords[0] * this.tileSize + 2, this.selectedTileCoords[1] * this.tileSize + this.tileSize - 3]
-    /*
-     this.selectedGraphics.clear()
-     this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
-     this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
-     this.selectedGraphics.lineTo(upperRight[0], upperRight[1])
-     this.selectedGraphics.moveTo(upperLeft[0], upperLeft[1])
-     this.selectedGraphics.lineTo(lowerLeft[0], lowerLeft[1])
-     this.selectedGraphics.moveTo(upperRight[0], upperRight[1])
-     this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
-     this.selectedGraphics.moveTo(lowerLeft[0], lowerLeft[1])
-     this.selectedGraphics.lineTo(lowerRight[0], lowerRight[1])
-     this.selectedGraphics.endFill()
-     */
+
+    const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
+
+    const yValue = (this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
+        this.selectedTileCoords[0] * this.tileSize : this.selectedTileCoords[1] * this.tileSize) - Math.abs(this.selectedTileCoords[0]-this.selectedTileCoords[1]) * 0.5 *this.tileSize
+
+    const up = [xValue-25, yValue+25]
+
+    const left = [xValue + this.tileSize-25, yValue-this.tileSize/2+25]
+
+    const right = [xValue + this.tileSize+25, yValue+25]
+
+    const down = [xValue+25, yValue + this.tileSize]
+
+    this.mouseoverGraphics.clear()
+    this.mouseoverGraphics.lineStyle(1, 0xFF0000, 1)
+    this.mouseoverGraphics.moveTo(up[0], up[1])
+    this.mouseoverGraphics.lineTo(left[0], left[1])
+    this.mouseoverGraphics.moveTo(up[0], up[1])
+    this.mouseoverGraphics.lineTo(down[0], down[1])
+    this.mouseoverGraphics.moveTo(down[0], down[1])
+    this.mouseoverGraphics.lineTo(right[0], right[1])
+    this.mouseoverGraphics.moveTo(right[0], right[1])
+    this.mouseoverGraphics.lineTo(left[0], left[1])
+    this.mouseoverGraphics.endFill()
+
 }
 
 Tilemap.prototype.zoomIn = function () {
