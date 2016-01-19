@@ -2,7 +2,7 @@
 
 Hobby project for testing pixi.js capabilities.
 
-![alt tag](http://laastine.kapsi.fi/screenshot.png)
+![alt tag](http://laastine.kapsi.fi/isometric.png)
 
 TODO:
 - [x] random map generation with grass, road and water
