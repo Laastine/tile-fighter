@@ -25,7 +25,7 @@ function Tilemap(width, height) {
     this.tilesAmountX = width
     this.tilesAmountY = height
 
-    this.tileSize = 51
+    this.tileSize = 50
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
@@ -68,35 +68,29 @@ function Tilemap(width, height) {
             this.constrainTilemap()
         }
         else {
+            const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
 
-            let mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
-
-            let mouseoverTileCoords = [Math.floor(
+            const mouseoverTileCoords = [Math.floor(
                 (mouseOverPoint[0] / this.tileWidthHalf + mouseOverPoint[1] / this.tileHeightHalf) / 2 / 4),
                 Math.floor((mouseOverPoint[1] / this.tileHeightHalf - (mouseOverPoint[0] / this.tileWidthHalf)) / 2 / 4)]
 
-            //console.log('mouseOverPoint',mouseOverPoint[0],mouseOverPoint[1])
+            const xValue = (mouseoverTileCoords[0] - mouseoverTileCoords[1]) * this.tileSize
 
-            //console.log('mouseoverTileCoords', mouseoverTileCoords[0], mouseoverTileCoords[1])
+            const yValue = (mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
+            mouseoverTileCoords[0] * this.tileSize : mouseoverTileCoords[1] * this.tileSize) - Math.abs(mouseoverTileCoords[0]-mouseoverTileCoords[1]) * 0.5 *this.tileSize
 
-            const up = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+            const up = [xValue, yValue]
 
-            const right = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+            const right = [xValue + this.tileSize, yValue]
 
-            const left = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize]
+            const left = [xValue, yValue]
 
-            const down = [mouseoverTileCoords[0] * this.tileSize, mouseoverTileCoords[1] * this.tileSize+this.tileSize]
+            const down = [xValue, yValue + this.tileSize]
 
             this.mouseoverGraphics.clear()
             this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
             this.mouseoverGraphics.moveTo(up[0], up[1])
             this.mouseoverGraphics.lineTo(right[0], right[1])
-            this.mouseoverGraphics.moveTo(up[0], up[1])
-            this.mouseoverGraphics.lineTo(left[0], left[1])
-            this.mouseoverGraphics.moveTo(right[0], right[1])
-            this.mouseoverGraphics.lineTo(down[0], down[1])
-            this.mouseoverGraphics.moveTo(down[0], down[1])
-            this.mouseoverGraphics.lineTo(left[0], left[1])
             this.mouseoverGraphics.endFill()
 
         }
