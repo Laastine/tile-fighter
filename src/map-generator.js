@@ -13,7 +13,7 @@ const generator = new MersenneTwister(1337)
 
 const GRASS = 5
 const ASPHALT = 2
-const WATER = 3
+const WATER = 1
 
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
@@ -207,17 +207,17 @@ Tilemap.prototype.selectTile = function (x, y) {
 
     const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
 
-    this.mouseoverGraphics.clear()
-    this.mouseoverGraphics.lineStyle(1, 0xFF0000, 1)
-    this.mouseoverGraphics.moveTo(up[0], up[1])
-    this.mouseoverGraphics.lineTo(left[0], left[1])
-    this.mouseoverGraphics.moveTo(up[0], up[1])
-    this.mouseoverGraphics.lineTo(down[0], down[1])
-    this.mouseoverGraphics.moveTo(down[0], down[1])
-    this.mouseoverGraphics.lineTo(right[0], right[1])
-    this.mouseoverGraphics.moveTo(right[0], right[1])
-    this.mouseoverGraphics.lineTo(left[0], left[1])
-    this.mouseoverGraphics.endFill()
+    this.selectedGraphics.clear()
+    this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
+    this.selectedGraphics.moveTo(up[0], up[1])
+    this.selectedGraphics.lineTo(left[0], left[1])
+    this.selectedGraphics.moveTo(up[0], up[1])
+    this.selectedGraphics.lineTo(down[0], down[1])
+    this.selectedGraphics.moveTo(down[0], down[1])
+    this.selectedGraphics.lineTo(right[0], right[1])
+    this.selectedGraphics.moveTo(right[0], right[1])
+    this.selectedGraphics.lineTo(left[0], left[1])
+    this.selectedGraphics.endFill()
 
 }
 
