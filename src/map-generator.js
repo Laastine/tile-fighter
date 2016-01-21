@@ -49,8 +49,8 @@ function Tilemap(width, height) {
             this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
             this.mousePressPoint[1] = event.data.global.y - this.position.y
             this.selectTile(Math.floor(
-                    (this.mousePressPoint[0] / this.tileWidthHalf + this.mousePressPoint[1] / this.tileHeightHalf) / 2 / 4),
-                Math.floor((this.mousePressPoint[1] / this.tileHeightHalf - (this.mousePressPoint[0] / this.tileWidthHalf)) / 2 / 4))
+                    (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2) + this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
+                Math.floor((this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8))
         }
     }
     this.mouseup = this.mouseupoutside =
@@ -69,21 +69,21 @@ function Tilemap(width, height) {
             const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
 
             const mouseoverTileCoords = [Math.floor(
-                (mouseOverPoint[0] / this.tileWidthHalf + mouseOverPoint[1] / this.tileHeightHalf) / 8),
-                Math.floor((mouseOverPoint[1] / this.tileHeightHalf - (mouseOverPoint[0] / this.tileWidthHalf)) / 8)]
+                (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2) + mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
+                Math.floor((mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)]
 
             const xValue = (mouseoverTileCoords[0] - mouseoverTileCoords[1]) * this.tileSize
 
             const yValue = (mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
                 mouseoverTileCoords[0] * this.tileSize : mouseoverTileCoords[1] * this.tileSize) - Math.abs(mouseoverTileCoords[0] - mouseoverTileCoords[1]) * 0.5 * this.tileSize
 
-            const up = [xValue - 25, yValue + 25]
+            const up = [xValue - this.tileSize / 2, yValue + this.tileSize / 2]
 
-            const left = [xValue + this.tileSize - 25, yValue - this.tileSize / 2 + 25]
+            const left = [xValue + this.tileSize - this.tileSize / 2, yValue - this.tileSize / 2 + this.tileSize / 2]
 
-            const right = [xValue + this.tileSize + 25, yValue + 25]
+            const right = [xValue + this.tileSize + this.tileSize / 2, yValue + this.tileSize / 2]
 
-            const down = [xValue + 25, yValue + this.tileSize]
+            const down = [xValue + this.tileSize / 2, yValue + this.tileSize]
 
             this.mouseoverGraphics.clear()
             this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
@@ -276,6 +276,8 @@ function Menubar() {
     this.selectedTileText = new PIXI.Text("Tile: " + 1,
         {font: "12px Helvetica", fill: "#777", align: "left"})
     this.addChild(this.selectedTileText)
+    this.addMenuButton(this, "+", 0, 12, tilemap, tilemap.zoomIn)
+    this.addMenuButton(this, "-", 30, 12, tilemap, tilemap.zoomOut)
 }
 
 Menubar.prototype.addMenuButton = (that, text, x, y, obj, callback) => {
