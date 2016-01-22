@@ -74,16 +74,13 @@ function Tilemap(width, height) {
 
             const xValue = (mouseoverTileCoords[0] - mouseoverTileCoords[1]) * this.tileSize
 
-            const yValue = (mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
-                mouseoverTileCoords[0] * this.tileSize : mouseoverTileCoords[1] * this.tileSize) - Math.abs(mouseoverTileCoords[0] - mouseoverTileCoords[1]) * 0.5 * this.tileSize
+            const yValue = ((mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
+                    mouseoverTileCoords[0] : mouseoverTileCoords[1]) - Math.abs(mouseoverTileCoords[0] - mouseoverTileCoords[1]) / 2) * this.tileSize
 
-            const up = [xValue - this.tileSize / 2, yValue + this.tileSize / 2]
-
-            const left = [xValue + this.tileSize - this.tileSize / 2, yValue - this.tileSize / 2 + this.tileSize / 2]
-
-            const right = [xValue + this.tileSize + this.tileSize / 2, yValue + this.tileSize / 2]
-
-            const down = [xValue + this.tileSize / 2, yValue + this.tileSize]
+            const up = [xValue - this.tileWidthHalf, yValue + this.tileWidthHalf]
+            const left = [xValue + this.tileWidthHalf, yValue]
+            const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
+            const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
 
             this.mouseoverGraphics.clear()
             this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
@@ -196,15 +193,13 @@ Tilemap.prototype.selectTile = function (x, y) {
 
     const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
 
-    const yValue = (this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
-        this.selectedTileCoords[0] * this.tileSize : this.selectedTileCoords[1] * this.tileSize) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) * 0.5 * this.tileSize
+    const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
+            this.selectedTileCoords[0] :
+            this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
 
     const up = [xValue - this.tileWidthHalf, yValue + this.tileWidthHalf]
-
-    const left = [xValue + this.tileSize - this.tileWidthHalf, yValue - this.tileSize / 2 + this.tileWidthHalf]
-
+    const left = [xValue + this.tileWidthHalf, yValue]
     const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
-
     const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
 
     this.selectedGraphics.clear()
