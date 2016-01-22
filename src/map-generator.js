@@ -9,11 +9,11 @@ const tilesX = 64
 const tilesY = 36
 let tilemap = null
 let menu = null
-const generator = new MersenneTwister(1337)
+const generator = new MersenneTwister(1)
 
 const GRASS = 5
 const ASPHALT = 2
-const WATER = 1
+const WATER = 52
 
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
@@ -29,7 +29,7 @@ function Tilemap(width, height) {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 1
+    this.zoom = 0.5
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = {x: 0, y: 0}
@@ -53,10 +53,12 @@ function Tilemap(width, height) {
                 Math.floor((this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8))
         }
     }
+
     this.mouseup = this.mouseupoutside =
         this.touchend = this.touchendoutside = function () {
             this.dragging = false
         }
+
     this.mousemove = this.touchmove = function (event) {
         if (this.dragging) {
             var position = event.data.global
@@ -130,15 +132,15 @@ Tilemap.prototype.cartesianToIsometric = function (pointX, pointY) {
 }
 
 Tilemap.prototype.generateMap = function () {
-
     for (let x = 0; x < this.tilesAmountX; ++x) {
         for (let y = 0; y < this.tilesAmountY; y++) {
             this.addTile(x, y, GRASS)
         }
     }
+    this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX-1)], true, ASPHALT)
 
-    for (let j = 0; j < 7; j++) {
-        for (let i = 0; i < 11; i++) {
+    for (let j = 0; j < 1; j++) {
+        for (let i = 0; i < 6; i++) {
             this.spawnChunks(Math.floor(i / 2) + 1,
                 Math.floor(generator.random() * this.tilesAmountX),
                 Math.floor(generator.random() * this.tilesAmountY),
@@ -146,8 +148,6 @@ Tilemap.prototype.generateMap = function () {
         }
     }
 
-    this.spawnYLine([Math.round(generator.random() * this.tilesAmountX), 0], false, ASPHALT)
-    this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX)], true, ASPHALT)
 }
 
 const accentedWeight = (scale = 1) => Math.round(generator.random() * scale) === 0
@@ -176,9 +176,7 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
     y = Math.max(y, 0)
     y = Math.min(y, this.tilesAmountY - 1)
 
-    if (this.getTile(x, y).terrain < size - 1) {
-        this.changeTile(x, y, element)
-    }
+    this.changeTile(x, y, element)
 
     for (let i = 0; i < size; i++) {
         let horizontal = Math.floor(generator.random() * 3) - 1
