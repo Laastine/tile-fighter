@@ -1,5 +1,4 @@
-import MapGenerator from './map-generator'
+import Map from './map'
 
-MapGenerator.initRenderer()
-MapGenerator.loadTexture('./assets/terrain.json')
-MapGenerator.renderLoop()
+Map.initRenderer()
+Map.loadTexture('./assets/terrain.json')

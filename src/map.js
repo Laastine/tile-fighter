@@ -5,8 +5,8 @@ let renderer, container
 const menuBarWidth = 80
 const screenX = window.innerWidth
 const screenY = window.innerHeight
-const tilesX = 64
-const tilesY = 64
+const tilesX = 65
+const tilesY = 65
 let tilemap = null
 let menu = null
 const generator = new MersenneTwister(1)
@@ -25,7 +25,7 @@ function Tilemap(width, height) {
     this.tilesAmountX = width
     this.tilesAmountY = height
 
-    this.tileSize = 50
+    this.tileSize = 25
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
@@ -95,7 +95,6 @@ function Tilemap(width, height) {
             this.mouseoverGraphics.moveTo(right[0], right[1])
             this.mouseoverGraphics.lineTo(left[0], left[1])
             this.mouseoverGraphics.endFill()
-
         }
     }
 }
@@ -103,7 +102,7 @@ function Tilemap(width, height) {
 Tilemap.prototype.addTile = function (x, y, terrain) {
     let tile = PIXI.Sprite.fromFrame(terrain)
     tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
-    tile.position.x -= this.tileSize / 2
+    tile.position.x -= this.tileSize /2
     tile.tileX = x
     tile.tileY = y
     tile.terrain = terrain
@@ -307,28 +306,22 @@ export default {
         container = new PIXI.Container()
     },
 
-    loadTexture: function (filePath) {
+    loadTexture: (filePath) => {
         const loader = new PIXI.loaders.Loader()
         loader.add(filePath)
-        loader.once('complete', this.loadTileMap)
+        loader.once('complete', () => {
+            tilemap = new Tilemap(tilesX, tilesY)
+            tilemap.position.x = 0
+            container.addChild(tilemap)
+
+            menu = new Menubar()
+            container.addChild(menu)
+
+            tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
+            tilemap.zoomIn()
+
+            requestAnimationFrame(animate)
+        })
         loader.load()
-    },
-
-    loadTileMap: () => {
-        tilemap = new Tilemap(tilesX, tilesY)
-        tilemap.position.x = 0
-        container.addChild(tilemap)
-
-        menu = new Menubar()
-        container.addChild(menu)
-
-        tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
-        tilemap.zoomIn()
-
-        requestAnimationFrame(animate)
-    },
-
-    renderLoop: () => {
-        animate()
     }
 }
