@@ -1,7 +1,6 @@
 {
-  "frames": [
-    {
-      "filename": "bridgeEast.png",
+  "frames": {
+    "bridgeEast.png": {
       "frame": {
         "x": 103,
         "y": 824,
@@ -25,8 +24,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "bridgeNorth.png",
+    "bridgeNorth.png": {
       "frame": {
         "x": 402,
         "y": 687,
@@ -50,8 +48,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "crossroad.png",
+    "crossroad.png": {
       "frame": {
         "x": 307,
         "y": 219,
@@ -75,8 +72,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "dirt.png",
+    "dirt.png": {
       "frame": {
         "x": 1,
         "y": 825,
@@ -100,8 +96,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "dirtHigh.png",
+    "dirtHigh.png": {
       "frame": {
         "x": 205,
         "y": 83,
@@ -125,8 +120,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "grass.png",
+    "grass.png": {
       "frame": {
         "x": 409,
         "y": 219,
@@ -150,8 +144,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillCornerEast.png",
+    "hillCornerEast.png": {
       "frame": {
         "x": 207,
         "y": 1,
@@ -175,8 +168,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillCornerNW.png",
+    "hillCornerNW.png": {
       "frame": {
         "x": 307,
         "y": 286,
@@ -200,8 +192,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillCornerSE.png",
+    "hillCornerSE.png": {
       "frame": {
         "x": 205,
         "y": 287,
@@ -225,8 +216,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillCornerWest.png",
+    "hillCornerWest.png": {
       "frame": {
         "x": 409,
         "y": 286,
@@ -250,8 +240,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillEast.png",
+    "hillEast.png": {
       "frame": {
         "x": 309,
         "y": 1,
@@ -275,8 +264,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillNorth.png",
+    "hillNorth.png": {
       "frame": {
         "x": 411,
         "y": 1,
@@ -300,8 +288,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillRoadEast.png",
+    "hillRoadEast.png": {
       "frame": {
         "x": 1,
         "y": 68,
@@ -325,8 +312,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillRoadNorth.png",
+    "hillRoadNorth.png": {
       "frame": {
         "x": 103,
         "y": 68,
@@ -350,8 +336,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillRoadSouth.png",
+    "hillRoadSouth.png": {
       "frame": {
         "x": 1,
         "y": 1,
@@ -375,8 +360,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillRoadWest.png",
+    "hillRoadWest.png": {
       "frame": {
         "x": 104,
         "y": 1,
@@ -400,8 +384,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillSouth.png",
+    "hillSouth.png": {
       "frame": {
         "x": 307,
         "y": 353,
@@ -425,8 +408,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hillWest.png",
+    "hillWest.png": {
       "frame": {
         "x": 409,
         "y": 353,
@@ -450,8 +432,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lot.png",
+    "lot.png": {
       "frame": {
         "x": 1,
         "y": 150,
@@ -475,8 +456,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotCornerEast.png",
+    "lotCornerEast.png": {
       "frame": {
         "x": 1,
         "y": 354,
@@ -500,8 +480,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotCornerNorth.png",
+    "lotCornerNorth.png": {
       "frame": {
         "x": 103,
         "y": 150,
@@ -525,8 +504,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotCornerSouth.png",
+    "lotCornerSouth.png": {
       "frame": {
         "x": 307,
         "y": 83,
@@ -550,8 +528,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotCornerWest.png",
+    "lotCornerWest.png": {
       "frame": {
         "x": 409,
         "y": 83,
@@ -575,8 +552,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotEast.png",
+    "lotEast.png": {
       "frame": {
         "x": 103,
         "y": 354,
@@ -600,8 +576,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotExitEast.png",
+    "lotExitEast.png": {
       "frame": {
         "x": 205,
         "y": 151,
@@ -625,8 +600,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotExitNorth.png",
+    "lotExitNorth.png": {
       "frame": {
         "x": 1,
         "y": 218,
@@ -650,8 +624,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotExitSouth.png",
+    "lotExitSouth.png": {
       "frame": {
         "x": 103,
         "y": 218,
@@ -675,8 +648,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotExitWest.png",
+    "lotExitWest.png": {
       "frame": {
         "x": 307,
         "y": 151,
@@ -700,8 +672,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotNorth.png",
+    "lotNorth.png": {
       "frame": {
         "x": 205,
         "y": 354,
@@ -725,8 +696,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotPark.png",
+    "lotPark.png": {
       "frame": {
         "x": 307,
         "y": 420,
@@ -750,8 +720,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotSouth.png",
+    "lotSouth.png": {
       "frame": {
         "x": 409,
         "y": 420,
@@ -775,8 +744,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "lotWest.png",
+    "lotWest.png": {
       "frame": {
         "x": 1,
         "y": 421,
@@ -800,8 +768,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadCornerES.png",
+    "roadCornerES.png": {
       "frame": {
         "x": 103,
         "y": 421,
@@ -825,8 +792,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadCornerNE.png",
+    "roadCornerNE.png": {
       "frame": {
         "x": 205,
         "y": 421,
@@ -850,8 +816,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadCornerNW.png",
+    "roadCornerNW.png": {
       "frame": {
         "x": 307,
         "y": 487,
@@ -875,8 +840,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadCornerWS.png",
+    "roadCornerWS.png": {
       "frame": {
         "x": 409,
         "y": 487,
@@ -900,8 +864,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadEast.png",
+    "roadEast.png": {
       "frame": {
         "x": 1,
         "y": 488,
@@ -925,8 +888,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadEndEast.png",
+    "roadEndEast.png": {
       "frame": {
         "x": 103,
         "y": 488,
@@ -950,8 +912,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadEndNorth.png",
+    "roadEndNorth.png": {
       "frame": {
         "x": 205,
         "y": 488,
@@ -975,8 +936,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadEndSouth.png",
+    "roadEndSouth.png": {
       "frame": {
         "x": 307,
         "y": 554,
@@ -1000,8 +960,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadEndWest.png",
+    "roadEndWest.png": {
       "frame": {
         "x": 409,
         "y": 554,
@@ -1025,8 +984,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadNorth.png",
+    "roadNorth.png": {
       "frame": {
         "x": 1,
         "y": 621,
@@ -1050,8 +1008,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadTEast.png",
+    "roadTEast.png": {
       "frame": {
         "x": 1,
         "y": 723,
@@ -1075,8 +1032,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadTNorth.png",
+    "roadTNorth.png": {
       "frame": {
         "x": 103,
         "y": 555,
@@ -1100,8 +1056,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadTSouth.png",
+    "roadTSouth.png": {
       "frame": {
         "x": 205,
         "y": 555,
@@ -1125,8 +1080,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "roadTWest.png",
+    "roadTWest.png": {
       "frame": {
         "x": 68,
         "y": 634,
@@ -1150,8 +1104,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "treeConiferShort.png",
+    "treeConiferShort.png": {
       "frame": {
         "x": 117,
         "y": 803,
@@ -1175,8 +1128,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "treeConiferTall.png",
+    "treeConiferTall.png": {
       "frame": {
         "x": 68,
         "y": 803,
@@ -1200,8 +1152,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "treeShort.png",
+    "treeShort.png": {
       "frame": {
         "x": 68,
         "y": 621,
@@ -1225,8 +1176,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "treeShort_autumn.png",
+    "treeShort_autumn.png": {
       "frame": {
         "x": 199,
         "y": 804,
@@ -1250,8 +1200,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "treeTall.png",
+    "treeTall.png": {
       "frame": {
         "x": 154,
         "y": 803,
@@ -1275,8 +1224,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "treeTall_autumn.png",
+    "treeTall_autumn.png": {
       "frame": {
         "x": 199,
         "y": 791,
@@ -1300,8 +1248,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "water.png",
+    "water.png": {
       "frame": {
         "x": 1,
         "y": 555,
@@ -1325,8 +1272,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachCornerEast.png",
+    "waterBeachCornerEast.png": {
       "frame": {
         "x": 68,
         "y": 736,
@@ -1350,8 +1296,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachCornerNorth.png",
+    "waterBeachCornerNorth.png": {
       "frame": {
         "x": 307,
         "y": 790,
@@ -1375,8 +1320,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachCornerSouth.png",
+    "waterBeachCornerSouth.png": {
       "frame": {
         "x": 409,
         "y": 151,
@@ -1400,8 +1344,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachCornerWest.png",
+    "waterBeachCornerWest.png": {
       "frame": {
         "x": 135,
         "y": 622,
@@ -1425,8 +1368,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachEast.png",
+    "waterBeachEast.png": {
       "frame": {
         "x": 272,
         "y": 724,
@@ -1450,8 +1392,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachNorth.png",
+    "waterBeachNorth.png": {
       "frame": {
         "x": 336,
         "y": 621,
@@ -1475,8 +1416,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachSouth.png",
+    "waterBeachSouth.png": {
       "frame": {
         "x": 205,
         "y": 219,
@@ -1500,8 +1440,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterBeachWest.png",
+    "waterBeachWest.png": {
       "frame": {
         "x": 1,
         "y": 286,
@@ -1525,8 +1464,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterCornerEast.png",
+    "waterCornerEast.png": {
       "frame": {
         "x": 170,
         "y": 724,
@@ -1550,8 +1488,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterCornerNorth.png",
+    "waterCornerNorth.png": {
       "frame": {
         "x": 402,
         "y": 621,
@@ -1575,8 +1512,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterCornerSouth.png",
+    "waterCornerSouth.png": {
       "frame": {
         "x": 103,
         "y": 286,
@@ -1600,8 +1536,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterCornerWest.png",
+    "waterCornerWest.png": {
       "frame": {
         "x": 202,
         "y": 622,
@@ -1625,8 +1560,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterEast.png",
+    "waterEast.png": {
       "frame": {
         "x": 409,
         "y": 752,
@@ -1650,8 +1584,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterNorth.png",
+    "waterNorth.png": {
       "frame": {
         "x": 409,
         "y": 817,
@@ -1675,8 +1608,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterSouth.png",
+    "waterSouth.png": {
       "frame": {
         "x": 269,
         "y": 622,
@@ -1700,8 +1632,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "waterWest.png",
+    "waterWest.png": {
       "frame": {
         "x": 205,
         "y": 817,
@@ -1725,17 +1656,17 @@
         "y": 0.5
       }
     }
-  ],
+  },
   "meta": {
     "app": "http://www.codeandweb.com/texturepacker",
     "version": "1.0",
-    "image": "sprite-sheet.png",
+    "image": "terrain.png",
     "format": "RGBA8888",
     "size": {
       "w": 512,
       "h": 888
     },
     "scale": "1",
-    "smartupdate": "$TexturePacker:SmartUpdate:ba55acd76583dbd2d12b7a84cbb5cff0:856b7a097a83b12cb6d958a31312eee6:7fa955c556d4cd9669f4239a44fb48fd$"
+    "smartupdate": "$TexturePacker:SmartUpdate:7280fc0d91f39fe6135506403cf6f018:856b7a097a83b12cb6d958a31312eee6:a52c91d73586a2a634ceb55ad22f4949$"
   }
 }

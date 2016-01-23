@@ -6,14 +6,14 @@ const menuBarWidth = 80
 const screenX = window.innerWidth
 const screenY = window.innerHeight
 const tilesX = 64
-const tilesY = 36
+const tilesY = 64
 let tilemap = null
 let menu = null
 const generator = new MersenneTwister(1)
 
-const GRASS = 5
-const ASPHALT = 2
-const WATER = 52
+const GRASS = "grass.png"
+const ASPHALT = "dirt.png"
+const WATER = "water.png"
 
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
@@ -29,7 +29,7 @@ function Tilemap(width, height) {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 0.5
+    this.zoom = 0.25
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = {x: 0, y: 0}
@@ -101,7 +101,7 @@ function Tilemap(width, height) {
 }
 
 Tilemap.prototype.addTile = function (x, y, terrain) {
-    var tile = PIXI.Sprite.fromFrame(terrain)
+    let tile = PIXI.Sprite.fromFrame(terrain)
     tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
     tile.position.x -= this.tileSize / 2
     tile.tileX = x
@@ -137,17 +137,12 @@ Tilemap.prototype.generateMap = function () {
             this.addTile(x, y, GRASS)
         }
     }
-    this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX-1)], true, ASPHALT)
-
-    for (let j = 0; j < 1; j++) {
-        for (let i = 0; i < 6; i++) {
-            this.spawnChunks(Math.floor(i / 2) + 1,
-                Math.floor(generator.random() * this.tilesAmountX),
-                Math.floor(generator.random() * this.tilesAmountY),
-                WATER)
-        }
-    }
-
+    this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX - 1)], true, ASPHALT)
+    this.spawnYLine([Math.round(generator.random() * this.tilesAmountX-15), 0], false, ASPHALT)
+    this.spawnChunks(6,
+        Math.floor(generator.random() * this.tilesAmountX),
+        Math.floor(generator.random() * this.tilesAmountY),
+        WATER)
 }
 
 const accentedWeight = (scale = 1) => Math.round(generator.random() * scale) === 0
@@ -179,8 +174,8 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
     this.changeTile(x, y, element)
 
     for (let i = 0; i < size; i++) {
-        let horizontal = Math.floor(generator.random() * 3) - 1
-        let vertical = Math.floor(generator.random() * 3) - 1
+        let horizontal = Math.floor(generator.random() * 2) - 1
+        let vertical = Math.floor(generator.random() * 2) - 1
         this.spawnChunks(size - 1, x + horizontal, y + vertical, element)
     }
 }
@@ -225,7 +220,7 @@ Tilemap.prototype.zoomIn = function () {
 Tilemap.prototype.zoomOut = function () {
     this.mouseoverGraphics.clear()
 
-    this.zoom = Math.max(this.zoom / 2, 1)
+    this.zoom = Math.max(this.zoom / 2, 1 / 2)
     this.scale.x = this.scale.y = this.zoom
 
     this.centerOnSelectedTile()

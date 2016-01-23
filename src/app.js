@@ -1,5 +1,5 @@
 import MapGenerator from './map-generator'
 
 MapGenerator.initRenderer()
-MapGenerator.loadTexture('./assets/sprite-sheet-data.json')
+MapGenerator.loadTexture('./assets/terrain.json')
 MapGenerator.renderLoop()
