@@ -2,9 +2,9 @@
 
 Hobby project for testing pixi.js capabilities.
 
-![alt tag](http://laastine.kapsi.fi/isometric.png)
+[Test it](http://laastine.kapsi.fi/tile-fighter/)
 
-http://laastine.kapsi.fi/tile-fighter/
+
 
 TODO:
 - [x] random map generation with grass, road and water
