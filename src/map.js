@@ -14,6 +14,11 @@ const generator = new MersenneTwister(1)
 const GRASS = "grass.png"
 const ASPHALT = "dirt.png"
 const WATER = "water.png"
+var houses = ['h01_s128_iso_0057.png',
+    'h01_s128_iso_0013.png',
+    'h01_s128_iso_0061.png',
+    'h01_s128_iso_0065.png',
+    'h01_s128_iso_0101.png']
 
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
@@ -29,7 +34,7 @@ function Tilemap(width, height) {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 0.25
+    this.zoom = 0.5
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = {x: 0, y: 0}
@@ -102,7 +107,19 @@ function Tilemap(width, height) {
 Tilemap.prototype.addTile = function (x, y, terrain) {
     let tile = PIXI.Sprite.fromFrame(terrain)
     tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
-    tile.position.x -= this.tileSize /2
+    tile.position.x -= this.tileSize / 2
+    tile.tileX = x
+    tile.tileY = y
+    tile.terrain = terrain
+    this.addChildAt(tile, x * this.tilesAmountY + y)
+}
+
+Tilemap.prototype.addBuildingTile = function (x, y, terrain) {
+    let tile = PIXI.Sprite.fromFrame(terrain)
+    this.removeChild(this.getTile(x, y))
+    tile.position = this.cartesianToIsometric(x * this.tileSize - 30, y * this.tileSize - 30)
+    tile.position.x -= this.tileSize / 2
+    tile.scale.x -= tile.scale.x * 0.25
     tile.tileX = x
     tile.tileY = y
     tile.terrain = terrain
@@ -137,11 +154,18 @@ Tilemap.prototype.generateMap = function () {
         }
     }
     this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX - 1)], true, ASPHALT)
-    this.spawnYLine([Math.round(generator.random() * this.tilesAmountX-15), 0], false, ASPHALT)
+    this.spawnYLine([Math.round(generator.random() * this.tilesAmountX - 15), 0], false, ASPHALT)
     this.spawnChunks(6,
         Math.floor(generator.random() * this.tilesAmountX),
         Math.floor(generator.random() * this.tilesAmountY),
         WATER)
+
+    var that = this
+    houses.map((house) => {
+        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX) - 2, Math.round(generator.random() * this.tilesAmountX) - 2, house)
+    })
+
+
 }
 
 const accentedWeight = (scale = 1) => Math.round(generator.random() * scale) === 0
@@ -321,7 +345,6 @@ export default {
             tilemap.zoomIn()
 
             requestAnimationFrame(animate)
-        })
-        loader.load()
+        }).load()
     }
 }
