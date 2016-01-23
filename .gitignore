@@ -4,3 +4,4 @@ node_modules/
 *.psd
 .DS_Store
 /npm-debug.log
+/deploy.sh
