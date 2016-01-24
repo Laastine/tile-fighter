@@ -100,25 +100,27 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
 }
 
 Tilemap.prototype.addBuildingTile = function (x, y, building) {
-    let tile = PIXI.Sprite.fromFrame(building)
-    this.removeChild(this.getTile(x, y))
-    tile.position = this.cartesianToIsometric(x * this.tileSize - 30, y * this.tileSize - 30)
-    tile.position.x -= this.tileSize / 2
-    tile.scale.x -= tile.scale.x * 0.25
-    tile.tileX = x
-    tile.tileY = y
-    tile.terrain = building
-    this.addChildAt(tile, x * this.tilesAmountY + y)
+    if (this.getTile(x, y).terrain === config.GRASS) {
+        let tile = PIXI.Sprite.fromFrame(building)
+        this.removeChild(this.getTile(x, y))
+        tile.position = this.cartesianToIsometric(x * this.tileSize - 30, y * this.tileSize - 30)
+        tile.position.x -= this.tileSize / 2
+        tile.scale.x -= tile.scale.x * 0.25
+        tile.tileX = x
+        tile.tileY = y
+        tile.terrain = building
+        this.addChildAt(tile, x * this.tilesAmountY + y)
+    }
 }
 
 Tilemap.prototype.addTreeTile = function (x, y, tree) {
-    let tile = PIXI.Sprite.fromFrame(tree)
-    tile.position = this.cartesianToIsometric(x * this.tileSize - 30, y * this.tileSize - 30)
-    tile.position.x -= this.tileSize / 2
-    tile.scale.x -= tile.scale.x * 0.25
-    tile.tileX = x
-    tile.tileY = y
-    if (x > 0 && y > 0) {
+    if (x > 0 && y > 0 && this.getTile(x, y).terrain === config.GRASS) {
+        let tile = PIXI.Sprite.fromFrame(tree)
+        tile.position = this.cartesianToIsometric(x * this.tileSize - 30, y * this.tileSize - 30)
+        tile.position.x -= this.tileSize / 2
+        tile.scale.x -= tile.scale.x * 0.25
+        tile.tileX = x
+        tile.tileY = y
         this.addChildAt(tile, x * this.tilesAmountY + y)
     }
 }
@@ -153,12 +155,12 @@ Tilemap.prototype.generateMap = function () {
 
     var that = this
     config.houses.forEach((house) => {
-        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX) - 2, Math.round(generator.random() * this.tilesAmountX) - 2, house)
-        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX) - 2, Math.round(generator.random() * this.tilesAmountX) - 2, house)
-        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX) - 2, Math.round(generator.random() * this.tilesAmountX) - 2, house)
+        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), house)
+        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), house)
+        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), house)
     })
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 500; i++) {
         config.trees.forEach((tree) => {
             that.addTreeTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), tree)
         })

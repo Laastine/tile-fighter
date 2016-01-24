@@ -1,5 +1,4 @@
 export default {
-
     GRASS: "grass.png",
     ASPHALT: "dirt.png",
     WATER: "water.png",
