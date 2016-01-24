@@ -105,7 +105,7 @@ Tilemap.prototype.addBuildingTile = function (x, y, building) {
     if (this.getTile(x, y).terrain === config.GRASS) {
         let tile = PIXI.Sprite.fromFrame(building)
         this.removeChild(this.getTile(x, y))
-        tile.position = this.cartesianToIsometric(x * this.tileSize - 30, y * this.tileSize - 30)
+        tile.position = this.cartesianToIsometric((x-1) * this.tileSize, (y-1) * this.tileSize)
         tile.position.x -= this.tileSize / 2
         tile.scale.x -= tile.scale.x * 0.25
         tile.tileX = x
@@ -262,8 +262,7 @@ export default {
     },
 
     loadTexture: (filePath) => {
-        const loader = new PIXI.loaders.Loader()
-        loader
+        new PIXI.loaders.Loader()
             .add(filePath)
             .once('complete', () => {
                 tilemap = new Tilemap(config.tilesX, config.tilesY)
