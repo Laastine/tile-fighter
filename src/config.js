@@ -7,7 +7,15 @@ export default {
         'h01_s128_iso_0013.png',
         'h01_s128_iso_0061.png',
         'h01_s128_iso_0065.png',
-        'h01_s128_iso_0101.png'],
+        'h01_s128_iso_0101.png',
+        'h01_s128_iso_0113.png',
+        'h01_s128_iso_0173.png',
+        'h01_s128_iso_0089.png'],
+
+    trees: ['treeConiferShort.png',
+        'treeConiferTall.png',
+        'treeShort.png',
+        'treeTall.png'],
 
     tilesX: 65,
     tilesY: 65,
