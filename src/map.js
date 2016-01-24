@@ -56,8 +56,7 @@ function Tilemap(width, height) {
             this.position.x = position.x - this.mousePressPoint[0]
             this.position.y = position.y - this.mousePressPoint[1]
             this.constrainTilemap()
-        }
-        else {
+        } else {
             const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
             const mouseoverTileCoords = [Math.floor(
                 (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2) + mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
@@ -123,13 +122,14 @@ Tilemap.prototype.addTreeTile = function (x, y, tree) {
         tile.scale.x -= tile.scale.x * 0.25
         tile.tileX = x
         tile.tileY = y
+        tile.terrain = config.WOOD
         this.addChildAt(tile, x * this.tilesAmountY + y)
     }
 }
 
-Tilemap.prototype.changeTile = function (x, y, terrain) {
+Tilemap.prototype.changeTile = function (x, y, tile) {
     this.removeChild(this.getTile(x, y))
-    this.addTile(x, y, terrain)
+    this.addTile(x, y, tile)
 }
 
 Tilemap.prototype.getTile = function (x, y) {
@@ -206,7 +206,9 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
 
 Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
-    menu.selectedTileText.text = "Tile: " + this.selectedTileCoords
+    menu.selectedTileCoordText.text = "Tile: " + this.selectedTileCoords
+    menu.selectedTileTypeText.text = "Terrain: " + this.getTile(x,y).terrain
+
 
     const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
     const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?

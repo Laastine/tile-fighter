@@ -19,11 +19,15 @@ function Menubar(tilemap) {
     this.background.endFill()
     this.addChild(this.background)
 
-    this.selectedTileText = new PIXI.Text("Tile: " + 1,
+    this.selectedTileCoordText = new PIXI.Text("Tile: ",
         {font: "12px Helvetica", fill: "#777", align: "left"})
-    this.addChild(this.selectedTileText)
-    this.addMenuButton(this, "+", 0, 12, tilemap, tilemap.zoomIn)
-    this.addMenuButton(this, "-", 30, 12, tilemap, tilemap.zoomOut)
+    this.selectedTileTypeText = new PIXI.Text("Terrain: ",
+        {font: "12px Helvetica", fill: "#777", align: "left"})
+    this.selectedTileTypeText.position.y = 17
+    this.addChild(this.selectedTileCoordText)
+    this.addChild(this.selectedTileTypeText)
+    this.addMenuButton(this, "+", 0, 24, tilemap, tilemap.zoomIn)
+    this.addMenuButton(this, "-", 30, 24, tilemap, tilemap.zoomOut)
 }
 
 Menubar.prototype.addMenuButton = (that, text, x, y, obj, callback) => {
