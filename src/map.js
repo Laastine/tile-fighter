@@ -59,34 +59,36 @@ function Tilemap(width, height) {
         }
         else {
             const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
-
             const mouseoverTileCoords = [Math.floor(
                 (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2) + mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
                 Math.floor((mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)]
 
             const xValue = (mouseoverTileCoords[0] - mouseoverTileCoords[1]) * this.tileSize
-
             const yValue = ((mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
                     mouseoverTileCoords[0] : mouseoverTileCoords[1]) - Math.abs(mouseoverTileCoords[0] - mouseoverTileCoords[1]) / 2) * this.tileSize
 
-            const up = [xValue - this.tileWidthHalf, yValue + this.tileWidthHalf]
-            const left = [xValue + this.tileWidthHalf, yValue]
-            const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
-            const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
-
-            this.mouseoverGraphics.clear()
-            this.mouseoverGraphics.lineStyle(1, 0xFFFFFF, 0.8)
-            this.mouseoverGraphics.moveTo(up[0], up[1])
-            this.mouseoverGraphics.lineTo(left[0], left[1])
-            this.mouseoverGraphics.moveTo(up[0], up[1])
-            this.mouseoverGraphics.lineTo(down[0], down[1])
-            this.mouseoverGraphics.moveTo(down[0], down[1])
-            this.mouseoverGraphics.lineTo(right[0], right[1])
-            this.mouseoverGraphics.moveTo(right[0], right[1])
-            this.mouseoverGraphics.lineTo(left[0], left[1])
-            this.mouseoverGraphics.endFill()
+            this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
         }
     }
+}
+
+Tilemap.prototype.drawRectangle = function (selector, xValue, yValue, color) {
+    const up = [xValue - this.tileWidthHalf, yValue + this.tileWidthHalf]
+    const left = [xValue + this.tileWidthHalf, yValue]
+    const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
+    const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
+
+    selector.clear()
+    selector.lineStyle(1, color, 0.8)
+    selector.moveTo(up[0], up[1])
+    selector.lineTo(left[0], left[1])
+    selector.moveTo(up[0], up[1])
+    selector.lineTo(down[0], down[1])
+    selector.moveTo(down[0], down[1])
+    selector.lineTo(right[0], right[1])
+    selector.moveTo(right[0], right[1])
+    selector.lineTo(left[0], left[1])
+    selector.endFill()
 }
 
 Tilemap.prototype.addTile = function (x, y, terrain) {
@@ -207,28 +209,10 @@ Tilemap.prototype.selectTile = function (x, y) {
     menu.selectedTileText.text = "Tile: " + this.selectedTileCoords
 
     const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
-
     const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
             this.selectedTileCoords[0] :
             this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
-
-    const up = [xValue - this.tileWidthHalf, yValue + this.tileWidthHalf]
-    const left = [xValue + this.tileWidthHalf, yValue]
-    const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
-    const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
-
-    this.selectedGraphics.clear()
-    this.selectedGraphics.lineStyle(1, 0xFF0000, 1)
-    this.selectedGraphics.moveTo(up[0], up[1])
-    this.selectedGraphics.lineTo(left[0], left[1])
-    this.selectedGraphics.moveTo(up[0], up[1])
-    this.selectedGraphics.lineTo(down[0], down[1])
-    this.selectedGraphics.moveTo(down[0], down[1])
-    this.selectedGraphics.lineTo(right[0], right[1])
-    this.selectedGraphics.moveTo(right[0], right[1])
-    this.selectedGraphics.lineTo(left[0], left[1])
-    this.selectedGraphics.endFill()
-
+    this.drawRectangle(this.selectedGraphics,xValue, yValue, 0xFF0000)
 }
 
 Tilemap.prototype.zoomIn = function () {
