@@ -3,6 +3,7 @@ export default {
     ASPHALT: "dirt",
     WATER: "water",
     WOOD: 'wood',
+    BUILDING: 'building',
     houses: ['h01_s128_iso_0057',
         'h01_s128_iso_0013',
         'h01_s128_iso_0061',

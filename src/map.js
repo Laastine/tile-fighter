@@ -102,8 +102,8 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
 
 Tilemap.prototype.addBuildingTile = function (x, y, building) {
     if (this.getTile(x, y).terrain === config.GRASS) {
-        let tile = PIXI.Sprite.fromFrame(building)
         this.removeChild(this.getTile(x, y))
+        let tile = PIXI.Sprite.fromFrame(building)
         tile.position = this.cartesianToIsometric((x-1) * this.tileSize, (y-1) * this.tileSize)
         tile.position.x -= this.tileSize / 2
         tile.scale.x -= tile.scale.x * 0.25
@@ -157,14 +157,12 @@ Tilemap.prototype.generateMap = function () {
 
     var that = this
     config.houses.forEach((house) => {
-        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), house)
-        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), house)
-        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), house)
+        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountY), house)
     })
 
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 300; i++) {
         config.trees.forEach((tree) => {
-            that.addTreeTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountX), tree)
+            that.addTreeTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountY), tree)
         })
     }
 }
@@ -176,7 +174,7 @@ Tilemap.prototype.spawnXLine = function (position, directionX, element) {
     let x = directionX ? position[0] + 1 : position[0] - 1
     let y = directionX ? position[1] : position[1] + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-        this.spawnXLine([x, y], !accentedWeight(3), element)
+        this.spawnXLine([x, y], Math.round(generator.random() * 3) !== 0, element)
     }
 }
 
@@ -185,7 +183,7 @@ Tilemap.prototype.spawnYLine = function (position, directionX, element) {
     let x = directionX ? position[0] + 1 : position[0] - 1
     let y = directionX ? position[1] : position[1] + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-        this.spawnXLine([x, y], accentedWeight(3), element)
+        this.spawnXLine([x, y], Math.round(generator.random() * 3) === 0, element)
     }
 }
 
@@ -208,7 +206,6 @@ Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
     menu.selectedTileCoordText.text = "Tile: " + this.selectedTileCoords
     menu.selectedTileTypeText.text = "Terrain: " + this.getTile(x,y).terrain
-
 
     const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
     const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
