@@ -100,30 +100,15 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
     this.addChildAt(tile, x * this.tilesAmountY + y)
 }
 
-Tilemap.prototype.addBuildingTile = function (x, y, building) {
-    if (this.getTile(x, y).terrain === config.GRASS) {
-        this.removeChild(this.getTile(x, y))
-        let tile = PIXI.Sprite.fromFrame(building)
-        tile.position = this.cartesianToIsometric((x-1) * this.tileSize, (y-1) * this.tileSize)
-        tile.position.x -= this.tileSize / 2
-        tile.scale.x -= tile.scale.x * 0.25
-        tile.tileX = x
-        tile.tileY = y
-        tile.terrain = building
-        this.addChildAt(tile, x * this.tilesAmountY + y)
-    }
-}
-
-Tilemap.prototype.addTreeTile = function (x, y, tree) {
+Tilemap.prototype.addWoodTile = function (x, y, wood) {
     if (x > 0 && y > 0 && this.getTile(x, y).terrain === config.GRASS) {
-        let tile = PIXI.Sprite.fromFrame(tree)
-        tile.position = this.cartesianToIsometric(x * this.tileSize - 30, y * this.tileSize - 30)
+        let tile = PIXI.Sprite.fromFrame(wood)
+        tile.position = this.cartesianToIsometric(x * this.tileWidthHalf, y * this.tileWidthHalf)
         tile.position.x -= this.tileSize / 2
-        tile.scale.x -= tile.scale.x * 0.25
         tile.tileX = x
         tile.tileY = y
         tile.terrain = config.WOOD
-        this.addChildAt(tile, x * this.tilesAmountY + y)
+        this.changeTile(x, y, wood)
     }
 }
 
@@ -148,26 +133,19 @@ Tilemap.prototype.generateMap = function () {
             this.addTile(x, y, config.GRASS)
         }
     }
+
     this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX - 1)], true, config.ASPHALT)
     this.spawnYLine([Math.round(generator.random() * this.tilesAmountX - 15), 0], false, config.ASPHALT)
+
     this.spawnChunks(6,
         Math.floor(generator.random() * this.tilesAmountX),
         Math.floor(generator.random() * this.tilesAmountY),
         config.WATER)
 
-    var that = this
-    config.houses.forEach((house) => {
-        that.addBuildingTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountY), house)
-    })
-
-    for (let i = 0; i < 300; i++) {
-        config.trees.forEach((tree) => {
-            that.addTreeTile(Math.round(generator.random() * this.tilesAmountX), Math.round(generator.random() * this.tilesAmountY), tree)
-        })
+    for (let i = 0; i < 500; i++) {
+        this.addWoodTile(Math.round(generator.random() * this.tilesAmountX-1), Math.round(generator.random() * this.tilesAmountY-1), config.WOOD)
     }
 }
-
-const accentedWeight = (scale = 1) => Math.round(generator.random() * scale) === 0
 
 Tilemap.prototype.spawnXLine = function (position, directionX, element) {
     this.changeTile(position[0], position[1], element)
@@ -205,13 +183,13 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
 Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
     menu.selectedTileCoordText.text = "Tile: " + this.selectedTileCoords
-    menu.selectedTileTypeText.text = "Terrain: " + this.getTile(x,y).terrain
+    menu.selectedTileTypeText.text = "Terrain: " + this.getTile(x, y).terrain
 
     const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
     const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
             this.selectedTileCoords[0] :
             this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
-    this.drawRectangle(this.selectedGraphics,xValue, yValue, 0xFF0000)
+    this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
 }
 
 Tilemap.prototype.zoomIn = function () {
