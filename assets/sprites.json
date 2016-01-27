@@ -1,48 +1,112 @@
-{"frames": {
-
-"dirt":
 {
-	"frame": {"x":1,"y":105,"w":50,"h":29},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":29},
-	"sourceSize": {"w":50,"h":29},
-	"pivot": {"x":0.5,"y":0.5}
-},
-"grass":
-{
-	"frame": {"x":1,"y":1,"w":50,"h":33},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":33},
-	"sourceSize": {"w":50,"h":33},
-	"pivot": {"x":0.5,"y":0.5}
-},
-"water":
-{
-	"frame": {"x":1,"y":71,"w":50,"h":32},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":32},
-	"sourceSize": {"w":50,"h":32},
-	"pivot": {"x":0.5,"y":0.5}
-},
-"wood":
-{
-	"frame": {"x":1,"y":36,"w":50,"h":33},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":33},
-	"sourceSize": {"w":50,"h":33},
-	"pivot": {"x":0.5,"y":0.5}
-}},
-"meta": {
-	"app": "http://www.codeandweb.com/texturepacker",
-	"version": "1.0",
-	"image": "sprites.png",
-	"format": "RGBA8888",
-	"size": {"w":52,"h":135},
-	"scale": "0.5",
-	"smartupdate": "$TexturePacker:SmartUpdate:6977ecbd31aaa416eb746a106cd31bca:5e00f6ca198d1ca04e4d413e014ddd2a:1eabdf11f75e3a4fe3147baf7b5be24b$"
-}
+  "frames": {
+    "dirt": {
+      "frame": {
+        "x": 1,
+        "y": 105,
+        "w": 50,
+        "h": 29
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 29
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 29
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "grass": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 50,
+        "h": 33
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 33
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 33
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "water": {
+      "frame": {
+        "x": 1,
+        "y": 71,
+        "w": 50,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 32
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wood": {
+      "frame": {
+        "x": 1,
+        "y": 36,
+        "w": 50,
+        "h": 33
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 33
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 33
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "sprites.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 52,
+      "h": 135
+    },
+    "scale": "0.5",
+    "smartupdate": "$TexturePacker:SmartUpdate:6977ecbd31aaa416eb746a106cd31bca:5e00f6ca198d1ca04e4d413e014ddd2a:1eabdf11f75e3a4fe3147baf7b5be24b$"
+  }
 }

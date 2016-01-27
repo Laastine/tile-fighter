@@ -1,10 +1,11 @@
 import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
 import Menubar from './menubar'
+import Character from './character'
 import config from './config'
 
 const generator = new MersenneTwister(1)
-let renderer, container, tilemap, menu
+let renderer, container, tilemap, menu, character
 
 Tilemap.prototype = new PIXI.Container()
 Tilemap.prototype.constructor = Tilemap
@@ -143,7 +144,7 @@ Tilemap.prototype.generateMap = function () {
         config.WATER)
 
     for (let i = 0; i < 500; i++) {
-        this.addWoodTile(Math.round(generator.random() * this.tilesAmountX-1), Math.round(generator.random() * this.tilesAmountY-1), config.WOOD)
+        this.addWoodTile(Math.round(generator.random() * this.tilesAmountX - 1), Math.round(generator.random() * this.tilesAmountY - 1), config.WOOD)
     }
 }
 
@@ -238,9 +239,9 @@ export default {
         container = new PIXI.Container()
     },
 
-    loadTexture: (filePath) => {
+    loadTexture: (mapFilePath, characterFilePath) => {
         new PIXI.loaders.Loader()
-            .add(filePath)
+            .add([mapFilePath,characterFilePath])
             .once('complete', () => {
                 tilemap = new Tilemap(config.tilesX, config.tilesY)
                 tilemap.position.x = 0
@@ -248,6 +249,9 @@ export default {
 
                 menu = new Menubar(tilemap)
                 container.addChild(menu)
+
+                character = new Character()
+                container.addChild(character)
 
                 tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
                 tilemap.zoomIn()
