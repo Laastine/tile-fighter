@@ -17,7 +17,7 @@ function Tilemap(width, height) {
     this.tilesAmountX = width
     this.tilesAmountY = height
 
-    this.tileSize = 25
+    this.tileSize = config.tileSize
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
@@ -40,6 +40,7 @@ function Tilemap(width, height) {
             this.dragging = true
             this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
             this.mousePressPoint[1] = event.data.global.y - this.position.y
+            console.log('click',this.mousePressPoint)
             this.selectTile(Math.floor(
                     (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2) + this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
                 Math.floor((this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8))
@@ -95,8 +96,6 @@ Tilemap.prototype.addTile = function (x, y, terrain) {
     let tile = PIXI.Sprite.fromFrame(terrain)
     tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
     tile.position.x -= this.tileSize / 2
-    tile.tileX = x
-    tile.tileY = y
     tile.terrain = terrain
     this.addChildAt(tile, x * this.tilesAmountY + y)
 }
@@ -235,6 +234,8 @@ const animate = () => {
 export default {
     initRenderer: () => {
         renderer = PIXI.autoDetectRenderer(config.screenX, config.screenY)
+        renderer.view.style.border = '2px solid #000'
+        renderer.backgroundColor = '0xFFFFFF'
         document.body.appendChild(renderer.view)
         container = new PIXI.Container()
     },
@@ -244,14 +245,10 @@ export default {
             .add([mapFilePath,characterFilePath])
             .once('complete', () => {
                 tilemap = new Tilemap(config.tilesX, config.tilesY)
-                tilemap.position.x = 0
                 container.addChild(tilemap)
 
                 menu = new Menubar(tilemap)
                 container.addChild(menu)
-
-                character = new Character()
-                container.addChild(character)
 
                 tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
                 tilemap.zoomIn()

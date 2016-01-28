@@ -1,4 +1,5 @@
 import PIXI from 'pixi.js'
+import config from './config'
 
 Character.prototype = new PIXI.Container()
 Character.prototype.constructor = Character
@@ -6,12 +7,15 @@ Character.prototype.constructor = Character
 function Character() {
     PIXI.Container.call(this)
     this.interactive = true
-    this.tileSize = 25
+    this.tileSize = config.tileSize
+
+    this.characterPosition = [0,0]
 
     this.drawCharacter()
 }
 
 Character.prototype.drawCharacter = function () {
+
     var frames = []
     for (var i = 1; i < 14; i++) {
         var val = i < 10 ? '0' + i : i
@@ -19,10 +23,11 @@ Character.prototype.drawCharacter = function () {
     }
 
     let movie = new PIXI.extras.MovieClip(frames)
-    movie.position.set(200,200)
+
+    movie.position.set(675, 80)
 
     movie.anchor.set(0.5)
-    movie.animationSpeed = 0.5
+    movie.animationSpeed = 0.4
 
     movie.play()
     this.addChild(movie)

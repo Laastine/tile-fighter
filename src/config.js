@@ -8,6 +8,8 @@ export default {
     tilesX: 65,
     tilesY: 65,
 
+    tileSize: 25,
+
     menuBarWidth: 80,
     screenX: window.innerWidth,
     screenY: window.innerHeight
