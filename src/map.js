@@ -28,10 +28,13 @@ function Tilemap(width, height) {
 
     this.generateMap()
 
+    this.character = null
+
     this.selectedTileCoords = [0, 0]
     this.mousePressPoint = [0, 0]
     this.selectedGraphics = new PIXI.Graphics()
     this.mouseoverGraphics = new PIXI.Graphics()
+
     this.addChild(this.selectedGraphics)
     this.addChild(this.mouseoverGraphics)
 
@@ -40,7 +43,7 @@ function Tilemap(width, height) {
             this.dragging = true
             this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
             this.mousePressPoint[1] = event.data.global.y - this.position.y
-            console.log('click',this.mousePressPoint)
+
             this.selectTile(Math.floor(
                     (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2) + this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
                 Math.floor((this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8))
@@ -127,6 +130,12 @@ Tilemap.prototype.cartesianToIsometric = function (pointX, pointY) {
     return {x, y}
 }
 
+Tilemap.prototype.isometricToCartesian = function (pointX, pointY) {
+    const x = (2 * pointY + pointX) / 2
+    const y = (2 * pointY - pointX) / 2
+    return {x, y}
+}
+
 Tilemap.prototype.generateMap = function () {
     for (let x = 0; x < this.tilesAmountX; ++x) {
         for (let y = 0; y < this.tilesAmountY; y++) {
@@ -189,7 +198,20 @@ Tilemap.prototype.selectTile = function (x, y) {
     const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
             this.selectedTileCoords[0] :
             this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
+
+    this.drawCharter(this.selectedTileCoords[0] * this.tileSize, this.selectedTileCoords[1] * this.tileSize)
     this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
+}
+
+Tilemap.prototype.drawCharter = function (x, y) {
+    if (!this.character) {
+        this.character = PIXI.Sprite.fromFrame('Walk_0(15,63,110)_01')
+    }
+
+    this.character.position = this.cartesianToIsometric(x, y)
+    this.character.position.x -= 15
+    this.character.position.y -= 45
+    this.addChild(this.character)
 }
 
 Tilemap.prototype.zoomIn = function () {
@@ -242,10 +264,14 @@ export default {
 
     loadTexture: (mapFilePath, characterFilePath) => {
         new PIXI.loaders.Loader()
-            .add([mapFilePath,characterFilePath])
+            .add([mapFilePath, characterFilePath])
             .once('complete', () => {
+
                 tilemap = new Tilemap(config.tilesX, config.tilesY)
                 container.addChild(tilemap)
+
+                character = new Character(tilemap)
+                container.addChild(character)
 
                 menu = new Menubar(tilemap)
                 container.addChild(menu)

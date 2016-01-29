@@ -8,10 +8,6 @@ function Character() {
     PIXI.Container.call(this)
     this.interactive = true
     this.tileSize = config.tileSize
-
-    this.characterPosition = [0,0]
-
-    this.drawCharacter()
 }
 
 Character.prototype.drawCharacter = function () {
