@@ -137,14 +137,14 @@ Tilemap.prototype.isometricToCartesian = function (pointX, pointY) {
 }
 
 Tilemap.prototype.generateMap = function () {
-    for (let x = 0; x < this.tilesAmountX; ++x) {
+    for (let x = 0; x < this.tilesAmountX; x++) {
         for (let y = 0; y < this.tilesAmountY; y++) {
             this.addTile(x, y, config.GRASS)
         }
     }
 
-    this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX - 1)], true, config.ASPHALT)
-    this.spawnYLine([Math.round(generator.random() * this.tilesAmountX - 15), 0], false, config.ASPHALT)
+    this.spawnXLine([0, Math.round(generator.random() * this.tilesAmountX - 1)], true, config.ROAD)
+    this.spawnYLine([Math.round(generator.random() * this.tilesAmountX - 15), 0], false, config.ROAD)
 
     this.spawnChunks(6,
         Math.floor(generator.random() * this.tilesAmountX),
@@ -199,19 +199,47 @@ Tilemap.prototype.selectTile = function (x, y) {
             this.selectedTileCoords[0] :
             this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
 
-    this.drawCharter(this.selectedTileCoords[0] * this.tileSize, this.selectedTileCoords[1] * this.tileSize)
+    if (this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD) {
+        menu.movementWarning.text = ''
+        this.drawCharter(this.selectedTileCoords[0] * this.tileSize, this.selectedTileCoords[1] * this.tileSize)
+    } else {
+        menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
+    }
+
     this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
 }
 
-Tilemap.prototype.drawCharter = function (x, y) {
+Tilemap.prototype.drawCharter = function (x, y, xTile, yTile) {
     if (!this.character) {
         this.character = PIXI.Sprite.fromFrame('Walk_90_07')
+        this.character.tile = {x: 0, y: 0}
+        this.addChild(this.character)
     }
-
     this.character.position = this.cartesianToIsometric(x, y)
+    this.character.tile = {x, y}
+
     this.character.position.x -= 15
     this.character.position.y -= 45
-    this.addChild(this.character)
+}
+
+Tilemap.prototype.shortestPath = function ({x, y}, {goalX, goalY}) {
+    let frontier = [{x, y}]
+    let cameFrom = [{x, y}]
+    let current
+    while (frontier.length > 0) {
+        current = frontier[frontier.length - 1]
+
+        if (current.x === goalX && current.y === goalY) {
+            break
+        }
+
+        for (let i = frontier.x; i < this.tilesAmountX; ++i) {
+            for (let j = frontier.y; j < this.tilesAmountX; ++j) {
+                frontier.push({x: i, y: j})
+                cameFrom.push(current)
+            }
+        }
+    }
 }
 
 Tilemap.prototype.zoomIn = function () {

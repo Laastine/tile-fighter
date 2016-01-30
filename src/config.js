@@ -1,6 +1,6 @@
 export default {
     GRASS: "grass",
-    ASPHALT: "dirt",
+    ROAD: "dirt",
     WATER: "water",
     WOOD: 'wood',
     BUILDING: 'building',

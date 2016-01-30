@@ -23,9 +23,13 @@ function Menubar(tilemap) {
         {font: "12px Helvetica", fill: "#777", align: "left"})
     this.selectedTileTypeText = new PIXI.Text("Terrain: ",
         {font: "12px Helvetica", fill: "#777", align: "left"})
+    this.movementWarning = new PIXI.Text("",
+        {font: "8px Helvetica", fill: "#F00", align: "left"})
     this.selectedTileTypeText.position.y = 17
+    this.movementWarning.position.y = 70
     this.addChild(this.selectedTileCoordText)
     this.addChild(this.selectedTileTypeText)
+    this.addChild(this.movementWarning)
     this.addMenuButton(this, "+", 0, 24, tilemap, tilemap.zoomIn)
     this.addMenuButton(this, "-", 30, 24, tilemap, tilemap.zoomOut)
 }
