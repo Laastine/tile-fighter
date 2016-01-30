@@ -205,7 +205,7 @@ Tilemap.prototype.selectTile = function (x, y) {
 
 Tilemap.prototype.drawCharter = function (x, y) {
     if (!this.character) {
-        this.character = PIXI.Sprite.fromFrame('Walk_0(15,63,110)_01')
+        this.character = PIXI.Sprite.fromFrame('Walk_90_07')
     }
 
     this.character.position = this.cartesianToIsometric(x, y)
