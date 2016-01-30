@@ -4,13 +4,12 @@ Hobby project for testing pixi.js capabilities.
 
 [Test it](http://laastine.kapsi.fi/tile-fighter/)
 
-
-
 TODO:
 - [x] random map generation with grass, road and water
 - [x] More terrain elements 
 - [ ] "Height differencies"
-- [ ] Render player units
+- [x] Render player unit
+- [ ] Replace placeholder graphics
 - [ ] LOS calculation and visualization
 - [ ] Shortest path functionality
 - [ ] Turn based gameplay
