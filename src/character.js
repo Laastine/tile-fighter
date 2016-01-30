@@ -10,14 +10,16 @@ function Character() {
     this.tileSize = config.tileSize
 }
 
-Character.prototype.drawCharacter = function () {
-
+Character.prototype.loadAnimation = function (direction, movement) {
     var frames = []
     for (var i = 1; i < 14; i++) {
         var val = i < 10 ? '0' + i : i
-        frames.push(PIXI.Texture.fromFrame('Walk_0(15,63,110)_' + val))
+        frames.push(PIXI.Texture.fromFrame(movement+'_' + direction + '_' + val))
     }
+    return frames
+}
 
+Character.prototype.moveAnimation = function (frames) {
     let movie = new PIXI.extras.MovieClip(frames)
 
     movie.position.set(675, 80)

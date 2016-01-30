@@ -29,6 +29,7 @@ function Tilemap(width, height) {
     this.generateMap()
 
     this.character = null
+    this.movie = null
 
     this.selectedTileCoords = [0, 0]
     this.mousePressPoint = [0, 0]
@@ -201,6 +202,11 @@ Tilemap.prototype.selectTile = function (x, y) {
 
     if (this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD) {
         menu.movementWarning.text = ''
+        this.moveCharacter(this, 135, {
+            x: this.selectedTileCoords[0] * this.tileSize,
+            y: this.selectedTileCoords[1] * this.tileSize
+        })
+    } else if (this.getTile(x, y).position.x === 0 && this.getTile(x, y).position.y === 0) {
         this.drawCharter(this.selectedTileCoords[0] * this.tileSize, this.selectedTileCoords[1] * this.tileSize)
     } else {
         menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
@@ -209,7 +215,7 @@ Tilemap.prototype.selectTile = function (x, y) {
     this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
 }
 
-Tilemap.prototype.drawCharter = function (x, y, xTile, yTile) {
+Tilemap.prototype.drawCharter = function (x, y) {
     if (!this.character) {
         this.character = PIXI.Sprite.fromFrame('Walk_90_07')
         this.character.tile = {x: 0, y: 0}
@@ -222,6 +228,48 @@ Tilemap.prototype.drawCharter = function (x, y, xTile, yTile) {
     this.character.position.y -= 45
 }
 
+Tilemap.prototype.moveCharacter = function (that, direction, startPosition) {
+    const loadFrames = (direction) => {
+        var frames = []
+        for (var i = 1; i < 14; i++) {
+            var val = i < 10 ? '0' + i : i
+            frames.push(PIXI.Texture.fromFrame('Jog' + '_' + direction + '_' + val))
+        }
+        return frames
+    }
+
+    switch (direction) {
+        case 135:
+            (function () {
+                that.movie = new PIXI.extras.MovieClip(loadFrames(direction))
+                that.movie.position.set(startPosition.x, startPosition.y)
+                that.movie.anchor.set(0.5)
+                that.movie.animationSpeed = 0.4
+                that.movie.play()
+                that.addChild(that.movie)
+                let click = 0
+                while (click < 25) {
+                    window.setTimeout(() =>
+                        that.movie.position.set(startPosition.x++, startPosition.y++), click * 20)
+                    click++
+                }
+                window.setTimeout(() => {
+                    that.removeChild(that.movie)
+                },25*20+10)
+            }())
+            break
+        case 45:
+            console.log('135')
+            break
+        case 225:
+            console.log('225')
+            break
+        case 315:
+            console.log('315')
+            break
+    }
+
+}
 Tilemap.prototype.shortestPath = function ({x, y}, {goalX, goalY}) {
     let frontier = [{x, y}]
     let cameFrom = [{x, y}]
