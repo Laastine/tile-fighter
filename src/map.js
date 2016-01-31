@@ -1,5 +1,6 @@
 import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
+import _ from 'lodash'
 import Menubar from './menubar'
 import Character from './character'
 import config from './config'
@@ -28,7 +29,8 @@ function Tilemap(width, height) {
 
     this.generateMap()
 
-    this.character = null
+    this.character = {}
+    this.character.position = {x: 0, y: 0}
     this.movie = null
 
     this.selectedTileCoords = [0, 0]
@@ -44,6 +46,7 @@ function Tilemap(width, height) {
             this.dragging = true
             this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
             this.mousePressPoint[1] = event.data.global.y - this.position.y
+            console.log('mouse', this.mousePressPoint)
 
             this.selectTile(Math.floor(
                     (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2) + this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
@@ -200,14 +203,10 @@ Tilemap.prototype.selectTile = function (x, y) {
             this.selectedTileCoords[0] :
             this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
 
-    if (this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD) {
+    if ((this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD)
+        && !_.isEqual(this.getTile(x,y), this.character.position)) {
         menu.movementWarning.text = ''
-        this.moveCharacter(this, 135, {
-            x: this.selectedTileCoords[0] * this.tileSize,
-            y: this.selectedTileCoords[1] * this.tileSize
-        })
-    } else if (this.getTile(x, y).position.x === 0 && this.getTile(x, y).position.y === 0) {
-        this.drawCharter(this.selectedTileCoords[0] * this.tileSize, this.selectedTileCoords[1] * this.tileSize)
+        this.moveCharacter(this, [135], this.character.position, _.partial(this.drawCharter, this, xValue, yValue))
     } else {
         menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
     }
@@ -215,59 +214,65 @@ Tilemap.prototype.selectTile = function (x, y) {
     this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
 }
 
-Tilemap.prototype.drawCharter = function (x, y) {
-    if (!this.character) {
-        this.character = PIXI.Sprite.fromFrame('Walk_90_07')
-        this.character.tile = {x: 0, y: 0}
-        this.addChild(this.character)
+Tilemap.prototype.drawCharter = function (that, x, y) {
+    if (!that.character) {
+        that.character = PIXI.Sprite.fromFrame('Walk_90_07')
+        that.character.tile = {x: 0, y: 0}
+        that.character.position = {x: 0, y: 0}
+        that.addChild(that.character)
     }
-    this.character.position = this.cartesianToIsometric(x, y)
-    this.character.tile = {x, y}
 
-    this.character.position.x -= 15
-    this.character.position.y -= 45
+    console.log('char before', that.character.position)
+    that.character.position = {x, y}
+    console.log('char after', that.character.position)
+    that.character.tile = {x, y}
 }
 
-Tilemap.prototype.moveCharacter = function (that, direction, startPosition) {
+Tilemap.prototype.moveCharacter = function (that, directions, startPosition, callback) {
     const loadFrames = (direction) => {
-        var frames = []
+        let frames = []
         for (var i = 1; i < 14; i++) {
             var val = i < 10 ? '0' + i : i
             frames.push(PIXI.Texture.fromFrame('Jog' + '_' + direction + '_' + val))
         }
         return frames
     }
-
-    switch (direction) {
-        case 135:
-            (function () {
-                that.movie = new PIXI.extras.MovieClip(loadFrames(direction))
-                that.movie.position.set(startPosition.x, startPosition.y)
-                that.movie.anchor.set(0.5)
-                that.movie.animationSpeed = 0.4
-                that.movie.play()
-                that.addChild(that.movie)
-                let click = 0
-                while (click < 25) {
-                    window.setTimeout(() =>
-                        that.movie.position.set(startPosition.x++, startPosition.y++), click * 20)
-                    click++
+    const doAnimation = (directions) => {
+        console.log('animation', startPosition)
+        let click = 0, movementTime = 25
+        that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
+        that.movie.position.set(startPosition.x, startPosition.y)
+        that.movie.anchor.set(0.5)
+        that.movie.animationSpeed = 0.3
+        that.movie.play()
+        that.addChild(that.movie)
+        while (click < config.tileSize) {
+            window.setTimeout(() => {
+                if (directions[0] === 45) {
+                    that.movie.position.set(startPosition.x++, startPosition.y--)
+                } else if (directions[0] === 135) {
+                    that.movie.position.set(startPosition.x++, startPosition.y++)
+                } else if (directions[0] === 225) {
+                    that.movie.position.set(startPosition.x--, startPosition.y++)
+                } else if (directions[0] === 315) {
+                    that.movie.position.set(startPosition.x--, startPosition.y--)
                 }
-                window.setTimeout(() => {
-                    that.removeChild(that.movie)
-                },25*20+10)
-            }())
-            break
-        case 45:
-            console.log('135')
-            break
-        case 225:
-            console.log('225')
-            break
-        case 315:
-            console.log('315')
-            break
+            }, click * movementTime)
+            click++
+        }
+        window.setTimeout(() => {
+            that.removeChild(that.movie)
+            if (directions.length > 1) {
+                directions.shift()
+                doAnimation(directions)
+            } else {
+                console.log('still', startPosition)
+                callback(that, startPosition.x, startPosition.y)
+            }
+        }, config.tileSize * movementTime)
     }
+
+    doAnimation(directions)
 
 }
 Tilemap.prototype.shortestPath = function ({x, y}, {goalX, goalY}) {

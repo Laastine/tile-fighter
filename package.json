@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "lodash": "4.1.0",
     "mersenne-twister": "^1.0.1",
     "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.9.tar.gz"
   },
