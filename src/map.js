@@ -29,7 +29,7 @@ function Tilemap(width, height) {
 
     this.generateMap()
 
-    this.character = {}
+    this.character = PIXI.Sprite.fromFrame('Walk_90_07')
     this.character.position = {x: 0, y: 0}
     this.movie = null
 
@@ -204,7 +204,7 @@ Tilemap.prototype.selectTile = function (x, y) {
             this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
 
     if ((this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD)
-        && !_.isEqual(this.getTile(x,y), this.character.position)) {
+        && !_.isEqual(this.getTile(x, y), this.character.position)) {
         menu.movementWarning.text = ''
         this.moveCharacter(this, [135], this.character.position, _.partial(this.drawCharter, this, xValue, yValue))
     } else {
@@ -214,18 +214,15 @@ Tilemap.prototype.selectTile = function (x, y) {
     this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
 }
 
-Tilemap.prototype.drawCharter = function (that, x, y) {
+Tilemap.prototype.drawCharter = function (that) {
     if (!that.character) {
-        that.character = PIXI.Sprite.fromFrame('Walk_90_07')
         that.character.tile = {x: 0, y: 0}
         that.character.position = {x: 0, y: 0}
         that.addChild(that.character)
     }
 
-    console.log('char before', that.character.position)
-    that.character.position = {x, y}
     console.log('char after', that.character.position)
-    that.character.tile = {x, y}
+    that.addChild(that.character)
 }
 
 Tilemap.prototype.moveCharacter = function (that, directions, startPosition, callback) {
@@ -239,6 +236,7 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
     }
     const doAnimation = (directions) => {
         console.log('animation', startPosition)
+        that.removeChild(that.character)
         let click = 0, movementTime = 25
         that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
         that.movie.position.set(startPosition.x, startPosition.y)
@@ -246,16 +244,20 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
         that.movie.animationSpeed = 0.3
         that.movie.play()
         that.addChild(that.movie)
-        while (click < config.tileSize) {
+        while (click < config.tileSize*2) {
             window.setTimeout(() => {
                 if (directions[0] === 45) {
                     that.movie.position.set(startPosition.x++, startPosition.y--)
+                    that.character.position = startPosition
                 } else if (directions[0] === 135) {
                     that.movie.position.set(startPosition.x++, startPosition.y++)
+                    that.character.position = startPosition
                 } else if (directions[0] === 225) {
                     that.movie.position.set(startPosition.x--, startPosition.y++)
+                    that.character.position = startPosition
                 } else if (directions[0] === 315) {
                     that.movie.position.set(startPosition.x--, startPosition.y--)
+                    that.character.position = startPosition
                 }
             }, click * movementTime)
             click++
@@ -266,8 +268,8 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
                 directions.shift()
                 doAnimation(directions)
             } else {
-                console.log('still', startPosition)
-                callback(that, startPosition.x, startPosition.y)
+                console.log('still', startPosition.x, startPosition.y)
+                callback(that)
             }
         }, config.tileSize * movementTime)
     }
