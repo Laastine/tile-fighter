@@ -1,12 +1,13 @@
 {
   "env": {
     "browser": true,
-    "es6": true,
-    "jquery": false
+    "es6": true
   },
   "ecmaFeatures": {
+    "arrowFunctions": true,
     "modules": true
   },
+  "extends": "eslint:recommended",
   "plugins": [],
   "rules": {
     "quotes": [2, "single"],
@@ -24,7 +25,5 @@
     "no-alert": [0],
     "no-extra-bind": [0],
     "no-sequences": [0]
-  },
-  "globals": {
   }
 }
