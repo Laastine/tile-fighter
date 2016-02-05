@@ -8,7 +8,8 @@ TODO:
 - [x] random map generation with grass, road and water
 - [x] More terrain elements 
 - [ ] "Height differencies"
-- [x] Render player unit
+- [x] Render character unit
+- [x] Animate character movement
 - [ ] Replace placeholder graphics
 - [ ] LOS calculation and visualization
 - [ ] Shortest path functionality
