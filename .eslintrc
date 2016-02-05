@@ -12,18 +12,18 @@
   "rules": {
     "quotes": [2, "single"],
     "no-use-before-define": [2, "nofunc"],
-    "no-console": [0],
-    "no-underscore-dangle": [0],
+    "no-console": [2],
+    "no-underscore-dangle": [2],
     "no-unused-vars": [2, {"args": "none"}],
     "no-unused-expressions": [0],
-    "camelcase": [0],
-    "new-cap": [0],
-    "space-infix-ops": [0],
+    "camelcase": [2],
+    "new-cap": [2],
+    "space-infix-ops": [2],
     "no-loop-func": [0],
     "semi": [2, "never"],
-    "quotes": [0],
-    "no-alert": [0],
-    "no-extra-bind": [0],
-    "no-sequences": [0]
+    "quotes": [2, "single"],
+    "no-alert": [2],
+    "no-extra-bind": [2],
+    "no-sequences": [2]
   }
 }
