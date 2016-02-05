@@ -14,7 +14,7 @@ Character.prototype.loadAnimation = function (direction, movement) {
     var frames = []
     for (var i = 1; i < 14; i++) {
         var val = i < 10 ? '0' + i : i
-        frames.push(PIXI.Texture.fromFrame(movement+'_' + direction + '_' + val))
+        frames.push(PIXI.Texture.fromFrame(movement + '_' + direction + '_' + val))
     }
     return frames
 }

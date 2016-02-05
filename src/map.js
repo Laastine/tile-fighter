@@ -46,7 +46,6 @@ function Tilemap(width, height) {
             this.dragging = true
             this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
             this.mousePressPoint[1] = event.data.global.y - this.position.y
-            console.log('mouse', this.mousePressPoint)
 
             this.selectTile(Math.floor(
                     (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2) + this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
@@ -195,8 +194,8 @@ Tilemap.prototype.spawnChunks = function (size, x, y, element) {
 
 Tilemap.prototype.selectTile = function (x, y) {
     this.selectedTileCoords = [x, y]
-    menu.selectedTileCoordText.text = "Tile: " + this.selectedTileCoords
-    menu.selectedTileTypeText.text = "Terrain: " + this.getTile(x, y).terrain
+    menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords
+    menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(x, y).terrain
 
     const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
     const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
@@ -206,7 +205,7 @@ Tilemap.prototype.selectTile = function (x, y) {
     if ((this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD)
         && !_.isEqual(this.getTile(x, y), this.character.position)) {
         menu.movementWarning.text = ''
-        this.moveCharacter(this, [135,135,225,225,135,135,135,225,315,315,315,315,45], this.character.position, _.partial(this.drawCharter, this), x,y)
+        this.moveCharacter(this, [225,135,225,135,225,135,225,135,225,135,225,315,315,315], this.character.position, _.partial(this.drawCharter, this))
     } else {
         menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
     }
@@ -218,12 +217,10 @@ Tilemap.prototype.drawCharter = function (that) {
     if (!that.character) {
         that.addChild(that.character)
     }
-    console.log('char after', that.character.position)
     that.addChild(that.character)
 }
 
-Tilemap.prototype.moveCharacter = function (that, directions, startPosition, callback,x,y) {
-    console.log('xy',x,y)
+Tilemap.prototype.moveCharacter = function (that, directions, startPosition, callback) {
     const loadFrames = (direction) => {
         let frames = []
         for (var i = 1; i < 14; i++) {
@@ -234,26 +231,24 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
     }
     const doAnimation = (directions) => {
         that.removeChild(that.character)
-        let click = 0, movementTime = 20
+        let click = 0, movementTime = 25
         that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
         that.movie.position.set(startPosition.x, startPosition.y)
-        that.movie.anchor.set(0.5,0.3)
+        that.movie.anchor.set(0.5, 0.3)
         that.movie.animationSpeed = 0.4
         that.movie.play()
         that.addChild(that.movie)
         while (click < config.tileSize) {
             window.setTimeout(() => {
                 if (directions[0] === 45) {
-                    const pos = that.cartesianToIsometric(startPosition.x++, startPosition.y-=0.5)
+                    const pos = that.cartesianToIsometric(startPosition.x++, startPosition.y -= 0.5)
                     that.movie.position.set(pos.x, pos.y)
                 } else if (directions[0] === 135) {
-                    that.movie.position.set(startPosition.x++, startPosition.y+=0.5)
+                    that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
                 } else if (directions[0] === 225) {
-                    const pos = that.cartesianToIsometric(startPosition.x--, startPosition.y+=0.5)
-                    that.movie.position.set(pos.x, pos.y)
+                    that.movie.position.set(startPosition.x--, startPosition.y+=0.5)
                 } else if (directions[0] === 315) {
-                    const pos = that.cartesianToIsometric(startPosition.x--, startPosition.y-=0.5)
-                    that.movie.position.set(pos.x, pos.y)
+                    that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
                 }
             }, click * movementTime)
             click++
@@ -266,7 +261,7 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
             } else {
                 callback(that)
             }
-        }, config.tileSize * movementTime+10)
+        }, config.tileSize * movementTime + 10)
     }
 
     doAnimation(directions)
