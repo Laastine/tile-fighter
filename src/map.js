@@ -2,7 +2,6 @@ import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
 import _ from 'lodash'
 import Menubar from './menubar'
-import Character from './character'
 import config from './config'
 
 const generator = new MersenneTwister(1)
@@ -31,6 +30,7 @@ function Tilemap(width, height) {
 
     this.character = PIXI.Sprite.fromFrame('Jog_135_01')
     this.character.position = {x: -10, y: -40}
+    this.character.selected = false
     this.movie = null
 
     this.selectedTileCoords = [0, 0]
@@ -205,7 +205,7 @@ Tilemap.prototype.selectTile = function (x, y) {
     if ((this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD)
         && !_.isEqual(this.getTile(x, y), this.character.position)) {
         menu.movementWarning.text = ''
-        this.moveCharacter(this, [225,135,225,135,225,135,225,135,225,135,225,315,315,315], this.character.position, _.partial(this.drawCharter, this))
+        this.moveCharacter(this, [225, 135, 225, 135, 225, 45, 225, 45, 225, 135, 225, 135, 315, 135], this.character.position, _.partial(this.drawCharter, this))
     } else {
         menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
     }
@@ -231,7 +231,7 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
     }
     const doAnimation = (directions) => {
         that.removeChild(that.character)
-        let click = 0, movementTime = 25
+        let click = 0, movementTime = 20
         that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
         that.movie.position.set(startPosition.x, startPosition.y)
         that.movie.anchor.set(0.5, 0.3)
@@ -241,12 +241,11 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
         while (click < config.tileSize) {
             window.setTimeout(() => {
                 if (directions[0] === 45) {
-                    const pos = that.cartesianToIsometric(startPosition.x++, startPosition.y -= 0.5)
-                    that.movie.position.set(pos.x, pos.y)
+                    that.movie.position.set(startPosition.x++, startPosition.y -= 0.5)
                 } else if (directions[0] === 135) {
                     that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
                 } else if (directions[0] === 225) {
-                    that.movie.position.set(startPosition.x--, startPosition.y+=0.5)
+                    that.movie.position.set(startPosition.x--, startPosition.y += 0.5)
                 } else if (directions[0] === 315) {
                     that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
                 }
@@ -267,7 +266,9 @@ Tilemap.prototype.moveCharacter = function (that, directions, startPosition, cal
     doAnimation(directions)
 
 }
-Tilemap.prototype.shortestPath = function ({x, y}, {goalX, goalY}) {
+Tilemap.prototype.shortestPath = function (playerStart, target) {
+    const {x, y} = playerStart
+    const {goalX, goalY} = target
     let frontier = [{x, y}]
     let cameFrom = [{x, y}]
     let current
@@ -342,9 +343,6 @@ export default {
 
                 tilemap = new Tilemap(config.tilesX, config.tilesY)
                 container.addChild(tilemap)
-
-                character = new Character(tilemap)
-                container.addChild(character)
 
                 menu = new Menubar(tilemap)
                 container.addChild(menu)
