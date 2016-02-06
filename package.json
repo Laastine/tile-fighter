@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "babel-preset-stage-0": "6.3.13",
     "lodash": "4.2.1",
     "mersenne-twister": "1.0.1",
     "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.9.tar.gz"
@@ -23,8 +22,7 @@
   },
   "babel": {
     "presets": [
-      "es2015",
-      "stage-0"
+      "es2015"
     ]
   },
   "browserify": {
