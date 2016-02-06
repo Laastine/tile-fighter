@@ -99,7 +99,7 @@ class Tilemap extends PIXI.Container {
 
 
     addTile(x, y, terrain) {
-        let tile = PIXI.Sprite.fromFrame(terrain)
+        const tile = PIXI.Sprite.fromFrame(terrain)
         tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
         tile.position.x -= this.tileSize / 2
         tile.terrain = terrain
@@ -108,7 +108,7 @@ class Tilemap extends PIXI.Container {
 
     addWoodTile(x, y, wood) {
         if (x > 0 && y > 0 && this.getTile(x, y).terrain === config.GRASS) {
-            let tile = PIXI.Sprite.fromFrame(wood)
+            const tile = PIXI.Sprite.fromFrame(wood)
             tile.position = this.cartesianToIsometric(x * this.tileWidthHalf, y * this.tileWidthHalf)
             tile.position.x -= this.tileSize / 2
             tile.tileX = x
@@ -161,8 +161,8 @@ class Tilemap extends PIXI.Container {
 
     spawnXLine(position, directionX, element) {
         this.changeTile(position[0], position[1], element)
-        let x = directionX ? position[0] + 1 : position[0] - 1
-        let y = directionX ? position[1] : position[1] + 1
+        const x = directionX ? position[0] + 1 : position[0] - 1
+        const y = directionX ? position[1] : position[1] + 1
         if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
             this.spawnXLine([x, y], Math.round(generator.random() * 3) !== 0, element)
         }
@@ -170,8 +170,8 @@ class Tilemap extends PIXI.Container {
 
     spawnYLine(position, directionX, element) {
         this.changeTile(position[0], position[1], element)
-        let x = directionX ? position[0] + 1 : position[0] - 1
-        let y = directionX ? position[1] : position[1] + 1
+        const x = directionX ? position[0] + 1 : position[0] - 1
+        const y = directionX ? position[1] : position[1] + 1
         if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
             this.spawnXLine([x, y], Math.round(generator.random() * 3) === 0, element)
         }
@@ -186,8 +186,8 @@ class Tilemap extends PIXI.Container {
         this.changeTile(x, y, element)
 
         for (let i = 0; i < size; i++) {
-            let horizontal = Math.floor(generator.random() * 2) - 1
-            let vertical = Math.floor(generator.random() * 2) - 1
+            const horizontal = Math.floor(generator.random() * 2) - 1
+            const vertical = Math.floor(generator.random() * 2) - 1
             this.spawnChunks(size - 1, x + horizontal, y + vertical, element)
         }
     }
@@ -222,7 +222,7 @@ class Tilemap extends PIXI.Container {
 
     moveCharacter(that, directions, startPosition, callback) {
         const loadFrames = (direction) => {
-            let frames = []
+            const frames = []
             for (var i = 1; i < 14; i++) {
                 var val = i < 10 ? '0' + i : i
                 frames.push(PIXI.Texture.fromFrame('Jog' + '_' + direction + '_' + val))
@@ -231,7 +231,8 @@ class Tilemap extends PIXI.Container {
         }
         const doAnimation = (directions) => {
             that.removeChild(that.character)
-            let click = 0, movementTime = 20
+            let click = 0
+            const movementTime = 20
             that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
             that.movie.position.set(startPosition.x, startPosition.y)
             that.movie.anchor.set(0.5, 0.3)
@@ -269,8 +270,8 @@ class Tilemap extends PIXI.Container {
     shortestPath(playerStart, target) {
         const {x, y} = playerStart
         const {goalX, goalY} = target
-        let frontier = [{x, y}]
-        let cameFrom = [{x, y}]
+        const frontier = [{x, y}]
+        const cameFrom = [{x, y}]
         let current
         while (frontier.length > 0) {
             current = frontier[frontier.length - 1]
