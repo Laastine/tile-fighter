@@ -4,7 +4,7 @@ Hobby project for testing pixi.js capabilities.
 
 [Test it](http://laastine.kapsi.fi/tile-fighter/)
 
-TODO:
+## TODO
 - [x] random map generation with grass, road and water
 - [x] More terrain elements 
 - [ ] "Height differencies"
@@ -12,12 +12,10 @@ TODO:
 - [x] Animate character movement
 - [ ] Replace placeholder graphics
 - [ ] LOS calculation and visualization
-- [ ] Shortest path functionality
+- [x] Shortest path functionality
 - [ ] Turn based gameplay
 - [ ] UI buttons (and shortcuts) for gameplay [crouch, turn, target]
 - [ ] Enemy AI
-
-
 Build & run app:
 ```
 npm install
@@ -29,3 +27,9 @@ Linter:
 ```
 npm run lint
 ```
+
+### Implementaion references
+A* implementation: [Github repo](https://github.com/bgrins/javascript-astar)<br/>
+Algorithms generally [home page](http://theory.stanford.edu/~amitp/GameProgramming/)<br/>
+Graphics [opengameart.org](http://opengameart.org/content/tmim-heroine-bleeds-game-art) 
+ [and](http://opengameart.org/content/isometric-road-tiles)
