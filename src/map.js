@@ -2,6 +2,8 @@ import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
 import _ from 'lodash'
 import Menubar from './menubar'
+import Graph from './graph'
+import PathFinder from './path-finder'
 import config from './config'
 
 const generator = new MersenneTwister(1)
@@ -27,8 +29,11 @@ class Tilemap extends PIXI.Container {
 
         this.generateMap()
 
+        this.graph = new Graph(this.children)
+
         this.character = PIXI.Sprite.fromFrame('Jog_135_01')
         this.character.position = {x: -10, y: -40}
+        this.character.tile = {x: 0, y: 0}
         this.character.selected = false
         this.movie = null
 
@@ -206,13 +211,35 @@ class Tilemap extends PIXI.Container {
         if ((this.getTile(x, y).terrain === config.GRASS.name || this.getTile(x, y).terrain === config.ROAD.name)
             && !_.isEqual(this.getTile(x, y), this.character.position)) {
             menu.movementWarning.text = ''
-
-            this.moveCharacter(this, [135], this.character.position, _.partial(this.drawCharter, this))
+            const path = PathFinder.search(this.graph,
+                this.graph.grid[this.character.tile.x][this.character.tile.y],
+                this.graph.grid[x][y])
+            this.moveCharacter(this, this.getDirection(path), this.character.position, _.partial(this.drawCharter, this))
+            this.character.tile = {x, y}
         } else {
             menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
         }
 
         this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
+    }
+
+    getDirection(route, currentPos) {
+        const directions = []
+        let pos = currentPos || {x: 0, y: 0}
+        route.forEach((dir) => {
+            const nextPos = {x: dir.x, y: dir.y}
+            if (nextPos.x > pos.x) {
+                directions.push(135)
+            } else if (nextPos.x < pos.x) {
+                directions.push(45)
+            } else if (nextPos.y > pos.y) {
+                directions.push(225)
+            } else if (nextPos.y > pos.y) {
+                directions.push(315)
+            }
+            pos = nextPos
+        })
+        return directions
     }
 
     drawCharter(that) {
@@ -234,36 +261,41 @@ class Tilemap extends PIXI.Container {
         const doAnimation = (directions) => {
             that.removeChild(that.character)
             let click = 0
-            const movementTime = 20
-            that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
-            that.movie.position.set(startPosition.x, startPosition.y)
-            that.movie.anchor.set(0.5, 0.3)
-            that.movie.animationSpeed = 0.4
-            that.movie.play()
-            that.addChild(that.movie)
-            while (click < config.tileSize) {
-                window.setTimeout(() => {
-                    if (directions[0] === 45) {
-                        that.movie.position.set(startPosition.x++, startPosition.y -= 0.5)
-                    } else if (directions[0] === 135) {
-                        that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
-                    } else if (directions[0] === 225) {
-                        that.movie.position.set(startPosition.x--, startPosition.y += 0.5)
-                    } else if (directions[0] === 315) {
-                        that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
-                    }
-                }, click * movementTime)
-                click++
-            }
-            window.setTimeout(() => {
-                that.removeChild(that.movie)
-                if (directions.length > 1) {
-                    directions.shift()
-                    doAnimation(directions)
-                } else {
-                    callback(that)
+            const movementTime = 10
+            if (directions.length > 0) {
+                that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
+                that.movie.position.set(startPosition.x, startPosition.y)
+                that.movie.anchor.set(0.5, 0.3)
+                that.movie.animationSpeed = 0.4
+                that.movie.play()
+                that.addChild(that.movie)
+
+                while (click < config.tileSize) {
+                    window.setTimeout(() => {
+                        if (directions[0] === 45) {
+                            that.movie.position.set(startPosition.x++, startPosition.y -= 0.5)
+                        } else if (directions[0] === 135) {
+                            that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
+                        } else if (directions[0] === 225) {
+                            that.movie.position.set(startPosition.x--, startPosition.y += 0.5)
+                        } else if (directions[0] === 315) {
+                            that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
+                        }
+                    }, click * movementTime)
+                    click++
                 }
-            }, config.tileSize * movementTime + 10)
+                window.setTimeout(() => {
+                    that.removeChild(that.movie)
+                    if (directions.length > 1) {
+                        directions.shift()
+                        doAnimation(directions)
+                    } else {
+                        callback(that)
+                    }
+                }, config.tileSize * movementTime + 10)
+            } else {
+                callback(that)
+            }
         }
         doAnimation(directions)
     }
@@ -271,7 +303,6 @@ class Tilemap extends PIXI.Container {
     zoomIn() {
         this.zoom = Math.min(this.zoom * 2, 8)
         this.scale.x = this.scale.y = this.zoom
-
         this.centerOnSelectedTile()
         this.constrainTilemap()
     }
@@ -321,7 +352,6 @@ export default {
         new PIXI.loaders.Loader()
             .add([mapFilePath, characterFilePath])
             .once('complete', () => {
-
                 tilemap = new Tilemap(config.tilesX, config.tilesY)
                 container.addChild(tilemap)
 
