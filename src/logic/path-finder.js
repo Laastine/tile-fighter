@@ -16,9 +16,6 @@ function getHeap() {
     })
 }
 
-/**
- * ES6 version of https://github.com/bgrins/javascript-astar
- */
 export default {
     search(graph, start, end) {
         graph.cleanDirty()
@@ -69,9 +66,9 @@ export default {
         return []
     },
 
-    heuristics(pos0, pos1) {
-        const d1 = Math.abs(pos1.x - pos0.x)
-        const d2 = Math.abs(pos1.y - pos0.y)
+    heuristics(pos1, pos2) {
+        const d1 = Math.abs(pos2.x - pos1.x)
+        const d2 = Math.abs(pos2.y - pos1.y)
         return d1 + d2
 
     },

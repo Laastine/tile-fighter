@@ -1,9 +1,9 @@
 import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
-import _ from 'lodash'
+import {isEqual, partial} from 'lodash'
 import Menubar from './menubar'
-import Graph from './graph'
-import PathFinder from './path-finder'
+import Graph from './logic/graph'
+import PathFinder from './logic/path-finder'
 import config from './config'
 
 const generator = new MersenneTwister(1)
@@ -81,6 +81,8 @@ class Tilemap extends PIXI.Container {
                 this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
             }
         }
+
+        this
     }
 
     drawRectangle(selector, xValue, yValue, color) {
@@ -214,7 +216,7 @@ class Tilemap extends PIXI.Container {
             const path = PathFinder.search(this.graph,
                 this.graph.grid[this.character.tile.x][this.character.tile.y],
                 this.graph.grid[x][y])
-            this.moveCharacter(this, this.getDirection(path), this.character.position, _.partial(this.drawCharter, this))
+            this.moveCharacter(this, this.getDirection(path, this.character.tile), this.character.position, partial(this.drawCharter, this))
             this.character.tile = {x, y}
         } else {
             menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
@@ -231,11 +233,11 @@ class Tilemap extends PIXI.Container {
             if (nextPos.x > pos.x) {
                 directions.push(135)
             } else if (nextPos.x < pos.x) {
-                directions.push(45)
+                directions.push(315)
             } else if (nextPos.y > pos.y) {
                 directions.push(225)
             } else if (nextPos.y > pos.y) {
-                directions.push(315)
+                directions.push(45)
             }
             pos = nextPos
         })

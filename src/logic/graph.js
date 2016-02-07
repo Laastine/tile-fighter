@@ -1,12 +1,12 @@
 import GridNode from './gridnode'
 import PathFinder from './path-finder'
-import config from './config'
-import _ from 'lodash'
+import config from '../config'
+import {times} from 'lodash'
 
 class Graph {
     constructor(tiles) {
         const grid = []
-        _.times(config.tilesY, () => grid.push([]))
+        times(config.tilesY, () => grid.push([]))
         tiles.forEach((tile, index) => {
             const i = Math.floor(index / config.tilesY)
             const j = index - (i * config.tilesY)

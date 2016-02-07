@@ -16,6 +16,7 @@ Hobby project for testing pixi.js capabilities.
 - [ ] Turn based gameplay
 - [ ] UI buttons (and shortcuts) for gameplay [crouch, turn, target]
 - [ ] Enemy AI
+
 Build & run app:
 ```
 npm install
@@ -31,5 +32,5 @@ npm run lint
 ### Implementaion references
 A* implementation: [Github repo](https://github.com/bgrins/javascript-astar)<br/>
 Algorithms generally [home page](http://theory.stanford.edu/~amitp/GameProgramming/)<br/>
-Graphics [opengameart.org](http://opengameart.org/content/tmim-heroine-bleeds-game-art) 
- [and](http://opengameart.org/content/isometric-road-tiles)
+Graphics [opengameart.org](http://opengameart.org/content/tmim-heroine-bleeds-game-art)  
+[and](http://opengameart.org/content/isometric-road-tiles)
