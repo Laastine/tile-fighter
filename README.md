@@ -7,12 +7,12 @@ Hobby project for testing pixi.js capabilities.
 ## TODO
 - [x] random map generation with grass, road and water
 - [x] More terrain elements 
-- [ ] "Height differencies"
 - [x] Render character unit
 - [x] Animate character movement
+- [x] Shortest path functionality
+- [ ] "Height differencies"
 - [ ] Replace placeholder graphics
 - [ ] LOS calculation and visualization
-- [x] Shortest path functionality
 - [ ] Turn based gameplay
 - [ ] UI buttons (and shortcuts) for gameplay [crouch, turn, target]
 - [ ] Enemy AI
