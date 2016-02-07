@@ -1,9 +1,28 @@
 export default {
-    GRASS: 'grass',
-    ROAD: 'dirt',
-    WATER: 'water',
-    WOOD: 'wood',
-    BUILDING: 'building',
+    GRASS: {
+        name: 'grass',
+        weight: 3
+    },
+    ROAD: {
+        name: 'dirt',
+        weight: 2
+    },
+    WATER: {
+        name: 'water',
+        weight: 0
+    },
+    WOOD: {
+        name: 'wood',
+        weight: 0
+    },
+    BUILDING: {
+        name: 'building',
+        weight: 0
+    },
+    BUILDING_DOOR: {
+        name: 'building door',
+        weight: 1
+    },
 
     tilesX: 65,
     tilesY: 65,

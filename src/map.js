@@ -97,24 +97,25 @@ class Tilemap extends PIXI.Container {
         selector.endFill()
     }
 
-
     addTile(x, y, terrain) {
-        const tile = PIXI.Sprite.fromFrame(terrain)
+        const tile = PIXI.Sprite.fromFrame(terrain.name)
         tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
         tile.position.x -= this.tileSize / 2
-        tile.terrain = terrain
+        tile.terrain = terrain.name
+        tile.weight = terrain.weight
         this.addChildAt(tile, x * this.tilesAmountY + y)
     }
 
-    addWoodTile(x, y, wood) {
-        if (x > 0 && y > 0 && this.getTile(x, y).terrain === config.GRASS) {
-            const tile = PIXI.Sprite.fromFrame(wood)
+    addWoodTile(x, y, terrain) {
+        if (x > 0 && y > 0 && this.getTile(x, y).terrain === config.GRASS.name) {
+            const tile = PIXI.Sprite.fromFrame(terrain.name)
             tile.position = this.cartesianToIsometric(x * this.tileWidthHalf, y * this.tileWidthHalf)
             tile.position.x -= this.tileSize / 2
             tile.tileX = x
             tile.tileY = y
-            tile.terrain = config.WOOD
-            this.changeTile(x, y, wood)
+            tile.terrain = terrain.name
+            tile.weight = terrain.weight
+            this.changeTile(x, y, terrain)
         }
     }
 
@@ -202,10 +203,11 @@ class Tilemap extends PIXI.Container {
                 this.selectedTileCoords[0] :
                 this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
 
-        if ((this.getTile(x, y).terrain === config.GRASS || this.getTile(x, y).terrain === config.ROAD)
+        if ((this.getTile(x, y).terrain === config.GRASS.name || this.getTile(x, y).terrain === config.ROAD.name)
             && !_.isEqual(this.getTile(x, y), this.character.position)) {
             menu.movementWarning.text = ''
-            this.moveCharacter(this, [225, 135, 225, 135, 225, 45, 225, 45, 225, 135, 225, 135, 315, 135], this.character.position, _.partial(this.drawCharter, this))
+
+            this.moveCharacter(this, [135], this.character.position, _.partial(this.drawCharter, this))
         } else {
             menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
         }
@@ -263,30 +265,7 @@ class Tilemap extends PIXI.Container {
                 }
             }, config.tileSize * movementTime + 10)
         }
-
         doAnimation(directions)
-
-    }
-    shortestPath(playerStart, target) {
-        const {x, y} = playerStart
-        const {goalX, goalY} = target
-        const frontier = [{x, y}]
-        const cameFrom = [{x, y}]
-        let current
-        while (frontier.length > 0) {
-            current = frontier[frontier.length - 1]
-
-            if (current.x === goalX && current.y === goalY) {
-                break
-            }
-
-            for (let i = frontier.x; i < this.tilesAmountX; ++i) {
-                for (let j = frontier.y; j < this.tilesAmountX; ++j) {
-                    frontier.push({x: i, y: j})
-                    cameFrom.push(current)
-                }
-            }
-        }
     }
 
     zoomIn() {
