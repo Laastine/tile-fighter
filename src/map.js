@@ -81,8 +81,6 @@ class Tilemap extends PIXI.Container {
                 this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
             }
         }
-
-        this
     }
 
     drawRectangle(selector, xValue, yValue, color) {
@@ -260,46 +258,47 @@ class Tilemap extends PIXI.Container {
             }
             return frames
         }
-        const doAnimation = (directions) => {
+        const doAnimation = () => {
+            if (directions.length === 0) {
+                return callback(that)
+            }
+
             that.removeChild(that.character)
             let click = 0
             const movementTime = 10
-            if (directions.length > 0) {
-                that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
-                that.movie.position.set(startPosition.x, startPosition.y)
-                that.movie.anchor.set(0.5, 0.3)
-                that.movie.animationSpeed = 0.4
-                that.movie.play()
-                that.addChild(that.movie)
+            that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
+            that.movie.position.set(startPosition.x, startPosition.y)
+            that.movie.anchor.set(0.5, 0.3)
+            that.movie.animationSpeed = 0.4
+            that.movie.play()
+            that.addChild(that.movie)
 
-                while (click < config.tileSize) {
-                    window.setTimeout(() => {
-                        if (directions[0] === 45) {
-                            that.movie.position.set(startPosition.x++, startPosition.y -= 0.5)
-                        } else if (directions[0] === 135) {
-                            that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
-                        } else if (directions[0] === 225) {
-                            that.movie.position.set(startPosition.x--, startPosition.y += 0.5)
-                        } else if (directions[0] === 315) {
-                            that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
-                        }
-                    }, click * movementTime)
-                    click++
-                }
+            while (click < config.tileSize) {
                 window.setTimeout(() => {
-                    that.removeChild(that.movie)
-                    if (directions.length > 1) {
-                        directions.shift()
-                        doAnimation(directions)
-                    } else {
-                        callback(that)
+                    if (directions[0] === 45) {
+                        that.movie.position.set(startPosition.x++, startPosition.y -= 0.5)
+                    } else if (directions[0] === 135) {
+                        that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
+                    } else if (directions[0] === 225) {
+                        that.movie.position.set(startPosition.x--, startPosition.y += 0.5)
+                    } else if (directions[0] === 315) {
+                        that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
                     }
-                }, config.tileSize * movementTime + 10)
-            } else {
-                callback(that)
+                }, click * movementTime)
+                click++
             }
+            window.setTimeout(() => {
+                that.removeChild(that.movie)
+                if (directions.length > 1) {
+                    directions.shift()
+                    doAnimation()
+                } else {
+                    callback(that)
+                }
+            }, config.tileSize * movementTime)
         }
-        doAnimation(directions)
+
+        doAnimation()
     }
 
     zoomIn() {
