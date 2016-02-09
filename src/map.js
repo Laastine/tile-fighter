@@ -234,7 +234,7 @@ class Tilemap extends PIXI.Container {
                 directions.push(315)
             } else if (nextPos.y > pos.y) {
                 directions.push(225)
-            } else if (nextPos.y > pos.y) {
+            } else if (nextPos.y < pos.y) {
                 directions.push(45)
             }
             pos = nextPos
