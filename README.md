@@ -30,7 +30,7 @@ open index.html in browser
 npm run lint
 ```
 
-### Implementaion resources & references:
+### Implementation resources & references:
 A* implementation: [Github repo](https://github.com/bgrins/javascript-astar)<br/>
 Algorithms generally [home page](http://theory.stanford.edu/~amitp/GameProgramming/)<br/>
 Graphics [opengameart.org](http://opengameart.org/content/tmim-heroine-bleeds-game-art)  
