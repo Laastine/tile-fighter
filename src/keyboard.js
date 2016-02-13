@@ -1,4 +1,4 @@
-export function Keyboard(keyCode) {
+export function keyboard(keyCode) {
   const key = {
     code: keyCode,
     isDown: false,
@@ -11,7 +11,6 @@ export function Keyboard(keyCode) {
         key.isDown = true
         key.isUp = false
       }
-      event.preventDefault()
     },
     upHandler: (event) => {
       if (event.keyCode === key.code) {
@@ -21,11 +20,10 @@ export function Keyboard(keyCode) {
         key.isDown = false
         key.isUp = true
       }
-      event.preventDefault()
     }
   }
 
-  window.addEventListener("keydown", key.downHandler.bind(key), false)
-  window.addEventListener("keyup", key.upHandler.bind(key), false)
+  window.addEventListener('keydown', key.downHandler.bind(key), false)
+  window.addEventListener('keyup', key.upHandler.bind(key), false)
   return key
 }

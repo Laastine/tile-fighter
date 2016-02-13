@@ -3,15 +3,13 @@
     "browser": true,
     "es6": true
   },
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "modules": true
+  "parserOptions": {
+    "sourceType": "module"
   },
   "extends": "eslint:recommended",
   "plugins": [],
   "rules": {
     "quotes": [2, "single"],
-    "no-use-before-define": [2, "nofunc"],
     "no-console": [2],
     "no-underscore-dangle": [2],
     "no-unused-vars": [2, {"args": "none"}],
@@ -27,7 +25,6 @@
     "no-loop-func": [0],
     "no-use-before-define": [2],
     "semi": [2, "never"],
-    "quotes": [2, "single"],
     "no-alert": [2],
     "no-extra-bind": [2],
     "no-sequences": [2]

@@ -1,14 +1,14 @@
 import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
-import {isEqual, partial} from 'lodash'
+import _ from 'lodash'
 import Menubar from './menubar'
-import {Keyboard} from './keyboard'
+import {keyboard} from './keyboard'
 import Graph from './logic/graph'
 import PathFinder from './logic/path-finder'
 import config from './config'
 
 const generator = new MersenneTwister(1)
-let renderer, container, tilemap, menu
+let renderer, container, menu
 
 class Tilemap extends PIXI.Container {
 
@@ -32,10 +32,10 @@ class Tilemap extends PIXI.Container {
 
     this.graph = new Graph(this.children)
 
-    this.keyW = Keyboard(87)
-    this.keyA = Keyboard(65)
-    this.keyS = Keyboard(83)
-    this.keyD = Keyboard(68)
+    this.keyW = keyboard(87)
+    this.keyA = keyboard(65)
+    this.keyS = keyboard(83)
+    this.keyD = keyboard(68)
 
     this.character = PIXI.Sprite.fromFrame('Jog_135_01')
     this.character.position = {x: -10, y: -40}
@@ -229,7 +229,7 @@ class Tilemap extends PIXI.Container {
       const path = PathFinder.search(this.graph,
         this.graph.grid[this.character.tile.x][this.character.tile.y],
         this.graph.grid[x][y])
-      this.moveCharacter(this, this.getDirection(path, this.character.tile), this.character.position, partial(this.drawCharter, this))
+      this.moveCharacter(this, this.getDirection(path, this.character.tile), this.character.position, _.partial(this.drawCharter, this))
       this.character.tile = {x, y}
     } else {
       menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
@@ -368,7 +368,7 @@ export default {
     new PIXI.loaders.Loader()
       .add([mapFilePath, characterFilePath])
       .once('complete', () => {
-        tilemap = new Tilemap(config.tilesX, config.tilesY)
+        const tilemap = new Tilemap(config.tilesX, config.tilesY)
         container.addChild(tilemap)
 
         menu = new Menubar(tilemap)
