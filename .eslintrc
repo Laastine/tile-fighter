@@ -4,7 +4,14 @@
     "es6": true
   },
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": "6"
+  },
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "modules": true,
+    "classes": true
   },
   "extends": "eslint:recommended",
   "plugins": [],
@@ -12,6 +19,7 @@
     "quotes": [2, "single"],
     "no-console": [2],
     "no-underscore-dangle": [2],
+    "no-multiple-empty-lines": [2, {"max": 1}],
     "no-unused-vars": [2, {"args": "none"}],
     "no-unused-expressions": [0],
     "camelcase": [2],

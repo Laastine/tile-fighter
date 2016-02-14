@@ -2,13 +2,14 @@ import PIXI from 'pixi.js'
 import MersenneTwister from 'mersenne-twister'
 import _ from 'lodash'
 import Menubar from './menubar'
+import Character from './character'
 import {keyboard} from './keyboard'
 import Graph from './logic/graph'
 import PathFinder from './logic/path-finder'
 import config from './config'
 
 const generator = new MersenneTwister(1)
-let renderer, container, menu
+let renderer, container, menu, character
 
 class Tilemap extends PIXI.Container {
 
@@ -229,91 +230,13 @@ class Tilemap extends PIXI.Container {
       const path = PathFinder.search(this.graph,
         this.graph.grid[this.character.tile.x][this.character.tile.y],
         this.graph.grid[x][y])
-      this.moveCharacter(this, this.getDirection(path, this.character.tile), this.character.position, _.partial(this.drawCharter, this))
+      character.moveCharacter(this, character.getDirection(path, this.character.tile), this.character.position, _.partial(character.drawCharter, this))
       this.character.tile = {x, y}
     } else {
       menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
     }
 
     this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
-  }
-
-  getDirection(route, currentPos) {
-    const directions = []
-    let pos = currentPos || {x: 0, y: 0}
-    route.forEach((dir) => {
-      const nextPos = {x: dir.x, y: dir.y}
-      if (nextPos.x > pos.x) {
-        directions.push(135)
-      } else if (nextPos.x < pos.x) {
-        directions.push(315)
-      } else if (nextPos.y > pos.y) {
-        directions.push(225)
-      } else if (nextPos.y < pos.y) {
-        directions.push(45)
-      }
-      pos = nextPos
-    })
-    return directions
-  }
-
-  drawCharter(that) {
-    if (!that.character) {
-      that.addChild(that.character)
-    }
-    that.addChild(that.character)
-  }
-
-  moveCharacter(that, directions, startPosition, callback) {
-    const loadFrames = (direction) => {
-      const frames = []
-      for (var i = 1; i < 14; i++) {
-        var val = i < 10 ? '0' + i : i
-        frames.push(PIXI.Texture.fromFrame('Jog' + '_' + direction + '_' + val))
-      }
-      return frames
-    }
-    const doAnimation = () => {
-      if (directions.length === 0) {
-        return callback(that)
-      }
-
-      that.removeChild(that.character)
-      let click = 0
-      const movementTime = 10
-      that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
-      that.movie.position.set(startPosition.x, startPosition.y)
-      that.movie.anchor.set(0.5, 0.3)
-      that.movie.animationSpeed = 0.5
-      that.movie.play()
-      that.addChild(that.movie)
-
-      while (click < config.tileSize) {
-        window.setTimeout(() => {
-          if (directions[0] === 45) {
-            that.movie.position.set(startPosition.x++, startPosition.y -= 0.5)
-          } else if (directions[0] === 135) {
-            that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
-          } else if (directions[0] === 225) {
-            that.movie.position.set(startPosition.x--, startPosition.y += 0.5)
-          } else if (directions[0] === 315) {
-            that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
-          }
-        }, click * movementTime)
-        click++
-      }
-      window.setTimeout(() => {
-        that.removeChild(that.movie)
-        if (directions.length > 1) {
-          directions.shift()
-          doAnimation()
-        } else {
-          callback(that)
-        }
-      }, config.tileSize * movementTime)
-    }
-
-    doAnimation()
   }
 
   zoomIn() {
@@ -370,6 +293,9 @@ export default {
       .once('complete', () => {
         const tilemap = new Tilemap(config.tilesX, config.tilesY)
         container.addChild(tilemap)
+
+        character = new Character(tilemap)
+        container.addChild(character)
 
         menu = new Menubar(tilemap)
         container.addChild(menu)
