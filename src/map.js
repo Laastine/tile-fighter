@@ -57,7 +57,6 @@ class Tilemap extends PIXI.Container {
 
     this.mousedown = this.touchstart = function (event) {
       if (event.data.global.x > config.menuBarWidth) {
-        this.dragging = true
         this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
         this.mousePressPoint[1] = event.data.global.y - this.position.y
 
@@ -67,29 +66,17 @@ class Tilemap extends PIXI.Container {
       }
     }
 
-    this.mouseup = this.mouseupoutside =
-      this.touchend = this.touchendoutside = function () {
-        this.dragging = false
-      }
-
     this.mousemove = this.touchmove = function (event) {
-      if (this.dragging) {
-        const position = event.data.global
-        this.position.x = position.x - this.mousePressPoint[0]
-        this.position.y = position.y - this.mousePressPoint[1]
-        this.constrainTilemap()
-      } else {
-        const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
-        const mouseoverTileCoords = [Math.floor(
-          (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2) + mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
-          Math.floor((mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)]
+      const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
+      const mouseoverTileCoords = [Math.floor(
+        (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2) + mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
+        Math.floor((mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)]
 
-        const xValue = (mouseoverTileCoords[0] - mouseoverTileCoords[1]) * this.tileSize
-        const yValue = ((mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
-            mouseoverTileCoords[0] : mouseoverTileCoords[1]) - Math.abs(mouseoverTileCoords[0] - mouseoverTileCoords[1]) / 2) * this.tileSize
+      const xValue = (mouseoverTileCoords[0] - mouseoverTileCoords[1]) * this.tileSize
+      const yValue = ((mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
+          mouseoverTileCoords[0] : mouseoverTileCoords[1]) - Math.abs(mouseoverTileCoords[0] - mouseoverTileCoords[1]) / 2) * this.tileSize
 
-        this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
-      }
+      this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
     }
 
     this.keyW.press = () => this.position.vy = 10
@@ -279,6 +266,7 @@ class Tilemap extends PIXI.Container {
   inputHandler() {
     this.position.x += this.position.vx
     this.position.y += this.position.vy
+    this.constrainTilemap()
   }
 }
 

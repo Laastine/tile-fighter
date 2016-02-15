@@ -4,17 +4,17 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "lodash": "^4.3.0",
+    "lodash": "4.3.0",
     "mersenne-twister": "1.0.1",
     "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.9.tar.gz"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-core": "^6.5.2",
-    "babel-preset-es2015": "^6.5.0",
+    "babel": "6.5.2",
+    "babel-core": "6.5.2",
+    "babel-preset-es2015": "6.5.0",
     "babelify": "7.2.0",
     "browserify": "13.0.0",
-    "eslint": "^2.0.0",
+    "eslint": "^2.1.0",
     "nodemon": "1.8.1",
     "supervisor": "0.9.1",
     "uglify-js": "2.6.1",
