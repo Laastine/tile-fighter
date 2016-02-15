@@ -11,6 +11,7 @@ Hobby project for testing [pixi.js](http://www.pixijs.com/) capabilities.
 - [x] Render character unit
 - [x] Animate character movement
 - [x] Shortest path functionality
+- [x] Keyboard camera movement (WASD)
 - [ ] "Height differencies"
 - [ ] Replace placeholder graphics
 - [ ] LOS calculation and visualization
