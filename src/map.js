@@ -9,7 +9,7 @@ import PathFinder from './logic/path-finder'
 import config from './config'
 
 const generator = new MersenneTwister(1)
-let renderer, container, menu, character
+let renderer, container, menu, character, tilemap
 
 class Tilemap extends PIXI.Container {
 
@@ -27,7 +27,7 @@ class Tilemap extends PIXI.Container {
     this.zoom = 1
     this.scale.x = this.scale.y = this.zoom
 
-    this.startLocation = {x: 0, y: 0}
+    this.startLocation = this.position = {x: 0, y: 0}
 
     this.generateMap()
 
@@ -43,6 +43,9 @@ class Tilemap extends PIXI.Container {
     this.character.tile = {x: 0, y: 0}
     this.character.selected = false
     this.movie = null
+
+    this.position.vx = 0
+    this.position.vy = 0
 
     this.selectedTileCoords = [0, 0]
     this.mousePressPoint = [0, 0]
@@ -71,7 +74,7 @@ class Tilemap extends PIXI.Container {
 
     this.mousemove = this.touchmove = function (event) {
       if (this.dragging) {
-        var position = event.data.global
+        const position = event.data.global
         this.position.x = position.x - this.mousePressPoint[0]
         this.position.y = position.y - this.mousePressPoint[1]
         this.constrainTilemap()
@@ -89,14 +92,17 @@ class Tilemap extends PIXI.Container {
       }
     }
 
-    this.keyW.press = function () {
-    }
-    this.keyA.press = function () {
-    }
-    this.keyS.press = function () {
-    }
-    this.keyD.press = function () {
-    }
+    this.keyW.press = () => this.position.vy = 10
+    this.keyW.release = () => this.position.vy = 0
+
+    this.keyD.press = () => this.position.vx = -10
+    this.keyD.release = () => this.position.vx = 0
+
+    this.keyA.press = () => this.position.vx = 10
+    this.keyA.release = () => this.position.vx = 0
+
+    this.keyS.press = () => this.position.vy = -10
+    this.keyS.release = () => this.position.vy = 0
   }
 
   drawRectangle(selector, xValue, yValue, color) {
@@ -248,10 +254,8 @@ class Tilemap extends PIXI.Container {
 
   zoomOut() {
     this.mouseoverGraphics.clear()
-
-    this.zoom = Math.max(this.zoom / 2, 1 / 2)
+    this.zoom = Math.max(this.zoom / 2, 0.5)
     this.scale.x = this.scale.y = this.zoom
-
     this.centerOnSelectedTile()
     this.constrainTilemap()
   }
@@ -271,10 +275,16 @@ class Tilemap extends PIXI.Container {
     this.position.y = Math.max(this.position.y, -2 * this.tileSize * this.tilesAmountY * this.zoom + config.screenY)
     this.position.y = Math.min(this.position.y, +config.menuBarWidth)
   }
+
+  inputHandler() {
+    this.position.x += this.position.vx
+    this.position.y += this.position.vy
+  }
 }
 
 const animate = () => {
   renderer.render(container)
+  tilemap.inputHandler()
   requestAnimationFrame(animate)
 }
 
@@ -291,7 +301,7 @@ export default {
     new PIXI.loaders.Loader()
       .add([mapFilePath, characterFilePath])
       .once('complete', () => {
-        const tilemap = new Tilemap(config.tilesX, config.tilesY)
+        tilemap = new Tilemap(config.tilesX, config.tilesY)
         container.addChild(tilemap)
 
         character = new Character(tilemap)
