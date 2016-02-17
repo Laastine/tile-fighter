@@ -208,28 +208,29 @@ class Tilemap extends PIXI.Container {
   }
 
   selectTile(x, y) {
-    this.selectedTileCoords = [x, y]
-    menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords
+    this.selectedTileCoords = {x, y}
+    menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords.x + ',' + this.selectedTileCoords.y
     menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(x, y).terrain
 
-    const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
-    const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
-        this.selectedTileCoords[0] :
-        this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
+    const xValue = (this.selectedTileCoords.x - this.selectedTileCoords.y) * this.tileSize
+    const yValue = ((this.selectedTileCoords.x >= this.selectedTileCoords.y ?
+        this.selectedTileCoords.x :
+        this.selectedTileCoords.y) - Math.abs(this.selectedTileCoords.x - this.selectedTileCoords.y) / 2) * this.tileSize
 
-    if ((this.getTile(x, y).terrain === config.GRASS.name || this.getTile(x, y).terrain === config.ROAD.name)
-      && !_.isEqual(this.getTile(x, y), this.character.position)) {
+    if (this.getTile(x, y).terrain === config.WOOD.name || this.getTile(x, y).terrain === config.WATER.name) {
+      menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
+    } else if (_.isEqual(this.character.tile, this.selectedTileCoords)) {
+      this.character.selected = !this.character.selected
+      character.drawCharter(this)
+    } else if (this.character.selected) {
       menu.movementWarning.text = ''
-      const path = PathFinder.search(this.graph,
-        this.graph.grid[this.character.tile.x][this.character.tile.y],
-        this.graph.grid[x][y])
+      const path = PathFinder.search(this.graph, this.graph.grid[this.character.tile.x][this.character.tile.y], this.graph.grid[x][y])
       character.moveCharacter(this, character.getDirection(path, this.character.tile), this.character.position, _.partial(character.drawCharter, this))
       this.character.tile = {x, y}
     } else {
-      menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
+      character.drawCharter(this)
     }
-
-    this.drawRectangle(this.selectedGraphics, xValue, yValue, 0xFF0000)
+    this.drawRectangle(this.selectedGraphics, xValue, yValue, this.character.selected ? 0xFF0000 : 0xFFFFFF)
   }
 
   zoomIn() {
@@ -249,10 +250,10 @@ class Tilemap extends PIXI.Container {
 
   centerOnSelectedTile() {
     this.position.x = (config.screenX - config.menuBarWidth) / 2 -
-      this.selectedTileCoords[0] * this.zoom * this.tileSize -
+      this.selectedTileCoords.x * this.zoom * this.tileSize -
       this.tileSize * this.zoom / 2 + config.menuBarWidth
     this.position.y = config.screenY / 2 -
-      this.selectedTileCoords[1] * this.zoom * this.tileSize -
+      this.selectedTileCoords.y * this.zoom * this.tileSize -
       this.tileSize * this.zoom / 2
   }
 

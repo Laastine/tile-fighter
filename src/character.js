@@ -49,7 +49,7 @@ class Character extends PIXI.Container {
 
       that.removeChild(that.character)
       let click = 0
-      const movementTime = 10
+      const movementTime = 12
       that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
       that.movie.position.set(startPosition.x, startPosition.y)
       that.movie.anchor.set(0.5, 0.3)
