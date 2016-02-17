@@ -31,5 +31,7 @@ export default {
 
   menuBarWidth: 80,
   screenX: window.innerWidth,
-  screenY: window.innerHeight
+  screenY: window.innerHeight,
+
+  mapScrollSpeed: 10
 }

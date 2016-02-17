@@ -79,17 +79,13 @@ class Tilemap extends PIXI.Container {
       this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
     }
 
-    this.keyW.press = () => this.position.vy = 10
-    this.keyW.release = () => this.position.vy = 0
+    this.keyW.press = () => this.position.vy = config.mapScrollSpeed
+    this.keyD.press = () => this.position.vx = -config.mapScrollSpeed
+    this.keyA.press = () => this.position.vx = config.mapScrollSpeed
+    this.keyS.press = () => this.position.vy = -config.mapScrollSpeed
 
-    this.keyD.press = () => this.position.vx = -10
-    this.keyD.release = () => this.position.vx = 0
-
-    this.keyA.press = () => this.position.vx = 10
-    this.keyA.release = () => this.position.vx = 0
-
-    this.keyS.press = () => this.position.vy = -10
-    this.keyS.release = () => this.position.vy = 0
+    this.keyD.release = this.keyA.release = () => this.position.vx = 0
+    this.keyW.release = this.keyS.release = () => this.position.vy = 0
   }
 
   drawRectangle(selector, xValue, yValue, color) {
