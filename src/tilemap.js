@@ -37,11 +37,13 @@ class Tilemap extends PIXI.Container {
     this.keyA = keyboard(65)
     this.keyS = keyboard(83)
     this.keyD = keyboard(68)
+    this.keyC = keyboard(67)
 
     this.character = PIXI.Sprite.fromFrame('Jog_135_01')
     this.character.position = {x: -10, y: -40}
     this.character.tile = {x: 0, y: 0}
     this.character.selected = false
+    this.character.isCrouched = false
     this.movie = null
 
     this.position.vx = 0
@@ -86,6 +88,10 @@ class Tilemap extends PIXI.Container {
 
     this.keyD.release = this.keyA.release = () => this.position.vx = 0
     this.keyW.release = this.keyS.release = () => this.position.vy = 0
+    this.keyC.press = () => {
+      this.character.isCrouched = !this.character.isCrouched
+    }
+
   }
 
   drawRectangle(selector, xValue, yValue, color) {
@@ -221,7 +227,11 @@ class Tilemap extends PIXI.Container {
     } else if (this.character.selected) {
       menu.movementWarning.text = ''
       const path = PathFinder.search(this.graph, this.graph.grid[this.character.tile.x][this.character.tile.y], this.graph.grid[x][y])
-      character.moveCharacter(this, character.getDirection(path, this.character.tile), this.character.position, _.partial(character.drawCharter, this))
+      character.moveCharacter(this,
+        character.getDirection(path, this.character.tile),
+        this.character.position,
+        this.character.isCrouched,
+        _.partial(character.drawCharter, this))
       this.character.tile = {x, y}
     } else {
       character.drawCharter(this)
@@ -277,7 +287,7 @@ export default {
   initRenderer: () => {
     renderer = PIXI.autoDetectRenderer(config.screenX, config.screenY)
     renderer.view.style.border = '2px solid #000'
-    renderer.backgroundColor = '0xFFFFFF'
+    renderer.backgroundColor = '0xEEEEEE'
     document.body.appendChild(renderer.view)
     container = new PIXI.Container()
   },

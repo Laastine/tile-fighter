@@ -33,15 +33,18 @@ class Character extends PIXI.Container {
     that.addChild(that.character)
   }
 
-  moveCharacter(that, directions, startPosition, callback) {
-    const loadFrames = (direction) => {
-      const frames = []
-      for (var i = 1; i < 14; i++) {
-        var val = i < 10 ? '0' + i : i
-        frames.push(PIXI.Texture.fromFrame('Jog' + '_' + direction + '_' + val))
-      }
-      return frames
+  loadFrames(direction, isCrouched) {
+    const frames = []
+    const fileNamePrefix = isCrouched ? 'Crouch' : 'Jog'
+    console.log(fileNamePrefix)
+    for (var i = 1; i < 14; i++) {
+      const val = i < 10 ? '0' + i : i
+      frames.push(PIXI.Texture.fromFrame(fileNamePrefix + '_' + direction + '_' + val))
     }
+    return frames
+  }
+
+  moveCharacter(that, directions, startPosition, isCrouched, callback) {
     const doAnimation = () => {
       if (directions.length === 0) {
         return callback(that)
@@ -50,7 +53,7 @@ class Character extends PIXI.Container {
       that.removeChild(that.character)
       let click = 0
       const movementTime = 12
-      that.movie = new PIXI.extras.MovieClip(loadFrames(directions[0]))
+      that.movie = new PIXI.extras.MovieClip(this.loadFrames(directions[0], isCrouched))
       that.movie.position.set(startPosition.x, startPosition.y)
       that.movie.anchor.set(0.5, 0.3)
       that.movie.animationSpeed = 0.5
