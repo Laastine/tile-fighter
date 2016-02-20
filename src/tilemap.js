@@ -88,10 +88,7 @@ class Tilemap extends PIXI.Container {
 
     this.keyD.release = this.keyA.release = () => this.position.vx = 0
     this.keyW.release = this.keyS.release = () => this.position.vy = 0
-    this.keyC.press = () => {
-      this.character.isCrouched = !this.character.isCrouched
-    }
-
+    this.keyC.press = () => this.character.isCrouched = !this.character.isCrouched
   }
 
   drawRectangle(selector, xValue, yValue, color) {

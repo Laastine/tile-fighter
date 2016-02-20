@@ -19,6 +19,10 @@ Hobby project for testing [pixi.js](http://www.pixijs.com/) capabilities.
 - [ ] UI buttons (and shortcuts) for gameplay [crouch, turn, target]
 - [ ] Enemy AI
 
+
+### Controls
+WASD - move camera
+
 ### Build & run app:
 ```
 npm install
