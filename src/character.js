@@ -36,7 +36,6 @@ class Character extends PIXI.Container {
   loadFrames(direction, isCrouched) {
     const frames = []
     const fileNamePrefix = isCrouched ? 'Crouch' : 'Jog'
-    console.log(fileNamePrefix)
     for (var i = 1; i < 14; i++) {
       const val = i < 10 ? '0' + i : i
       frames.push(PIXI.Texture.fromFrame(fileNamePrefix + '_' + direction + '_' + val))
@@ -44,7 +43,9 @@ class Character extends PIXI.Container {
     return frames
   }
 
-  moveCharacter(that, directions, startPosition, isCrouched, callback) {
+  moveCharacter(that, directions, character, callback) {
+    const position = character.position
+    const isCrouched = character.isCrouched
     const doAnimation = () => {
       if (directions.length === 0) {
         return callback(that)
@@ -54,7 +55,7 @@ class Character extends PIXI.Container {
       let click = 0
       const movementTime = 12
       that.movie = new PIXI.extras.MovieClip(this.loadFrames(directions[0], isCrouched))
-      that.movie.position.set(startPosition.x, startPosition.y)
+      that.movie.position.set(position.x, position.y)
       that.movie.anchor.set(0.5, 0.3)
       that.movie.animationSpeed = 0.5
       that.movie.play()
@@ -63,13 +64,13 @@ class Character extends PIXI.Container {
       while (click < config.tileSize) {
         window.setTimeout(() => {
           if (directions[0] === 45) {
-            that.movie.position.set(startPosition.x++, startPosition.y -= 0.5)
+            that.movie.position.set(position.x++, position.y -= 0.5)
           } else if (directions[0] === 135) {
-            that.movie.position.set(startPosition.x++, startPosition.y += 0.5)
+            that.movie.position.set(position.x++, position.y += 0.5)
           } else if (directions[0] === 225) {
-            that.movie.position.set(startPosition.x--, startPosition.y += 0.5)
+            that.movie.position.set(position.x--, position.y += 0.5)
           } else if (directions[0] === 315) {
-            that.movie.position.set(startPosition.x--, startPosition.y -= 0.5)
+            that.movie.position.set(position.x--, position.y -= 0.5)
           }
         }, click * movementTime)
         click++

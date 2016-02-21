@@ -226,8 +226,7 @@ class Tilemap extends PIXI.Container {
       const path = PathFinder.search(this.graph, this.graph.grid[this.character.tile.x][this.character.tile.y], this.graph.grid[x][y])
       character.moveCharacter(this,
         character.getDirection(path, this.character.tile),
-        this.character.position,
-        this.character.isCrouched,
+        this.character,
         _.partial(character.drawCharter, this))
       this.character.tile = {x, y}
     } else {
