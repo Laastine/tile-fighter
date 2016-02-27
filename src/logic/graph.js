@@ -1,91 +1,81 @@
-import GridNode from './gridnode'
-import PathFinder from './path-finder'
-import config from '../config'
-import {times} from 'lodash'
-
-class Graph {
-  constructor(tiles) {
-    const grid = []
-    times(config.tilesY, () => grid.push([]))
-    tiles.forEach((tile, index) => {
-      const i = Math.floor(index / config.tilesY)
-      const j = index - (i * config.tilesY)
-      grid[i][j] = tile.weight
-    })
-    this.nodes = []
-    this.grid = []
-    for (let x = 0; x < grid.length; x++) {
-      this.grid[x] = []
-
-      for (let y = 0, row = grid[x]; y < row.length; y++) {
-        const node = new GridNode(x, y, row[y])
-        this.grid[x][y] = node
-        this.nodes.push(node)
-      }
+/// <reference path="../references.d.ts" />
+var gridnode_1 = require('./gridnode');
+var path_finder_1 = require('./path-finder');
+var config_1 = require('../config');
+var lodash_1 = require('lodash');
+var Graph = (function () {
+    function Graph(tiles) {
+        var grid = [];
+        lodash_1.times(config_1.Config.tilesY, function () { return grid.push([]); });
+        tiles.forEach(function (tile, index) {
+            var i = Math.floor(index / config_1.Config.tilesY);
+            var j = index - (i * config_1.Config.tilesY);
+            grid[i][j] = tile.weight;
+        });
+        this.nodes = [];
+        this.grid = [];
+        for (var x = 0; x < grid.length; x++) {
+            this.grid[x] = [];
+            for (var y = 0, row = grid[x]; y < row.length; y++) {
+                var node = new gridnode_1["default"](x, y, row[y]);
+                this.grid[x][y] = node;
+                this.nodes.push(node);
+            }
+        }
+        this.init();
     }
-    this.init()
-  }
-
-  init() {
-    this.dirtyNodes = []
-    for (let i = 0; i < this.nodes.length; i++) {
-      PathFinder.cleanNode(this.nodes[i])
-    }
-  }
-
-  cleanDirty() {
-    for (let i = 0; i < this.dirtyNodes.length; i++) {
-      PathFinder.cleanNode(this.dirtyNodes[i])
-    }
-    this.dirtyNodes = []
-  }
-
-  markDirty(node) {
-    this.dirtyNodes.push(node)
-  }
-
-  neighbors(node) {
-    const ret = []
-    const x = node.x
-    const y = node.y
-    const grid = this.grid
-
-    //315
-    if (grid[x - 1] && grid[x - 1][y]) {
-      ret.push(grid[x - 1][y])
-    }
-
-    //135
-    if (grid[x + 1] && grid[x + 1][y]) {
-      ret.push(grid[x + 1][y])
-    }
-
-    //225
-    if (grid[x] && grid[x][y - 1]) {
-      ret.push(grid[x][y - 1])
-    }
-
-    //45
-    if (grid[x] && grid[x][y + 1]) {
-      ret.push(grid[x][y + 1])
-    }
-
-    return ret
-  }
-
-  toString() {
-    const graphString = []
-    const nodes = this.grid
-    for (let x = 0; x < nodes.length; x++) {
-      const rowDebug = []
-      const row = nodes[x]
-      for (let y = 0; y < row.length; y++) {
-        rowDebug.push(row[y].weight)
-      }
-      graphString.push(rowDebug.join(' '))
-    }
-    return graphString.join('\n')
-  }
-}
-
-export default Graph
+    Graph.prototype.init = function () {
+        this.dirtyNodes = [];
+        for (var i = 0; i < this.nodes.length; i++) {
+            path_finder_1["default"].cleanNode(this.nodes[i]);
+        }
+    };
+    Graph.prototype.cleanDirty = function () {
+        for (var i = 0; i < this.dirtyNodes.length; i++) {
+            path_finder_1["default"].cleanNode(this.dirtyNodes[i]);
+        }
+        this.dirtyNodes = [];
+    };
+    Graph.prototype.markDirty = function (node) {
+        this.dirtyNodes.push(node);
+    };
+    Graph.prototype.neighbors = function (node) {
+        var ret = [];
+        var x = node.x;
+        var y = node.y;
+        var grid = this.grid;
+        //315
+        if (grid[x - 1] && grid[x - 1][y]) {
+            ret.push(grid[x - 1][y]);
+        }
+        //135
+        if (grid[x + 1] && grid[x + 1][y]) {
+            ret.push(grid[x + 1][y]);
+        }
+        //225
+        if (grid[x] && grid[x][y - 1]) {
+            ret.push(grid[x][y - 1]);
+        }
+        //45
+        if (grid[x] && grid[x][y + 1]) {
+            ret.push(grid[x][y + 1]);
+        }
+        return ret;
+    };
+    Graph.prototype.toString = function () {
+        var graphString = [];
+        var nodes = this.grid;
+        for (var x = 0; x < nodes.length; x++) {
+            var rowDebug = [];
+            var row = nodes[x];
+            for (var y = 0; y < row.length; y++) {
+                rowDebug.push(row[y].weight);
+            }
+            graphString.push(rowDebug.join(' '));
+        }
+        return graphString.join('\n');
+    };
+    return Graph;
+})();
+exports["default"] = Graph;
+//# sourceMappingURL=graph.js.map

@@ -1,4 +1,4 @@
-export default {
+export const Config = {
   GRASS: {
     name: 'grass',
     weight: 3
