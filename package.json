@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "node tsconfig && browserify src/app.ts -p tsify -o .generated/bundle.js",
-    "watch": "node node_modules/watchify/bin/cmd.js src/app.ts --debug -o .generated/bundle.js -v",
+    "watch": "node node_modules/watchify/bin/cmd.js src/app.ts -p tsify --debug -o .generated/bundle.js -v",
     "lint": "eslint src/ ",
     "test": "_mocha --compilers js:babel-core/register -R spec test/calcSpec.js"
   }

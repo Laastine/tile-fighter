@@ -1,7 +1,6 @@
 /// <reference path="./references.d.ts" />
 
 import * as PIXI from 'pixi.js'
-import {RandomSeed} from './util'
 import * as _ from 'lodash'
 import Menubar from './menubar'
 import Character from './character'
@@ -9,9 +8,7 @@ import {keyboard} from './keyboard'
 import Graph from './logic/graph'
 import PathFinder from './logic/path-finder'
 import {Config} from './config'
-import {Velocity} from './models'
 
-const generator = new RandomSeed(1)
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
 let menu: Menubar
@@ -33,7 +30,8 @@ export class Tilemap extends PIXI.Container {
   interactive: boolean
   character: Character
   position: PIXI.Point
-  velocity: Velocity
+  vx: number
+  vy: number
   tileSize: number
   tileWidthHalf: number
   tileHeightHalf: number
@@ -45,7 +43,6 @@ export class Tilemap extends PIXI.Container {
   mousemove: any
   selectedTileCoords: number[]
   mousePressPoint: number[]
-  movie: any  //useless?
 
   constructor(width: number, height: number) {
     super()
@@ -73,15 +70,14 @@ export class Tilemap extends PIXI.Container {
     this.keyD = keyboard(68)
     this.keyC = keyboard(67)
 
-    this.character.character = PIXI.Sprite.fromFrame('Jog_135_01')
+    this.character = new Character()
     this.character.position = new PIXI.Point(-10, -40)
     this.character.tile = {x: 0, y: 0}
     this.character.selected = false
     this.character.isCrouched = false
-    this.movie = null
 
-    this.velocity.vx = 0
-    this.velocity.vy = 0
+    this.vx = 0
+    this.vy = 0
 
     this.selectedTileCoords = [0, 0]
     this.mousePressPoint = [0, 0]
@@ -115,13 +111,13 @@ export class Tilemap extends PIXI.Container {
       this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
     }
 
-    this.keyW.press = () => this.velocity.vy = Config.mapScrollSpeed
-    this.keyD.press = () => this.velocity.vx = -Config.mapScrollSpeed
-    this.keyA.press = () => this.velocity.vx = Config.mapScrollSpeed
-    this.keyS.press = () => this.velocity.vy = -Config.mapScrollSpeed
+    this.keyW.press = () => this.vy = Config.mapScrollSpeed
+    this.keyD.press = () => this.vx = -Config.mapScrollSpeed
+    this.keyA.press = () => this.vx = Config.mapScrollSpeed
+    this.keyS.press = () => this.vy = -Config.mapScrollSpeed
 
-    this.keyD.release = this.keyA.release = () => this.velocity.vx = 0
-    this.keyW.release = this.keyS.release = () => this.velocity.vy = 0
+    this.keyD.release = this.keyA.release = () => this.vx = 0
+    this.keyW.release = this.keyS.release = () => this.vy = 0
     this.keyC.press = () => this.character.isCrouched = !this.character.isCrouched
   }
 
@@ -172,6 +168,7 @@ export class Tilemap extends PIXI.Container {
   }
 
   getTile(x: number, y: number) {
+    //console.log('xy',x,y) //TODO: random seed probably fails
     return this.getChildAt(x * this.tilesAmountY + y) as any
   }
 
@@ -193,19 +190,19 @@ export class Tilemap extends PIXI.Container {
         this.addTile(x, y, Config.GRASS)
       }
     }
-    const xLinePoint = new PIXI.Point(0, generator.random() * this.tilesAmountX - 1)
-    const yLinePoint = new PIXI.Point(generator.random() * this.tilesAmountX - 15, 0)
+    const xLinePoint = new PIXI.Point(0, 1 * this.tilesAmountX - 1)
+    const yLinePoint = new PIXI.Point(2 * this.tilesAmountX - 15, 0)
     this.spawnXLine(xLinePoint, true, Config.ROAD)
-    this.spawnYLine(yLinePoint, false, Config.ROAD)
+    //this.spawnYLine(yLinePoint, true, Config.ROAD)
 
     this.spawnChunks(6,
-      Math.floor(generator.random() * this.tilesAmountX),
-      Math.floor(generator.random() * this.tilesAmountY),
+      Math.floor(3 * this.tilesAmountX),
+      Math.floor(2 * this.tilesAmountY),
       Config.WATER)
 
-    for (let i = 0; i < 500; i++) {
-      this.addWoodTile(generator.random() * this.tilesAmountX - 1, generator.random() * this.tilesAmountY - 1, Config.WOOD)
-    }
+    //for (let i = 0; i < 500; i++) {
+    this.addWoodTile(32, 45, Config.WOOD)
+    //}
   }
 
   spawnXLine(position: PIXI.Point, directionX: boolean, element: any) {
@@ -213,7 +210,7 @@ export class Tilemap extends PIXI.Container {
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-      this.spawnXLine(new PIXI.Point(x,y), Math.round(generator.random() * 3) !== 0, element)
+      this.spawnXLine(new PIXI.Point(x, y), true, element)
     }
   }
 
@@ -222,7 +219,7 @@ export class Tilemap extends PIXI.Container {
     const x = directionX ? position.x + 1 : position.x - 1
     const y = directionX ? position.y : position.y + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-      this.spawnXLine(new PIXI.Point(x,y), generator.random() * 3 === 0, element)
+      this.spawnXLine(new PIXI.Point(x, y), true, element)
     }
   }
 
@@ -235,8 +232,8 @@ export class Tilemap extends PIXI.Container {
     this.changeTile(x, y, element)
 
     for (let i = 0; i < size; i++) {
-      const horizontal = Math.floor(generator.random() * 2) - 1
-      const vertical = Math.floor(generator.random() * 2) - 1
+      const horizontal = Math.floor(3 * 2) - 1
+      const vertical = Math.floor(4 * 2) - 1
       this.spawnChunks(size - 1, x + horizontal, y + vertical, element)
     }
   }
@@ -302,8 +299,8 @@ export class Tilemap extends PIXI.Container {
   }
 
   inputHandler() {
-    this.position.x += this.velocity.vx
-    this.position.y += this.velocity.vy
+    this.position.x += this.vx
+    this.position.y += this.vy
     this.constrainTilemap()
   }
 }
@@ -324,23 +321,24 @@ export default {
   },
 
   loadTexture: (mapFilePath: string, characterFilePath: string) => {
-    new PIXI.loaders.Loader()
-      .add([mapFilePath, characterFilePath])
-      .once('complete', () => {
-        tilemap = new Tilemap(Config.tilesX, Config.tilesY)
-        container.addChild(tilemap)
 
-        character = new Character()
-        container.addChild(character)
+    const loader = new PIXI.loaders.Loader()
+    loader.add([mapFilePath, characterFilePath])
+    loader.once('complete', () => {
+      tilemap = new Tilemap(Config.tilesX, Config.tilesY)
+      container.addChild(tilemap)
 
-        menu = new Menubar(tilemap)
-        container.addChild(menu)
+      character = new Character()
+      container.addChild(character)
 
-        tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
-        tilemap.zoomIn()
+      menu = new Menubar(tilemap)
+      container.addChild(menu)
 
-        requestAnimationFrame(animate)
-      })
-      .on('load', (loader: any) => loader.load())
+      tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
+      tilemap.zoomIn()
+
+      requestAnimationFrame(animate)
+    })
+    loader.load()
   }
 }

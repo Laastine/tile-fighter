@@ -12,6 +12,7 @@ class Character extends PIXI.Container {
     super()
     this.isCrouched = false
     this.selected = false
+    this.character = PIXI.Sprite.fromFrame('Jog_135_01')
   }
 
   getDirection(route: any[], currentPos: PIXI.Point) {
