@@ -8,12 +8,15 @@ import {keyboard} from './keyboard'
 import Graph from './logic/graph'
 import PathFinder from './logic/path-finder'
 import {Config} from './config'
+import {LCG} from './util'
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
 let menu: Menubar
 let character: Character
 let tilemap: Tilemap
+
+const LCGRandom = new LCG(1)
 
 export class Tilemap extends PIXI.Container {
   tilesAmountX: number
@@ -55,7 +58,7 @@ export class Tilemap extends PIXI.Container {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 1
+    this.zoom = 0.25
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = this.position = new PIXI.Point(0, 0)
@@ -87,10 +90,10 @@ export class Tilemap extends PIXI.Container {
     this.addChild(this.selectedGraphics)
     this.addChild(this.mouseoverGraphics)
 
-    this.mousedown = this.touchstart = function (event: MouseEvent) {
-      if (event.screenX > Config.menuBarWidth) {
-        this.mousePressPoint[0] = event.screenX - this.position.x - this.tileSize
-        this.mousePressPoint[1] = event.screenY - this.position.y
+    this.mousedown = this.touchstart = function (event: any) {
+      if (event.data.global.x > Config.menuBarWidth) {
+        this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
+        this.mousePressPoint[1] = event.data.global.y - this.position.y
 
         this.selectTile(Math.floor(
             (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2) + this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
@@ -98,8 +101,8 @@ export class Tilemap extends PIXI.Container {
       }
     }
 
-    this.mousemove = this.touchmove = function (event: MouseEvent) {
-      const mouseOverPoint = [event.screenX - this.position.x, event.screenY - this.position.y]
+    this.mousemove = this.touchmove = function (event: any) {
+      const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
       const mouseoverTileCoords = [Math.floor(
         (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2) + mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
         Math.floor((mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2) - (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)]
@@ -154,8 +157,6 @@ export class Tilemap extends PIXI.Container {
       const tile = PIXI.Sprite.fromFrame(terrain.name) as any
       tile.position = this.cartesianToIsometric(x * this.tileWidthHalf, y * this.tileWidthHalf)
       tile.position.x -= this.tileSize / 2
-      //tile.tileX = x
-      //tile.tileY = y  //WTF
       tile.terrain = terrain.name
       tile.weight = terrain.weight
       this.changeTile(x, y, terrain)
@@ -168,7 +169,6 @@ export class Tilemap extends PIXI.Container {
   }
 
   getTile(x: number, y: number) {
-    //console.log('xy',x,y) //TODO: random seed probably fails
     return this.getChildAt(x * this.tilesAmountY + y) as any
   }
 
@@ -190,36 +190,41 @@ export class Tilemap extends PIXI.Container {
         this.addTile(x, y, Config.GRASS)
       }
     }
-    const xLinePoint = new PIXI.Point(0, 1 * this.tilesAmountX - 1)
-    const yLinePoint = new PIXI.Point(2 * this.tilesAmountX - 15, 0)
-    this.spawnXLine(xLinePoint, true, Config.ROAD)
-    //this.spawnYLine(yLinePoint, true, Config.ROAD)
 
-    this.spawnChunks(6,
-      Math.floor(3 * this.tilesAmountX),
-      Math.floor(2 * this.tilesAmountY),
-      Config.WATER)
+    this.spawnXLine(new PIXI.Point(0, 38), true, Config.ROAD)
+    this.spawnYLine(new PIXI.Point(0, 10), true, Config.ROAD)
 
-    //for (let i = 0; i < 500; i++) {
-    this.addWoodTile(32, 45, Config.WOOD)
-    //}
+    /*
+     this.spawnChunks(6,
+     Math.floor(0.3 * this.tilesAmountX),
+     Math.floor(0.22 * this.tilesAmountY),
+     Config.WATER)
+
+     for (let i = 6; i < 23; i++) {
+     for (let j = 4; j < 23; j++) {
+     this.addWoodTile(i, j, Config.WOOD)
+     }
+     }
+     */
   }
 
   spawnXLine(position: PIXI.Point, directionX: boolean, element: any) {
+    console.log("X", position)
     this.changeTile(position.x, position.y, element)
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-      this.spawnXLine(new PIXI.Point(x, y), true, element)
+      this.spawnYLine(new PIXI.Point(x, y), LCGRandom.randomFloat() < 0.9, element)
     }
   }
 
   spawnYLine(position: PIXI.Point, directionX: boolean, element: any) {
+    console.log("Y", position)
     this.changeTile(position.x, position.y, element)
     const x = directionX ? position.x + 1 : position.x - 1
     const y = directionX ? position.y : position.y + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-      this.spawnXLine(new PIXI.Point(x, y), true, element)
+      this.spawnXLine(new PIXI.Point(x, y), LCGRandom.randomFloat() < 0.8, element)
     }
   }
 
