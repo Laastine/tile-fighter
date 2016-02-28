@@ -194,12 +194,18 @@ export class Tilemap extends PIXI.Container {
     this.spawnXLine(new PIXI.Point(0, 38), true, Config.ROAD)
     this.spawnYLine(new PIXI.Point(0, 10), true, Config.ROAD)
 
-    /*
-     this.spawnChunks(6,
-     Math.floor(0.3 * this.tilesAmountX),
-     Math.floor(0.22 * this.tilesAmountY),
-     Config.WATER)
 
+    this.spawnChunks(6,
+      Math.floor(0.3 * this.tilesAmountX),
+      Math.floor(0.44 * this.tilesAmountY),
+      Config.WATER)
+
+    this.spawnChunks(6,
+      Math.floor(0.8 * this.tilesAmountX),
+      Math.floor(0.44 * this.tilesAmountY),
+      Config.WATER)
+
+    /*
      for (let i = 6; i < 23; i++) {
      for (let j = 4; j < 23; j++) {
      this.addWoodTile(i, j, Config.WOOD)
@@ -209,7 +215,6 @@ export class Tilemap extends PIXI.Container {
   }
 
   spawnXLine(position: PIXI.Point, directionX: boolean, element: any) {
-    console.log("X", position)
     this.changeTile(position.x, position.y, element)
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
@@ -219,7 +224,6 @@ export class Tilemap extends PIXI.Container {
   }
 
   spawnYLine(position: PIXI.Point, directionX: boolean, element: any) {
-    console.log("Y", position)
     this.changeTile(position.x, position.y, element)
     const x = directionX ? position.x + 1 : position.x - 1
     const y = directionX ? position.y : position.y + 1
@@ -237,8 +241,8 @@ export class Tilemap extends PIXI.Container {
     this.changeTile(x, y, element)
 
     for (let i = 0; i < size; i++) {
-      const horizontal = Math.floor(3 * 2) - 1
-      const vertical = Math.floor(4 * 2) - 1
+      const horizontal = Math.floor(LCGRandom.randomFloat() * 2) - 1
+      const vertical = Math.floor(LCGRandom.randomFloat() * 2) - 1
       this.spawnChunks(size - 1, x + horizontal, y + vertical, element)
     }
   }
