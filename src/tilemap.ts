@@ -152,17 +152,6 @@ export class Tilemap extends PIXI.Container {
     this.addChildAt(tile, x * this.tilesAmountY + y)
   }
 
-  addWoodTile(x: number, y: number, terrain: any) {
-    if (x > 0 && y > 0 && this.getTile(x, y).terrain === Config.GRASS.name) {
-      const tile = PIXI.Sprite.fromFrame(terrain.name) as any
-      tile.position = this.cartesianToIsometric(x * this.tileWidthHalf, y * this.tileWidthHalf)
-      tile.position.x -= this.tileSize / 2
-      tile.terrain = terrain.name
-      tile.weight = terrain.weight
-      this.changeTile(x, y, terrain)
-    }
-  }
-
   changeTile(x: number, y: number, tile: any) {
     this.removeChild(this.getTile(x, y) as any)
     this.addTile(x, y, tile)
@@ -205,13 +194,11 @@ export class Tilemap extends PIXI.Container {
       Math.floor(0.44 * this.tilesAmountY),
       Config.WATER)
 
-    /*
-     for (let i = 6; i < 23; i++) {
-     for (let j = 4; j < 23; j++) {
-     this.addWoodTile(i, j, Config.WOOD)
-     }
-     }
-     */
+
+    for (let i = 0; i < 28; i++) {
+      this.spawnChunks(4, Math.floor(LCGRandom.randomFloat() * Config.tilesX -1),
+        Math.floor(LCGRandom.randomFloat() * Config.tilesY -1), Config.WOOD)
+    }
   }
 
   spawnXLine(position: PIXI.Point, directionX: boolean, element: any) {
