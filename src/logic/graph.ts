@@ -1,13 +1,19 @@
+/// <reference path="../references.d.ts" />
+
 import GridNode from './gridnode'
 import PathFinder from './path-finder'
-import config from '../config'
+import {config} from '../config'
 import {times} from 'lodash'
 
 class Graph {
-  constructor(tiles) {
-    const grid = []
+  nodes: GridNode[]
+  grid: GridNode[][]
+  dirtyNodes: GridNode[]
+
+  constructor(tiles: any[]) {
+    const grid: any[][] = []
     times(config.tilesY, () => grid.push([]))
-    tiles.forEach((tile, index) => {
+    tiles.forEach((tile: any, index: number) => {
       const i = Math.floor(index / config.tilesY)
       const j = index - (i * config.tilesY)
       grid[i][j] = tile.weight
@@ -40,32 +46,32 @@ class Graph {
     this.dirtyNodes = []
   }
 
-  markDirty(node) {
+  markDirty(node: GridNode) {
     this.dirtyNodes.push(node)
   }
 
-  neighbors(node) {
-    const ret = []
-    const x = node.x
-    const y = node.y
+  neighbors(node: GridNode) {
+    const ret: GridNode[] = []
+    const x: number = node.x
+    const y: number = node.y
     const grid = this.grid
 
-    //315
+    // 315
     if (grid[x - 1] && grid[x - 1][y]) {
       ret.push(grid[x - 1][y])
     }
 
-    //135
+    // 135
     if (grid[x + 1] && grid[x + 1][y]) {
       ret.push(grid[x + 1][y])
     }
 
-    //225
+    // 225
     if (grid[x] && grid[x][y - 1]) {
       ret.push(grid[x][y - 1])
     }
 
-    //45
+    // 45
     if (grid[x] && grid[x][y + 1]) {
       ret.push(grid[x][y + 1])
     }
@@ -74,10 +80,10 @@ class Graph {
   }
 
   toString() {
-    const graphString = []
+    const graphString: string[] = []
     const nodes = this.grid
     for (let x = 0; x < nodes.length; x++) {
-      const rowDebug = []
+      const rowDebug: number[] = []
       const row = nodes[x]
       for (let y = 0; y < row.length; y++) {
         rowDebug.push(row[y].weight)

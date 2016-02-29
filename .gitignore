@@ -1,7 +1,11 @@
+/.idea
 node_modules/
 .idea/
 .generated/bundle.js
-*.psd
 .DS_Store
 /npm-debug.log
 /deploy.sh
+/tile-fighter.iml
+.generated/*.js
+.generated/**/*.js
+src/**.js*

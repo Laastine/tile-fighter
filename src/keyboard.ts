@@ -1,18 +1,20 @@
-export function keyboard(keyCode) {
+export function keyboard(keyCode: number) {
   const key = {
     code: keyCode,
     isDown: false,
     isUp: true,
-    press: undefined,
-    release: undefined,
-    downHandler: (event) => {
+    press: Function,
+    release: Function,
+    downHandler: (event: KeyboardEvent) => {
       if (event.keyCode === key.code) {
-        if (key.isUp && key.press) key.press()
+        if (key.isUp && key.press) {
+          key.press()
+        }
         key.isDown = true
         key.isUp = false
       }
     },
-    upHandler: (event) => {
+    upHandler: (event: KeyboardEvent) => {
       if (event.keyCode === key.code) {
         if (key.isDown && key.release) {
           key.release()

@@ -1,8 +1,11 @@
+import * as PIXI from 'pixi.js';
 import BinaryHeap from './heap'
+import Graph from './graph';
+import GridNode from './gridnode';
 
-function pathTo(node) {
+function pathTo(node: GridNode) {
   let curr = node
-  const path = []
+  const path: GridNode[] = []
   while (curr.parent) {
     path.unshift(curr)
     curr = curr.parent
@@ -11,13 +14,13 @@ function pathTo(node) {
 }
 
 function getHeap() {
-  return new BinaryHeap(function (node) {
+  return new BinaryHeap(function (node: GridNode) {
     return node.f
   })
 }
 
 export default {
-  search(graph, start, end) {
+  search(graph: Graph, start: GridNode, end: GridNode) {
     graph.cleanDirty()
     const heuristic = this.heuristics
     const openHeap = getHeap()
@@ -28,7 +31,7 @@ export default {
     openHeap.push(start)
 
     while (openHeap.size() > 0) {
-      var currentNode = openHeap.pop()
+      const currentNode = openHeap.pop()
       if (currentNode === end) {
         return pathTo(currentNode)
       }
@@ -66,14 +69,14 @@ export default {
     return []
   },
 
-  heuristics(pos1, pos2) {
+  heuristics(pos1: PIXI.Point, pos2: PIXI.Point) {
     const d1 = Math.abs(pos2.x - pos1.x)
     const d2 = Math.abs(pos2.y - pos1.y)
     return d1 + d2
 
   },
 
-  cleanNode(node) {
+  cleanNode(node: GridNode) {
     node.f = 0
     node.g = 0
     node.h = 0

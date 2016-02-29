@@ -1,6 +1,6 @@
 # Tile-fighter
 
-Hobby project for testing [pixi.js](http://www.pixijs.com/) capabilities.
+Hobby project for testing [pixi.js](http://www.pixijs.com/) capabilities with Typescript.
 
 [Test it](http://laastine.kapsi.fi/tile-fighter/)
 

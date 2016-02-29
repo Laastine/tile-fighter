@@ -1,9 +1,14 @@
-import PIXI from 'pixi.js'
-import config from './config'
+import * as PIXI from 'pixi.js'
+import {Tilemap} from './tilemap'
+import {config} from './config'
 
 class Menubar extends PIXI.Container {
-  constructor(tilemap) {
-    super(tilemap)
+  background: PIXI.Graphics
+  selectedTileCoordText: PIXI.Text
+  selectedTileTypeText: PIXI.Text
+  movementWarning: PIXI.Text
+  constructor(tilemap: Tilemap) {
+    super()
     this.interactive = true
     const marginWidth = 2
     this.background = new PIXI.Graphics()
@@ -32,9 +37,9 @@ class Menubar extends PIXI.Container {
     this.addMenuButton(this, '-', 30, 24, tilemap, tilemap.zoomOut)
   }
 
-  addMenuButton(that, text, x, y, obj, callback) {
+  addMenuButton(that: any, text: string, x: number, y: number, obj: any, callback: any) {
     const textColor = '#777'
-    const button = new PIXI.Text(text, {font: '40px Helvetica', fill: textColor})
+    const button = new PIXI.Text(text, {font: '40px Helvetica', fill: textColor}) as any
     button.position.x = x
     button.position.y = y
     button.interactive = true
