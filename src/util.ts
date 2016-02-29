@@ -41,3 +41,15 @@ export class LCG {
     return array[this.nextRange(0, array.length)];
   }
 }
+
+export const cartesianToIsometric = (pointX: number, pointY: number) => {
+  const x = pointX - pointY
+  const y = (pointX + pointY) / 2
+  return new PIXI.Point(x, y)
+}
+
+export const isometricToCartesian = (pointX: number, pointY: number) => {
+  const x = (2 * pointY + pointX) / 2
+  const y = (2 * pointY - pointX) / 2
+  return new PIXI.Point(x, y)
+}

@@ -6,9 +6,10 @@ import Menubar from './menubar'
 import Character from './character'
 import {keyboard} from './keyboard'
 import Graph from './logic/graph'
+import GridNode from './logic/gridnode'
 import PathFinder from './logic/path-finder'
 import {Config} from './config'
-import {LCG} from './util'
+import {LCG, cartesianToIsometric} from './util'
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -58,7 +59,7 @@ export class Tilemap extends PIXI.Container {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 0.25
+    this.zoom = 1
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = this.position = new PIXI.Point(0, 0)
@@ -73,12 +74,7 @@ export class Tilemap extends PIXI.Container {
     this.keyD = keyboard(68)
     this.keyC = keyboard(67)
 
-    this.character = new Character()
-    this.character.position = new PIXI.Point(-10, -40)
-    this.character.tile = {x: 0, y: 0}
-    this.character.selected = false
-    this.character.isCrouched = false
-
+    this.character = new Character(0, 0)
     this.vx = 0
     this.vy = 0
 
@@ -145,7 +141,7 @@ export class Tilemap extends PIXI.Container {
 
   addTile(x: number, y: number, terrain: any) {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
-    tile.position = this.cartesianToIsometric(x * this.tileSize, y * this.tileSize)
+    tile.position = cartesianToIsometric(x * this.tileSize, y * this.tileSize)
     tile.position.x -= this.tileSize / 2
     tile.terrain = terrain.name
     tile.weight = terrain.weight
@@ -161,18 +157,6 @@ export class Tilemap extends PIXI.Container {
     return this.getChildAt(x * this.tilesAmountY + y) as any
   }
 
-  cartesianToIsometric(pointX: number, pointY: number) {
-    const x = pointX - pointY
-    const y = (pointX + pointY) / 2
-    return new PIXI.Point(x, y)
-  }
-
-  isometricToCartesian(pointX: number, pointY: number) {
-    const x = (2 * pointY + pointX) / 2
-    const y = (2 * pointY - pointX) / 2
-    return new PIXI.Point(x, y)
-  }
-
   generateMap() {
     for (let x = 0; x < this.tilesAmountX; x++) {
       for (let y = 0; y < this.tilesAmountY; y++) {
@@ -182,7 +166,6 @@ export class Tilemap extends PIXI.Container {
 
     this.spawnXLine(new PIXI.Point(0, 38), true, Config.ROAD)
     this.spawnYLine(new PIXI.Point(0, 10), true, Config.ROAD)
-
 
     this.spawnChunks(6,
       Math.floor(0.3 * this.tilesAmountX),
@@ -194,10 +177,9 @@ export class Tilemap extends PIXI.Container {
       Math.floor(0.44 * this.tilesAmountY),
       Config.WATER)
 
-
     for (let i = 0; i < 28; i++) {
-      this.spawnChunks(4, Math.floor(LCGRandom.randomFloat() * Config.tilesX -1),
-        Math.floor(LCGRandom.randomFloat() * Config.tilesY -1), Config.WOOD)
+      this.spawnChunks(4, Math.floor(LCGRandom.randomFloat() * Config.tilesX - 1),
+        Math.floor(LCGRandom.randomFloat() * Config.tilesY - 1), Config.WOOD)
     }
   }
 
@@ -244,20 +226,25 @@ export class Tilemap extends PIXI.Container {
         this.selectedTileCoords[0] :
         this.selectedTileCoords[1]) - Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
 
+    console.log('character', this.character)
     if (this.getTile(x, y).terrain === Config.WOOD.name || this.getTile(x, y).terrain === Config.WATER.name) {
+      console.log('1')
       menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
     } else if (_.isEqual(this.character.tile, this.selectedTileCoords)) {
+      console.log('2')
       this.character.selected = !this.character.selected
       character.drawCharter(this)
     } else if (this.character.selected) {
+      console.log('3')
       menu.movementWarning.text = ''
-      const path = PathFinder.search(this.graph, this.graph.grid[this.character.tile.x][this.character.tile.y], this.graph.grid[x][y])
-      character.moveCharacter(this,
-        character.getDirection(path, this.character.tile),
-        this.character,
-        _.partial(character.drawCharter, this))
-      this.character.tile = {x, y}
+      const path = PathFinder.search(this.graph, this.graph.grid[this.character.tile[0]][this.character.tile[1]], this.graph.grid[x][y])
+      console.log('path',path)
+      const directions = character.getDirection(path, this.character.tile)
+      //console.log('dir', directions, this.graph.grid[this.character.tile[0]][this.character.tile[1]], this.graph.grid[x][y])
+      character.moveCharacter(this, directions, this.character, _.partial(character.drawCharter, this))
+      this.character.tile = [x, y]
     } else {
+      console.log('4')
       character.drawCharter(this)
     }
     this.drawRectangle(this.selectedGraphics, xValue, yValue, this.character.selected ? 0xFF0000 : 0xFFFFFF)
@@ -317,14 +304,13 @@ export default {
   },
 
   loadTexture: (mapFilePath: string, characterFilePath: string) => {
-
     const loader = new PIXI.loaders.Loader()
     loader.add([mapFilePath, characterFilePath])
     loader.once('complete', () => {
       tilemap = new Tilemap(Config.tilesX, Config.tilesY)
       container.addChild(tilemap)
 
-      character = new Character()
+      character = new Character(0, 0)
       container.addChild(character)
 
       menu = new Menubar(tilemap)

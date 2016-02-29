@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import {Tilemap} from "./tilemap"
-import {Config} from './Config'
+import {Config} from './config'
 
 class Menubar extends PIXI.Container {
   background: PIXI.Graphics

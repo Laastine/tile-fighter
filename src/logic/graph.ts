@@ -7,10 +7,10 @@ import {times} from 'lodash'
 
 class Graph {
   nodes: GridNode[]
-  grid: any[]
+  grid: GridNode[][]
   dirtyNodes: GridNode[]
   constructor(tiles: any[]) {
-    const grid: any[] = []
+    const grid: any[][] = []
     times(Config.tilesY, () => grid.push([]))
     tiles.forEach((tile: any, index: number) => {
       const i = Math.floor(index / Config.tilesY)

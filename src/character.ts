@@ -7,17 +7,20 @@ class Character extends PIXI.Container {
   tile: any
   isCrouched: boolean
   selected: boolean
-  character: PIXI.Sprite
-  constructor() {
+  characterSprite: any
+
+  constructor(x: number, y: number) {
     super()
     this.isCrouched = false
     this.selected = false
-    this.character = PIXI.Sprite.fromFrame('Jog_135_01')
+    this.tile = [x,y]
+    this.characterSprite = PIXI.Sprite.fromFrame('Jog_135_01')
+    this.characterSprite.position = {x: -10, y: -40}
   }
 
-  getDirection(route: any[], currentPos: PIXI.Point) {
+  getDirection(route: any[], currentPos: number[]) {
     const directions: number[] = []
-    let pos = currentPos || {x: 0, y: 0}
+    let pos = {x: currentPos[0], y: currentPos[1]}
     route.forEach((dir) => {
       const nextPos = {x: dir.x, y: dir.y}
       if (nextPos.x > pos.x) {
@@ -35,10 +38,10 @@ class Character extends PIXI.Container {
   }
 
   drawCharter(that: any) {
-    if (!that.character) {
-      that.addChild(that.character)
+    if (!that.character.characterSprite) {
+      that.addChild(that.character.characterSprite)
     }
-    that.addChild(that.character)
+    that.addChild(that.character.characterSprite)
   }
 
   loadFrames(direction: number, isCrouched: boolean) {
@@ -52,18 +55,18 @@ class Character extends PIXI.Container {
   }
 
   moveCharacter(that: any, directions: number[], character: any, callback: any) {
-    const position = character.position
+    const pos = character.characterSprite.position
     const isCrouched = character.isCrouched
     const doAnimation = () => {
       if (directions.length === 0) {
         return callback(that)
       }
 
-      that.removeChild(that.character)
+      that.removeChild(that.character.characterSprite)
       let click = 0
       const movementTime = 12
       that.movie = new PIXI.extras.MovieClip(this.loadFrames(directions[0], isCrouched))
-      that.movie.position.set(position.x, position.y)
+      that.movie.position.set(pos.x, pos.y)
       that.movie.anchor.set(0.5, 0.3)
       that.movie.animationSpeed = 0.5
       that.movie.play()
@@ -72,13 +75,13 @@ class Character extends PIXI.Container {
       while (click < Config.tileSize) {
         window.setTimeout(() => {
           if (directions[0] === 45) {
-            that.movie.position.set(position.x++, position.y -= 0.5)
+            that.movie.position.set(pos.x++, pos.y -= 0.5)
           } else if (directions[0] === 135) {
-            that.movie.position.set(position.x++, position.y += 0.5)
+            that.movie.position.set(pos.x++, pos.y += 0.5)
           } else if (directions[0] === 225) {
-            that.movie.position.set(position.x--, position.y += 0.5)
+            that.movie.position.set(pos.x--, pos.y += 0.5)
           } else if (directions[0] === 315) {
-            that.movie.position.set(position.x--, position.y -= 0.5)
+            that.movie.position.set(pos.x--, pos.y -= 0.5)
           }
         }, click * movementTime)
         click++
