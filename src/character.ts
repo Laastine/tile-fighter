@@ -1,7 +1,7 @@
 /// <reference path="./references.d.ts" />
 
 import * as PIXI from 'pixi.js'
-import {Config} from './config'
+import {config} from './config'
 
 class Character extends PIXI.Container {
   tile: any
@@ -13,7 +13,7 @@ class Character extends PIXI.Container {
     super()
     this.isCrouched = false
     this.selected = false
-    this.tile = [x,y]
+    this.tile = [x, y]
     this.characterSprite = PIXI.Sprite.fromFrame('Jog_135_01')
     this.characterSprite.position = {x: -10, y: -40}
   }
@@ -72,7 +72,7 @@ class Character extends PIXI.Container {
       that.movie.play()
       that.addChild(that.movie)
 
-      while (click < Config.tileSize) {
+      while (click < config.tileSize) {
         window.setTimeout(() => {
           if (directions[0] === 45) {
             that.movie.position.set(pos.x++, pos.y -= 0.5)
@@ -94,7 +94,7 @@ class Character extends PIXI.Container {
         } else {
           callback(that)
         }
-      }, Config.tileSize * movementTime)
+      }, config.tileSize * movementTime)
     }
 
     doAnimation()

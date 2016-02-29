@@ -37,7 +37,7 @@
         "variables-before-functions"
       ],
       "no-arg": true,
-      "no-bitwise": true,
+      "no-bitwise": false,
       "no-conditional-assignment": true,
       "no-consecutive-blank-lines": false,
       "no-console": false,
@@ -70,7 +70,7 @@
       ],
       "quotemark": [
         true,
-        "double",
+        "single",
         "avoid-escape"
       ],
       "radix": true,
@@ -96,8 +96,7 @@
         "check-function"
       ],
       "variable-name": [
-        true,
-        "check-format",
+        false,
         "ban-keywords"
       ],
       "whitespace": [

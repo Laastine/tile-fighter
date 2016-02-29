@@ -1,7 +1,7 @@
-import * as PIXI from "pixi.js";
+import * as PIXI from 'pixi.js';
 import BinaryHeap from './heap'
-import Graph from "./graph";
-import GridNode from "./gridnode";
+import Graph from './graph';
+import GridNode from './gridnode';
 
 function pathTo(node: GridNode) {
   let curr = node
@@ -31,7 +31,7 @@ export default {
     openHeap.push(start)
 
     while (openHeap.size() > 0) {
-      var currentNode = openHeap.pop()
+      const currentNode = openHeap.pop()
       if (currentNode === end) {
         return pathTo(currentNode)
       }

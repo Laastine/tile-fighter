@@ -1,4 +1,4 @@
-export const Config = {
+export const config = {
   GRASS: {
     name: 'grass',
     weight: 3

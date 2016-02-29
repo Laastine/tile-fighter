@@ -1,4 +1,4 @@
-import GridNode from "./gridnode";
+import GridNode from './gridnode';
 class BinaryHeap {
   content: any[]
   scoreFunction: any
@@ -72,7 +72,7 @@ class BinaryHeap {
       const child2N = (n + 1) << 1
       const child1N = child2N - 1
       let swap: any = null as any
-      let child1Score: number = 0
+      let child1Score = 0
 
       if (child1N < length) {
         const child1 = this.content[child1N]

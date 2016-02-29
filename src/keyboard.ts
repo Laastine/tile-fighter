@@ -3,11 +3,13 @@ export function keyboard(keyCode: number) {
     code: keyCode,
     isDown: false,
     isUp: true,
-    press: function() {},
-    release: function() {},
+    press: Function,
+    release: Function,
     downHandler: (event: KeyboardEvent) => {
       if (event.keyCode === key.code) {
-        if (key.isUp && key.press) key.press()
+        if (key.isUp && key.press) {
+          key.press()
+        }
         key.isDown = true
         key.isUp = false
       }

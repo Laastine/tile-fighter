@@ -2,19 +2,20 @@
 
 import GridNode from './gridnode'
 import PathFinder from './path-finder'
-import {Config} from '../config'
+import {config} from '../config'
 import {times} from 'lodash'
 
 class Graph {
   nodes: GridNode[]
   grid: GridNode[][]
   dirtyNodes: GridNode[]
+
   constructor(tiles: any[]) {
     const grid: any[][] = []
-    times(Config.tilesY, () => grid.push([]))
+    times(config.tilesY, () => grid.push([]))
     tiles.forEach((tile: any, index: number) => {
-      const i = Math.floor(index / Config.tilesY)
-      const j = index - (i * Config.tilesY)
+      const i = Math.floor(index / config.tilesY)
+      const j = index - (i * config.tilesY)
       grid[i][j] = tile.weight
     })
     this.nodes = []
@@ -55,22 +56,22 @@ class Graph {
     const y: number = node.y
     const grid = this.grid
 
-    //315
+    // 315
     if (grid[x - 1] && grid[x - 1][y]) {
       ret.push(grid[x - 1][y])
     }
 
-    //135
+    // 135
     if (grid[x + 1] && grid[x + 1][y]) {
       ret.push(grid[x + 1][y])
     }
 
-    //225
+    // 225
     if (grid[x] && grid[x][y - 1]) {
       ret.push(grid[x][y - 1])
     }
 
-    //45
+    // 45
     if (grid[x] && grid[x][y + 1]) {
       ret.push(grid[x][y + 1])
     }

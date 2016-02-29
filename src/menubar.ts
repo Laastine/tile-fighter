@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
-import {Tilemap} from "./tilemap"
-import {Config} from './config'
+import {Tilemap} from './tilemap'
+import {config} from './config'
 
 class Menubar extends PIXI.Container {
   background: PIXI.Graphics
@@ -14,11 +14,11 @@ class Menubar extends PIXI.Container {
     this.background = new PIXI.Graphics()
     this.background.lineStyle(1, 0x000000, 1)
     this.background.beginFill(0x444444, 1)
-    this.background.drawRect(Config.menuBarWidth - marginWidth, 0, marginWidth, Config.screenX)
+    this.background.drawRect(config.menuBarWidth - marginWidth, 0, marginWidth, config.screenX)
     this.background.endFill()
     this.background.lineStyle(0, 0x000000, 1)
     this.background.beginFill(0xDDDDDD, 1)
-    this.background.drawRect(0, 0, Config.menuBarWidth - marginWidth, Config.screenX)
+    this.background.drawRect(0, 0, config.menuBarWidth - marginWidth, config.screenX)
     this.background.endFill()
     this.addChild(this.background)
 
