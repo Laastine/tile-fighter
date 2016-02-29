@@ -22,9 +22,10 @@
     "watchify": "3.7.0"
   },
   "scripts": {
-    "build": "node tsconfig && browserify src/app.ts -p tsify -o .generated/bundle.js",
+    "build": "node tsconfig && browserify src/app.ts -p tsify -o .generated/bundle.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle",
     "watch": "node node_modules/watchify/bin/cmd.js src/app.ts -p tsify --debug -o .generated/bundle.js -v",
     "lint": "tsconfig-lint",
-    "test": "_mocha --compilers js:babel-core/register -R spec test/calcSpec.js"
+    "test": "_mocha --compilers js:babel-core/register -R spec test/calcSpec.js",
+    "clean": "find .generated -type f -name '*.js' -exec rm {} +"
   }
 }

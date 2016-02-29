@@ -6,5 +6,6 @@ node_modules/
 /npm-debug.log
 /deploy.sh
 /tile-fighter.iml
-/.generated
+.generated/*.js
+.generated/**/*.js
 src/**.js*
