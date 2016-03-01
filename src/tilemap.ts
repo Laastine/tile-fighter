@@ -169,8 +169,8 @@ export class Tilemap extends PIXI.Container {
       }
     }
 
-    this.spawnXLine(new PIXI.Point(0, 38), true, config.ROAD)
-    this.spawnYLine(new PIXI.Point(0, 10), true, config.ROAD)
+    this.spawnLine(new PIXI.Point(0, 38), true, 0.9, config.ROAD)
+    this.spawnLine(new PIXI.Point(0, 4), true, 0.8, config.ROAD)
 
     this.spawnChunks(6,
       Math.floor(0.3 * this.tilesAmountX),
@@ -188,21 +188,12 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  spawnXLine(position: PIXI.Point, directionX: boolean, element: any) {
+  spawnLine(position: PIXI.Point, directionX: boolean, variability: number, element: any) {
     this.changeTile(position.x, position.y, element)
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-      this.spawnYLine(new PIXI.Point(x, y), LCGRandom.randomFloat() < 0.9, element)
-    }
-  }
-
-  spawnYLine(position: PIXI.Point, directionX: boolean, element: any) {
-    this.changeTile(position.x, position.y, element)
-    const x = directionX ? position.x + 1 : position.x - 1
-    const y = directionX ? position.y : position.y + 1
-    if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-      this.spawnXLine(new PIXI.Point(x, y), LCGRandom.randomFloat() < 0.8, element)
+      this.spawnLine(new PIXI.Point(x, y), LCGRandom.randomFloat() < variability, variability, element)
     }
   }
 
