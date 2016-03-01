@@ -19,11 +19,13 @@
     "tsify": "0.13.2",
     "typescript": "1.7.5",
     "uglify-js": "2.6.2",
+    "watch": "0.17.1",
     "watchify": "3.7.0"
   },
   "scripts": {
     "build": "node tsconfig && browserify src/app.ts -p tsify -o .generated/bundle.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle",
     "watch": "node node_modules/watchify/bin/cmd.js src/app.ts -p tsify --debug -o .generated/bundle.js -v",
+    "win-watch": "node node_modules/watch/cli.js \"npm run build\" src/",
     "lint": "tsconfig-lint",
     "test": "_mocha --compilers js:babel-core/register -R spec test/calcSpec.js",
     "clean": "find .generated -type f -name '*.js' -exec rm {} +"
