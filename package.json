@@ -5,8 +5,7 @@
   "private": true,
   "dependencies": {
     "lodash": "4.5.1",
-    "mersenne-twister": "1.0.1",
-    "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.9.tar.gz"
+    "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.10.tar.gz"
   },
   "devDependencies": {
     "browserify": "13.0.0",
@@ -25,7 +24,7 @@
   "scripts": {
     "build": "node tsconfig && browserify --entry src/app.ts -p tsify -o .generated/bundle.js",
     "build-min": "npm run build && node node_modules/uglify-js/bin/uglifyjs --compress -o .generated/bundle.js .generated/bundle.js",
-    "watch": "node node_modules/watchify/bin/cmd.js src/app.ts -p tsify --debug -v .generated/bundle.js",
+    "watch": "watchify src/app.ts -p tsify --debug -v -o .generated/bundle.js",
     "win-watch": "node node_modules/watch/cli.js \"npm run build\" src/",
     "lint": "tsconfig-lint",
     "test": "_mocha --compilers js:babel-core/register -R spec test/calcSpec.js",
