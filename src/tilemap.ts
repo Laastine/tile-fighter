@@ -90,27 +90,19 @@ export class Tilemap extends PIXI.Container {
       if (event.data.global.x > config.menuBarWidth) {
         this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
         this.mousePressPoint[1] = event.data.global.y - this.position.y
-
-        this.selectTile(Math.floor(
-            (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2) +
-            this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
-          Math.floor((this.mousePressPoint[1] / (this.tileHeightHalf * this.zoom / 2) -
-            (this.mousePressPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8))
+        this.selectTile(this.mapGlobalCoordinatesToGame(this.mousePressPoint)
+        )
       }
     }
 
     this.mousemove = this.touchmove = function (event: any) {
       const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
-      const mouseoverTileCoords = [Math.floor(
-        (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2) +
-        mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
-        Math.floor((mouseOverPoint[1] / (this.tileHeightHalf * this.zoom / 2) -
-          (mouseOverPoint[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)]
+      const mouseoverTileCoords = this.mapGlobalCoordinatesToGame(mouseOverPoint)
 
-      const xValue = (mouseoverTileCoords[0] - mouseoverTileCoords[1]) * this.tileSize
-      const yValue = ((mouseoverTileCoords[0] >= mouseoverTileCoords[1] ?
-          mouseoverTileCoords[0] :
-          mouseoverTileCoords[1]) - Math.abs(mouseoverTileCoords[0] - mouseoverTileCoords[1]) / 2) * this.tileSize
+      const xValue = (mouseoverTileCoords.x - mouseoverTileCoords.y) * this.tileSize
+      const yValue = ((mouseoverTileCoords.x >= mouseoverTileCoords.y ?
+          mouseoverTileCoords.x :
+          mouseoverTileCoords.y) - Math.abs(mouseoverTileCoords.x - mouseoverTileCoords.y) / 2) * this.tileSize
 
       this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
     }
@@ -123,6 +115,16 @@ export class Tilemap extends PIXI.Container {
     this.keyD.release = this.keyA.release = () => this.vx = 0
     this.keyW.release = this.keyS.release = () => this.vy = 0
     this.keyC.press = () => this.character.isCrouched = !this.character.isCrouched
+  }
+
+  mapGlobalCoordinatesToGame(coords: number[]) {
+    return {
+      x: Math.floor(
+        (coords[0] / (this.tileWidthHalf * this.zoom / 2) +
+        coords[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
+      y: Math.floor((coords[1] / (this.tileHeightHalf * this.zoom / 2) -
+        (coords[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)
+    }
   }
 
   drawRectangle(graphics: PIXI.Graphics, xValue: number, yValue: number, color: number) {
@@ -212,10 +214,10 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  selectTile(x: number, y: number) {
-    this.selectedTileCoords = {x, y}
+  selectTile(coords: {x: number, y: number}) {
+    this.selectedTileCoords = {x: coords.x, y: coords.y}
     menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords.x + ',' + this.selectedTileCoords.y
-    menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(x, y).terrain
+    menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(coords.x, coords.y).terrain
 
     const xValue = (this.selectedTileCoords.x - this.selectedTileCoords.y) * this.tileSize
     const yValue = ((this.selectedTileCoords.x >= this.selectedTileCoords.y ?
@@ -223,18 +225,18 @@ export class Tilemap extends PIXI.Container {
         this.selectedTileCoords.y) -
       Math.abs(this.selectedTileCoords.x - this.selectedTileCoords.y) / 2) * this.tileSize
 
-    if (this.getTile(x, y).terrain === config.WOOD.name || this.getTile(x, y).terrain === config.WATER.name) {
-      menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
+    if (this.getTile(coords.x, coords.y).terrain === config.WOOD.name || this.getTile(coords.x, coords.y).terrain === config.WATER.name) {
+      menu.movementWarning.text = 'Can\'t move to ' + this.getTile(coords.x, coords.y).terrain
     } else if (_.isEqual(this.character.tile, this.selectedTileCoords)) {
       this.character.selected = !this.character.selected
       character.drawCharter(this)
     } else if (this.character.selected) {
       menu.movementWarning.text = ''
       const startPosition = this.graph.grid[this.character.tile.x][this.character.tile.y]
-      const path = PathFinder.search(this.graph, startPosition, this.graph.grid[x][y])
+      const path = PathFinder.search(this.graph, startPosition, this.graph.grid[coords.x][coords.y])
       const directions = character.getDirection(path, this.character.tile)
       character.moveCharacter(this, directions, this.character, _.partial(character.drawCharter, this))
-      this.character.tile = {x, y}
+      this.character.tile = coords
     } else {
       character.drawCharter(this)
     }
@@ -307,7 +309,7 @@ export default {
       menu = new Menubar(tilemap)
       container.addChild(menu)
 
-      tilemap.selectTile(tilemap.startLocation.x, tilemap.startLocation.y)
+      tilemap.selectTile(tilemap.startLocation)
       tilemap.zoomIn()
 
       requestAnimationFrame(animate)
