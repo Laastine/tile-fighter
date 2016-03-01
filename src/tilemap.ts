@@ -10,6 +10,7 @@ import GridNode from './logic/gridnode'
 import PathFinder from './logic/path-finder'
 import {config} from './config'
 import {LCG, cartesianToIsometric} from './util'
+import Tile = Model.Tile;
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -45,8 +46,8 @@ export class Tilemap extends PIXI.Container {
   touchstart: any
   touchmove: any
   mousemove: any
-  selectedTileCoords: {x: number, y: number}
-  mousePressPoint: {x: number, y: number}
+  selectedTileCoords: Tile
+  mousePressPoint: Tile
 
   constructor(width: number, height: number) {
     super()
@@ -146,28 +147,28 @@ export class Tilemap extends PIXI.Container {
     graphics.endFill()
   }
 
-  addTile(x: number, y: number, terrain: any) {
+  addTile(coords: Tile, terrain: any) {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
-    tile.position = cartesianToIsometric(x * this.tileSize, y * this.tileSize)
+    tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
     tile.terrain = terrain.name
     tile.weight = terrain.weight
-    this.addChildAt(tile, x * this.tilesAmountY + y)
+    this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
   }
 
-  changeTile(x: number, y: number, tile: any) {
-    this.removeChild(this.getTile(x, y) as any)
-    this.addTile(x, y, tile)
+  changeTile(coords: Tile, tile: any) {
+    this.removeChild(this.getTile(coords) as any)
+    this.addTile(coords, tile)
   }
 
-  getTile(x: number, y: number) {
-    return this.getChildAt(x * this.tilesAmountY + y) as any
+  getTile(coords: Tile) {
+    return this.getChildAt(coords.x * this.tilesAmountY + coords.y) as any
   }
 
   generateMap() {
     for (let x = 0; x < this.tilesAmountX; x++) {
       for (let y = 0; y < this.tilesAmountY; y++) {
-        this.addTile(x, y, config.GRASS)
+        this.addTile({x, y}, config.GRASS)
       }
     }
 
@@ -191,7 +192,7 @@ export class Tilemap extends PIXI.Container {
   }
 
   spawnLine(position: PIXI.Point, directionX: boolean, variability: number, element: any) {
-    this.changeTile(position.x, position.y, element)
+    this.changeTile(position, element)
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
@@ -205,7 +206,7 @@ export class Tilemap extends PIXI.Container {
     y = Math.max(y, 0)
     y = Math.min(y, this.tilesAmountY - 1)
 
-    this.changeTile(x, y, element)
+    this.changeTile({x, y}, element)
 
     for (let i = 0; i < size; i++) {
       const horizontal = Math.floor(LCGRandom.randomFloat() * 2) - 1
@@ -214,10 +215,10 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  selectTile(coords: {x: number, y: number}) {
+  selectTile(coords: Tile) {
     this.selectedTileCoords = {x: coords.x, y: coords.y}
     menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords.x + ',' + this.selectedTileCoords.y
-    menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(coords.x, coords.y).terrain
+    menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(coords).terrain
 
     const xValue = (this.selectedTileCoords.x - this.selectedTileCoords.y) * this.tileSize
     const yValue = ((this.selectedTileCoords.x >= this.selectedTileCoords.y ?
@@ -225,8 +226,8 @@ export class Tilemap extends PIXI.Container {
         this.selectedTileCoords.y) -
       Math.abs(this.selectedTileCoords.x - this.selectedTileCoords.y) / 2) * this.tileSize
 
-    if (this.getTile(coords.x, coords.y).terrain === config.WOOD.name || this.getTile(coords.x, coords.y).terrain === config.WATER.name) {
-      menu.movementWarning.text = 'Can\'t move to ' + this.getTile(coords.x, coords.y).terrain
+    if (this.getTile(coords).terrain === config.WOOD.name || this.getTile(coords).terrain === config.WATER.name) {
+      menu.movementWarning.text = 'Can\'t move to ' + this.getTile(coords).terrain
     } else if (_.isEqual(this.character.tile, this.selectedTileCoords)) {
       this.character.selected = !this.character.selected
       character.drawCharter(this)
