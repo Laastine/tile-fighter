@@ -45,8 +45,8 @@ export class Tilemap extends PIXI.Container {
   touchstart: any
   touchmove: any
   mousemove: any
-  selectedTileCoords: number[]
-  mousePressPoint: number[]
+  selectedTileCoords: {x: number, y: number}
+  mousePressPoint: {x: number, y: number}
 
   constructor(width: number, height: number) {
     super()
@@ -78,8 +78,8 @@ export class Tilemap extends PIXI.Container {
     this.vx = 0
     this.vy = 0
 
-    this.selectedTileCoords = [0, 0]
-    this.mousePressPoint = [0, 0]
+    this.selectedTileCoords = {x: 0, y: 0}
+    this.mousePressPoint = {x: 0, y: 0}
     this.selectedGraphics = new PIXI.Graphics()
     this.mouseoverGraphics = new PIXI.Graphics()
 
@@ -222,15 +222,15 @@ export class Tilemap extends PIXI.Container {
   }
 
   selectTile(x: number, y: number) {
-    this.selectedTileCoords = [x, y]
-    menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords[0] + ',' + this.selectedTileCoords[1]
+    this.selectedTileCoords = {x, y}
+    menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords.x + ',' + this.selectedTileCoords.y
     menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(x, y).terrain
 
-    const xValue = (this.selectedTileCoords[0] - this.selectedTileCoords[1]) * this.tileSize
-    const yValue = ((this.selectedTileCoords[0] >= this.selectedTileCoords[1] ?
-        this.selectedTileCoords[0] :
-        this.selectedTileCoords[1]) -
-      Math.abs(this.selectedTileCoords[0] - this.selectedTileCoords[1]) / 2) * this.tileSize
+    const xValue = (this.selectedTileCoords.x - this.selectedTileCoords.y) * this.tileSize
+    const yValue = ((this.selectedTileCoords.x >= this.selectedTileCoords.y ?
+        this.selectedTileCoords.x :
+        this.selectedTileCoords.y) -
+      Math.abs(this.selectedTileCoords.x - this.selectedTileCoords.y) / 2) * this.tileSize
 
     if (this.getTile(x, y).terrain === config.WOOD.name || this.getTile(x, y).terrain === config.WATER.name) {
       menu.movementWarning.text = 'Can\'t move to ' + this.getTile(x, y).terrain
@@ -239,11 +239,11 @@ export class Tilemap extends PIXI.Container {
       character.drawCharter(this)
     } else if (this.character.selected) {
       menu.movementWarning.text = ''
-      const startPosition = this.graph.grid[this.character.tile[0]][this.character.tile[1]]
+      const startPosition = this.graph.grid[this.character.tile.x][this.character.tile.y]
       const path = PathFinder.search(this.graph, startPosition, this.graph.grid[x][y])
       const directions = character.getDirection(path, this.character.tile)
       character.moveCharacter(this, directions, this.character, _.partial(character.drawCharter, this))
-      this.character.tile = [x, y]
+      this.character.tile = {x, y}
     } else {
       character.drawCharter(this)
     }
@@ -267,10 +267,10 @@ export class Tilemap extends PIXI.Container {
 
   centerOnSelectedTile() {
     this.position.x = (config.screenX - config.menuBarWidth) / 2 -
-      this.selectedTileCoords[0] * this.zoom * this.tileSize -
+      this.selectedTileCoords.x * this.zoom * this.tileSize -
       this.tileSize * this.zoom / 2 + config.menuBarWidth
     this.position.y = config.screenY / 2 -
-      this.selectedTileCoords[1] * this.zoom * this.tileSize -
+      this.selectedTileCoords.y * this.zoom * this.tileSize -
       this.tileSize * this.zoom / 2
   }
 

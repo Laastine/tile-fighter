@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js'
 import {config} from './config'
 
 class Character extends PIXI.Container {
-  tile: any
+  tile: {x: number, y: number}
   isCrouched: boolean
   selected: boolean
   characterSprite: any
@@ -13,14 +13,14 @@ class Character extends PIXI.Container {
     super()
     this.isCrouched = false
     this.selected = false
-    this.tile = [x, y]
+    this.tile = {x: 0, y: 0}
     this.characterSprite = PIXI.Sprite.fromFrame('Jog_135_01')
     this.characterSprite.position = {x: -10, y: -40}
   }
 
-  getDirection(route: any[], currentPos: number[]) {
+  getDirection(route: any[], currentPos: {x: number, y: number}) {
     const directions: number[] = []
-    let pos = {x: currentPos[0], y: currentPos[1]}
+    let pos = {x: currentPos.x, y: currentPos.y}
     route.forEach((dir) => {
       const nextPos = {x: dir.x, y: dir.y}
       if (nextPos.x > pos.x) {
