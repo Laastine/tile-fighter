@@ -5,6 +5,7 @@ import {config} from './config'
 
 class Character extends PIXI.Container {
   tile: {x: number, y: number}
+  direction: number
   isCrouched: boolean
   selected: boolean
   characterSprite: any
@@ -14,7 +15,8 @@ class Character extends PIXI.Container {
     this.isCrouched = false
     this.selected = false
     this.tile = {x: 0, y: 0}
-    this.characterSprite = PIXI.Sprite.fromFrame('Jog_135_01')
+    this.direction = 135;
+    this.characterSprite = PIXI.Sprite.fromFrame('Jog_' + this.direction + '_01')
     this.characterSprite.position = {x: -10, y: -40}
   }
 
@@ -38,6 +40,11 @@ class Character extends PIXI.Container {
   }
 
   drawCharter(that: any) {
+
+    const tempPos = that.character.characterSprite.position
+    that.character.characterSprite = PIXI.Sprite.fromFrame('Jog_' + that.character.direction + '_01')
+    that.character.characterSprite.position = tempPos
+
     if (!that.character.characterSprite) {
       that.addChild(that.character.characterSprite)
     }
@@ -55,6 +62,7 @@ class Character extends PIXI.Container {
   }
 
   moveCharacter(that: any, directions: number[], character: any, callback: any) {
+    let lastDirection = 0
     const pos = character.characterSprite.position
     const isCrouched = character.isCrouched
     const doAnimation = () => {
@@ -88,6 +96,8 @@ class Character extends PIXI.Container {
       }
       window.setTimeout(() => {
         that.removeChild(that.movie)
+        lastDirection = directions[0]
+        character.direction = lastDirection
         if (directions.length > 1) {
           directions.shift()
           doAnimation()
