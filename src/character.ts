@@ -40,7 +40,6 @@ class Character extends PIXI.Container {
   }
 
   drawCharter(that: any) {
-
     const tempPos = that.character.characterSprite.position
     that.character.characterSprite = PIXI.Sprite.fromFrame('Jog_' + that.character.direction + '_01')
     that.character.characterSprite.position = tempPos
@@ -62,7 +61,6 @@ class Character extends PIXI.Container {
   }
 
   moveCharacter(that: any, directions: number[], character: any, callback: any) {
-    let lastDirection = 0
     const pos = character.characterSprite.position
     const isCrouched = character.isCrouched
     const doAnimation = () => {
@@ -96,8 +94,7 @@ class Character extends PIXI.Container {
       }
       window.setTimeout(() => {
         that.removeChild(that.movie)
-        lastDirection = directions[0]
-        character.direction = lastDirection
+        character.direction = directions[0]
         if (directions.length > 1) {
           directions.shift()
           doAnimation()
