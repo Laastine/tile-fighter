@@ -10,7 +10,6 @@ import GridNode from './logic/gridnode'
 import PathFinder from './logic/path-finder'
 import {config} from './config'
 import {LCG, cartesianToIsometric} from './util'
-import Tile = Model.Tile;
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -46,8 +45,8 @@ export class Tilemap extends PIXI.Container {
   touchstart: any
   touchmove: any
   mousemove: any
-  selectedTileCoords: Tile
-  mousePressPoint: Tile
+  selectedTileCoords: Model.Tile
+  mousePressPoint: Model.Tile
 
   constructor(width: number, height: number) {
     super()
@@ -147,7 +146,7 @@ export class Tilemap extends PIXI.Container {
     graphics.endFill()
   }
 
-  addTile(coords: Tile, terrain: any) {
+  addTile(coords: Model.Tile, terrain: any) {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
@@ -156,12 +155,12 @@ export class Tilemap extends PIXI.Container {
     this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
   }
 
-  changeTile(coords: Tile, tile: any) {
+  changeTile(coords: Model.Tile, tile: any) {
     this.removeChild(this.getTile(coords) as any)
     this.addTile(coords, tile)
   }
 
-  getTile(coords: Tile) {
+  getTile(coords: Model.Tile) {
     return this.getChildAt(coords.x * this.tilesAmountY + coords.y) as any
   }
 
@@ -215,7 +214,7 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  selectTile(coords: Tile) {
+  selectTile(coords: Model.Tile) {
     this.selectedTileCoords = {x: coords.x, y: coords.y}
     menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords.x + ',' + this.selectedTileCoords.y
     menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(coords).terrain
