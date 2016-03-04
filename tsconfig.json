@@ -115,7 +115,7 @@
     "src/config.ts",
     "src/keyboard.ts",
     "src/menubar.ts",
-    "src/models.ts",
+    "src/models.d.ts",
     "src/references.d.ts",
     "src/tilemap.ts",
     "src/util.ts",
