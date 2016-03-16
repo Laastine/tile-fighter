@@ -6,6 +6,9 @@
     "preserveConstEnums": true,
     "outDir": ".generated"
   },
+  "exclude": [
+    "node_modules"
+  ],
   "filesGlob": [
     "src/**/*.ts"
   ],
