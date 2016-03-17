@@ -73,7 +73,8 @@ class Character extends PIXI.Container {
       const movementTime = 12
       that.movie = new PIXI.extras.MovieClip(this.loadFrames(directions[0], isCrouched))
       that.movie.position.set(pos.x, pos.y)
-      that.movie.anchor.set(0.5, 0.3)
+      that.movie.anchor.set(0,0)
+      that.movie.pivot.set(1, 1)
       that.movie.animationSpeed = 0.5
       that.movie.play()
       that.addChild(that.movie)

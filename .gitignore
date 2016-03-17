@@ -9,3 +9,4 @@ node_modules/
 .generated/*.js
 .generated/**/*.js
 src/**.js*
+tile-fighter-assets/
