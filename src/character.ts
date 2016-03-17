@@ -70,12 +70,12 @@ class Character extends PIXI.Container {
 
       that.removeChild(that.character.characterSprite)
       let click = 0
-      const movementTime = 12
+      const movementTime = 10
       that.movie = new PIXI.extras.MovieClip(this.loadFrames(directions[0], isCrouched))
       that.movie.position.set(pos.x, pos.y)
       that.movie.anchor.set(0,0)
       that.movie.pivot.set(1, 1)
-      that.movie.animationSpeed = 0.5
+      that.movie.animationSpeed = 0.7
       that.movie.play()
       that.addChild(that.movie)
 
