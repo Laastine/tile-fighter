@@ -7,13 +7,15 @@ class Character extends PIXI.Container {
   tile: {x: number, y: number}
   direction: number
   isCrouched: boolean
-  selected: boolean
+  isMoving: boolean
+  isSelected: boolean
   characterSprite: any
 
   constructor(x: number, y: number) {
     super()
     this.isCrouched = false
-    this.selected = false
+    this.isMoving = false
+    this.isSelected = false
     this.tile = {x: 0, y: 0}
     this.direction = 135;
     this.characterSprite = PIXI.Sprite.fromFrame('Jog_' + this.direction + '_01')
@@ -63,6 +65,7 @@ class Character extends PIXI.Container {
   moveCharacter(that: any, directions: number[], character: any, callback: any) {
     const pos = character.characterSprite.position
     const isCrouched = character.isCrouched
+    character.isMoving = true
     const doAnimation = () => {
       if (directions.length === 0) {
         return callback(that)
@@ -100,6 +103,7 @@ class Character extends PIXI.Container {
           directions.shift()
           doAnimation()
         } else {
+          character.isMoving = false
           callback(that)
         }
       }, config.tileSize * movementTime)
