@@ -27,7 +27,7 @@ export const config = {
   tilesX: 65,
   tilesY: 65,
 
-  tileSize: 25,
+  tileSize: 50,
 
   menuBarWidth: 80,
   screenX: window.innerWidth,

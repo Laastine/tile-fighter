@@ -3,21 +3,21 @@
     "dirt": {
       "frame": {
         "x": 1,
-        "y": 105,
-        "w": 50,
-        "h": 29
+        "y": 1,
+        "w": 100,
+        "h": 58
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 50,
-        "h": 29
+        "w": 100,
+        "h": 58
       },
       "sourceSize": {
-        "w": 50,
-        "h": 29
+        "w": 100,
+        "h": 58
       },
       "pivot": {
         "x": 0.5,
@@ -26,22 +26,22 @@
     },
     "grass": {
       "frame": {
-        "x": 1,
+        "x": 103,
         "y": 1,
-        "w": 50,
-        "h": 33
+        "w": 100,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 50,
-        "h": 33
+        "w": 100,
+        "h": 65
       },
       "sourceSize": {
-        "w": 50,
-        "h": 33
+        "w": 100,
+        "h": 65
       },
       "pivot": {
         "x": 0.5,
@@ -50,22 +50,22 @@
     },
     "water": {
       "frame": {
-        "x": 1,
-        "y": 71,
-        "w": 50,
-        "h": 32
+        "x": 205,
+        "y": 1,
+        "w": 100,
+        "h": 64
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 50,
-        "h": 32
+        "w": 100,
+        "h": 64
       },
       "sourceSize": {
-        "w": 50,
-        "h": 32
+        "w": 100,
+        "h": 64
       },
       "pivot": {
         "x": 0.5,
@@ -74,22 +74,22 @@
     },
     "wood": {
       "frame": {
-        "x": 1,
-        "y": 36,
-        "w": 50,
-        "h": 33
+        "x": 307,
+        "y": 1,
+        "w": 100,
+        "h": 65
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 50,
-        "h": 33
+        "w": 100,
+        "h": 65
       },
       "sourceSize": {
-        "w": 50,
-        "h": 33
+        "w": 100,
+        "h": 65
       },
       "pivot": {
         "x": 0.5,
@@ -100,13 +100,13 @@
   "meta": {
     "app": "http://www.codeandweb.com/texturepacker",
     "version": "1.0",
-    "image": "sprites.png",
+    "image": "tiles.png",
     "format": "RGBA8888",
     "size": {
-      "w": 52,
-      "h": 135
+      "w": 408,
+      "h": 67
     },
-    "scale": "0.5",
-    "smartupdate": "$TexturePacker:SmartUpdate:6977ecbd31aaa416eb746a106cd31bca:5e00f6ca198d1ca04e4d413e014ddd2a:1eabdf11f75e3a4fe3147baf7b5be24b$"
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:5d6e090a757bf24113165d56efe17893:5e00f6ca198d1ca04e4d413e014ddd2a:accbe1e7e294ded8391337fc1c446319$"
   }
 }

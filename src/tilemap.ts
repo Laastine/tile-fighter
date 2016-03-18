@@ -59,7 +59,7 @@ export class Tilemap extends PIXI.Container {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 1
+    this.zoom = 0.5
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = this.position = new PIXI.Point(0, 0)
@@ -165,6 +165,7 @@ export class Tilemap extends PIXI.Container {
   }
 
   generateMap() {
+
     for (let x = 0; x < this.tilesAmountX; x++) {
       for (let y = 0; y < this.tilesAmountY; y++) {
         this.addTile({x, y}, config.GRASS)
@@ -237,7 +238,7 @@ export class Tilemap extends PIXI.Container {
       const directions = character.getDirection(path, this.character.tile)
       character.moveCharacter(this, directions, this.character, _.partial(character.drawCharter, this))
       this.character.tile = coords
-    } else if(!this.character.isMoving) {
+    } else if (!this.character.isMoving) {
       character.drawCharter(this)
     }
     this.drawRectangle(this.selectedGraphics, xValue, yValue, this.character.isSelected ? 0xFF0000 : 0xFFFFFF)
@@ -296,9 +297,9 @@ export default {
     container = new PIXI.Container()
   },
 
-  loadTexture: (mapFilePath: string, characterFilePath: string) => {
+  loadTexture: (tileFilePath: string, characterFilePath: string, houseFilePath: string) => {
     const loader = new PIXI.loaders.Loader()
-    loader.add([mapFilePath, characterFilePath])
+    loader.add([tileFilePath, characterFilePath, houseFilePath])
     loader.once('complete', () => {
       tilemap = new Tilemap(config.tilesX, config.tilesY)
       container.addChild(tilemap)

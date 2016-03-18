@@ -19,7 +19,7 @@ class Character extends PIXI.Container {
     this.tile = {x: 0, y: 0}
     this.direction = 135;
     this.characterSprite = PIXI.Sprite.fromFrame('Jog_' + this.direction + '_01')
-    this.characterSprite.position = {x: -10, y: -40}
+    this.characterSprite.position = {x: 0, y: -20}
   }
 
   getDirection(route: any[], currentPos: {x: number, y: number}) {
@@ -76,7 +76,7 @@ class Character extends PIXI.Container {
       const movementTime = 10
       that.movie = new PIXI.extras.MovieClip(this.loadFrames(directions[0], isCrouched))
       that.movie.position.set(pos.x, pos.y)
-      that.movie.anchor.set(0,0)
+      that.movie.anchor.set(0, 0)
       that.movie.pivot.set(1, 1)
       that.movie.animationSpeed = 0.7
       that.movie.play()
