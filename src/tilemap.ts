@@ -59,7 +59,7 @@ export class Tilemap extends PIXI.Container {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 0.5
+    this.zoom = 1
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = this.position = new PIXI.Point(0, 0)
