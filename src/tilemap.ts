@@ -1,15 +1,14 @@
-/// <reference path="./references.d.ts" />
+/// <reference path='./references.d.ts' />
 
-import * as PIXI from 'pixi.js'
-import * as _ from 'lodash'
-import Menubar from './menubar'
-import Character from './character'
-import {keyboard} from './keyboard'
-import Graph from './logic/graph'
-import GridNode from './logic/gridnode'
-import PathFinder from './logic/path-finder'
-import {config} from './config'
-import {LCG, cartesianToIsometric} from './util'
+import * as PIXI from 'pixi.js';
+import * as _ from 'lodash';
+import Menubar from './menubar';
+import Character from './character';
+import {keyboard} from './keyboard';
+import Graph from './logic/graph';
+import PathFinder from './logic/path-finder';
+import {config} from './config';
+import {LCG, cartesianToIsometric} from './util';
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -226,7 +225,8 @@ export class Tilemap extends PIXI.Container {
         this.selectedTileCoords.y) -
       Math.abs(this.selectedTileCoords.x - this.selectedTileCoords.y) / 2) * this.tileSize
 
-    if (this.getTile(coords).terrain === config.WOOD.name || this.getTile(coords).terrain === config.WATER.name && !this.character.isMoving) {
+    if (this.getTile(coords).terrain === config.WOOD.name || this.getTile(coords).terrain === config.WATER.name
+      && !this.character.isMoving) {
       menu.movementWarning.text = 'Can\'t move to ' + this.getTile(coords).terrain
     } else if (_.isEqual(this.character.tile, this.selectedTileCoords) && !this.character.isMoving) {
       this.character.isSelected = !this.character.isSelected
