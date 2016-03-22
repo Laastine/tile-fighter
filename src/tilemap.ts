@@ -149,6 +149,9 @@ export class Tilemap extends PIXI.Container {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
+    if (_.startsWith(terrain.name, "House_corner")) {
+      tile.position.y -= 32
+    }
     tile.terrain = terrain.name
     tile.weight = terrain.weight
     this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
@@ -188,6 +191,11 @@ export class Tilemap extends PIXI.Container {
       this.spawnChunks(4, Math.floor(LCGRandom.randomFloat() * config.tilesX - 1),
         Math.floor(LCGRandom.randomFloat() * config.tilesY - 1), config.WOOD)
     }
+
+    this.changeTile({x: 12, y: 12}, {name: "House_corner_000", weight: 0})
+    this.changeTile({x: 13, y: 12}, {name: "House_corner_090", weight: 0})
+    this.changeTile({x: 12, y: 13}, {name: "House_corner_270", weight: 0})
+    this.changeTile({x: 13, y: 13}, {name: "House_corner_180", weight: 0})
   }
 
   spawnLine(position: PIXI.Point, directionX: boolean, variability: number, element: any) {

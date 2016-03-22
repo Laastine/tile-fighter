@@ -1,0 +1,112 @@
+{
+  "frames": {
+    "House_corner_000": {
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 100,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "House_corner_090": {
+      "frame": {
+        "x": 105,
+        "y": 3,
+        "w": 100,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "House_corner_180": {
+      "frame": {
+        "x": 3,
+        "y": 85,
+        "w": 100,
+        "h": 85
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 85
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 85
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "House_corner_270": {
+      "frame": {
+        "x": 105,
+        "y": 85,
+        "w": 100,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 100,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "house.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 208,
+      "h": 208
+    },
+    "scale": "0.5",
+    "smartupdate": "$TexturePacker:SmartUpdate:7dd3f36d7c713ee375b2e912a71fb7c6:8d7f917e4a33611b44f4301d55ec97a9:012e186cbf003f2e084d2fc78cfd7593$"
+  }
+}
