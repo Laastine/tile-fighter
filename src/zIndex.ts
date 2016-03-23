@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js";
 /**
  * Monkey-patch PIXI.js API
  **/
+
+
 (function () {
   PIXI.DisplayObject.prototype.depth = 0;
 
@@ -22,7 +24,7 @@ import * as PIXI from "pixi.js";
   }
 })();
 
-const p = Array.prototype;
+const p = Array.prototype as any;
 
 p.mergeSort = mergeSort;
 p.bubbleSort = bubbleSort;
@@ -31,11 +33,11 @@ p.swap = swap;
 
 function shuffle() {
   const o = this;
-  for (let j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  for (let j: number, x: number, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
   return o;
 }
 
-function swap(a, b) {
+function swap(a: number, b: number) {
   const o = this;
   const temp = o[a];
   o[a] = o[b];
@@ -43,9 +45,9 @@ function swap(a, b) {
   return o;
 }
 
-function bubbleSort(compare) {
+function bubbleSort(compare: (a: number, b: number) => number) {
   const a = this;
-  let swapped;
+  let swapped: boolean;
   do {
     swapped = false;
     for (let i = 0; i < a.length - 1; i++) {
@@ -59,7 +61,7 @@ function bubbleSort(compare) {
   } while (swapped);
 }
 
-function mergeSort(compare) {
+function mergeSort(compare: (a: number, b: number) => number) {
   const items = this;
 
   if (items.length < 2) {
@@ -77,8 +79,8 @@ function mergeSort(compare) {
   return items;
 }
 
-function merge(left, right, compare) {
-  const result = []
+function merge(left: number[], right: number[], compare: (a: number, b: number) => number) {
+  const result: number[] = []
   let il = 0
   let ir = 0
 
