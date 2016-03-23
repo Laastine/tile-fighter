@@ -300,7 +300,7 @@ export default {
   initRenderer: () => {
     renderer = PIXI.autoDetectRenderer(config.screenX, config.screenY)
     renderer.view.style.border = '2px solid #000'
-    renderer.backgroundColor = 0xEEEEEE
+    renderer.backgroundColor = 0xDDDDDD
     document.body.appendChild(renderer.view)
     container = new PIXI.Container()
   },
