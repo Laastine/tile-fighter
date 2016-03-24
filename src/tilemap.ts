@@ -9,6 +9,7 @@ import Graph from './logic/graph';
 import PathFinder from './logic/path-finder';
 import {config} from './config';
 import {LCG, cartesianToIsometric} from './util';
+import {updatePixiAPI} from './zIndex'
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -17,6 +18,7 @@ let character: Character
 let tilemap: Tilemap
 
 const LCGRandom = new LCG(1)
+updatePixiAPI()
 
 export class Tilemap extends PIXI.Container {
   tilesAmountX: number
@@ -80,8 +82,9 @@ export class Tilemap extends PIXI.Container {
     this.selectedTileCoords = {x: 0, y: 0}
     this.mousePressPoint = {x: 0, y: 0}
     this.selectedGraphics = new PIXI.Graphics()
+    this.selectedGraphics.depth = 1
     this.mouseoverGraphics = new PIXI.Graphics()
-
+    this.mouseoverGraphics.depth = 1
     this.addChild(this.selectedGraphics)
     this.addChild(this.mouseoverGraphics)
 
@@ -149,7 +152,7 @@ export class Tilemap extends PIXI.Container {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
-    if (_.startsWith(terrain.name, "House_corner")) {
+    if (_.startsWith(terrain.name, 'House_corner')) {
       tile.position.y -= 32
     }
     tile.terrain = terrain.name
@@ -192,10 +195,10 @@ export class Tilemap extends PIXI.Container {
         Math.floor(LCGRandom.randomFloat() * config.tilesY - 1), config.WOOD)
     }
 
-    this.changeTile({x: 12, y: 12}, {name: "House_corner_000", weight: 0})
-    this.changeTile({x: 13, y: 12}, {name: "House_corner_090", weight: 0})
-    this.changeTile({x: 12, y: 13}, {name: "House_corner_270", weight: 0})
-    this.changeTile({x: 13, y: 13}, {name: "House_corner_180", weight: 0})
+    this.changeTile({x: 12, y: 12}, {name: 'House_corner_000', weight: 0})
+    this.changeTile({x: 13, y: 12}, {name: 'House_corner_090', weight: 0})
+    this.changeTile({x: 12, y: 13}, {name: 'House_corner_270', weight: 0})
+    this.changeTile({x: 13, y: 13}, {name: 'House_corner_180', weight: 0})
   }
 
   spawnLine(position: PIXI.Point, directionX: boolean, variability: number, element: any) {
@@ -317,6 +320,8 @@ export default {
 
       menu = new Menubar(tilemap)
       container.addChild(menu)
+
+      container.sortChildrenByDepth()
 
       tilemap.selectTile(tilemap.startLocation)
       tilemap.zoomIn()

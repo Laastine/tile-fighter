@@ -132,7 +132,7 @@ declare module PIXI {
         updateTransform(): void;
         sortByDepth(): void;
         depth: number;
-        sortChildrenByDepth(): void
+        sortByDepth(a: any, b:any): () => void;
 
         position: Point;
         scale: Point;
@@ -219,6 +219,7 @@ declare module PIXI {
 
         width: number;
         height: number;
+        sortChildrenByDepth: () => void;
 
         addChild(child: DisplayObject): DisplayObject;
         addChildAt(child: DisplayObject, index: number): DisplayObject;

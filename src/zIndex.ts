@@ -3,9 +3,7 @@ import * as PIXI from "pixi.js";
 /**
  * Monkey-patch PIXI.js API
  **/
-
-
-(function () {
+export const updatePixiAPI = () => {
   PIXI.DisplayObject.prototype.depth = 0;
 
   PIXI.Container.prototype.sortChildrenByDepth = function () {
@@ -22,7 +20,7 @@ import * as PIXI from "pixi.js";
     else
       return 1;
   }
-})();
+};
 
 const p = Array.prototype as any;
 
