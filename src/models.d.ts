@@ -3,4 +3,9 @@ declare namespace Model {
     x: number;
     y: number;
   }
+
+  interface TileStat {
+    nmae: string;
+    weight: number;
+  }
 }

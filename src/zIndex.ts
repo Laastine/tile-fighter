@@ -1,3 +1,5 @@
+/// <reference path='./references.d.ts' />
+
 import * as PIXI from "pixi.js";
 
 /**
