@@ -130,6 +130,9 @@ declare module PIXI {
         protected _cachedObject: any;
 
         updateTransform(): void;
+        sortByDepth(): void;
+        depth: number;
+        sortByDepth(a: any, b:any): () => void;
 
         position: Point;
         scale: Point;
@@ -216,6 +219,7 @@ declare module PIXI {
 
         width: number;
         height: number;
+        sortChildrenByDepth: () => void;
 
         addChild(child: DisplayObject): DisplayObject;
         addChildAt(child: DisplayObject, index: number): DisplayObject;

@@ -1,14 +1,15 @@
 /// <reference path='./references.d.ts' />
 
-import * as PIXI from 'pixi.js';
-import * as _ from 'lodash';
-import Menubar from './menubar';
-import Character from './character';
-import {keyboard} from './keyboard';
-import Graph from './logic/graph';
-import PathFinder from './logic/path-finder';
-import {config} from './config';
-import {LCG, cartesianToIsometric} from './util';
+import * as PIXI from 'pixi.js'
+import * as _ from 'lodash'
+import Menubar from './menubar'
+import Character from './character'
+import {keyboard} from './keyboard'
+import Graph from './logic/graph'
+import PathFinder from './logic/path-finder'
+import {config} from './config'
+import {LCG, cartesianToIsometric} from './util'
+import {updatePixiAPI} from './zIndex'
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -17,6 +18,7 @@ let character: Character
 let tilemap: Tilemap
 
 const LCGRandom = new LCG(1)
+updatePixiAPI()
 
 export class Tilemap extends PIXI.Container {
   tilesAmountX: number
@@ -58,7 +60,7 @@ export class Tilemap extends PIXI.Container {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 1
+    this.zoom = 0.5
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = this.position = new PIXI.Point(0, 0)
@@ -81,7 +83,6 @@ export class Tilemap extends PIXI.Container {
     this.mousePressPoint = {x: 0, y: 0}
     this.selectedGraphics = new PIXI.Graphics()
     this.mouseoverGraphics = new PIXI.Graphics()
-
     this.addChild(this.selectedGraphics)
     this.addChild(this.mouseoverGraphics)
 
@@ -149,6 +150,9 @@ export class Tilemap extends PIXI.Container {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
+    if (_.startsWith(terrain.name, 'House_corner')) {
+      tile.position.y -= 32
+    }
     tile.terrain = terrain.name
     tile.weight = terrain.weight
     this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
@@ -164,7 +168,6 @@ export class Tilemap extends PIXI.Container {
   }
 
   generateMap() {
-
     for (let x = 0; x < this.tilesAmountX; x++) {
       for (let y = 0; y < this.tilesAmountY; y++) {
         this.addTile({x, y}, config.GRASS)
@@ -188,6 +191,11 @@ export class Tilemap extends PIXI.Container {
       this.spawnChunks(4, Math.floor(LCGRandom.randomFloat() * config.tilesX - 1),
         Math.floor(LCGRandom.randomFloat() * config.tilesY - 1), config.WOOD)
     }
+
+    this.changeTile({x: 12, y: 12}, {name: 'House_corner_000', weight: 0})
+    this.changeTile({x: 13, y: 12}, {name: 'House_corner_090', weight: 0})
+    this.changeTile({x: 12, y: 13}, {name: 'House_corner_270', weight: 0})
+    this.changeTile({x: 13, y: 13}, {name: 'House_corner_180', weight: 0})
   }
 
   spawnLine(position: PIXI.Point, directionX: boolean, variability: number, element: any) {
@@ -292,7 +300,7 @@ export default {
   initRenderer: () => {
     renderer = PIXI.autoDetectRenderer(config.screenX, config.screenY)
     renderer.view.style.border = '2px solid #000'
-    renderer.backgroundColor = 0xEEEEEE
+    renderer.backgroundColor = 0xDDDDDD
     document.body.appendChild(renderer.view)
     container = new PIXI.Container()
   },

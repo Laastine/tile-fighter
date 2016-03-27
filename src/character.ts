@@ -22,7 +22,7 @@ class Character extends PIXI.Container {
     this.characterSprite.position = {x: 0, y: -20}
   }
 
-  getDirection(route: any[], currentPos: {x: number, y: number}) {
+  getDirection(route: {x: number, y: number}[], currentPos: {x: number, y: number}) {
     const directions: number[] = []
     let pos = {x: currentPos.x, y: currentPos.y}
     route.forEach((dir) => {
