@@ -1,14 +1,14 @@
 /// <reference path='./references.d.ts' />
 
-import * as PIXI from 'pixi.js';
-import * as _ from 'lodash';
-import Menubar from './menubar';
-import Character from './character';
-import {keyboard} from './keyboard';
-import Graph from './logic/graph';
-import PathFinder from './logic/path-finder';
-import {config} from './config';
-import {LCG, cartesianToIsometric} from './util';
+import * as PIXI from 'pixi.js'
+import * as _ from 'lodash'
+import Menubar from './menubar'
+import Character from './character'
+import {keyboard} from './keyboard'
+import Graph from './logic/graph'
+import PathFinder from './logic/path-finder'
+import {config} from './config'
+import {LCG, cartesianToIsometric} from './util'
 import {updatePixiAPI} from './zIndex'
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
@@ -60,7 +60,7 @@ export class Tilemap extends PIXI.Container {
     this.tileWidthHalf = this.tileSize / 2
     this.tileHeightHalf = this.tileSize / 4
 
-    this.zoom = 1
+    this.zoom = 0.5
     this.scale.x = this.scale.y = this.zoom
 
     this.startLocation = this.position = new PIXI.Point(0, 0)
@@ -82,9 +82,7 @@ export class Tilemap extends PIXI.Container {
     this.selectedTileCoords = {x: 0, y: 0}
     this.mousePressPoint = {x: 0, y: 0}
     this.selectedGraphics = new PIXI.Graphics()
-    this.selectedGraphics.depth = 1
     this.mouseoverGraphics = new PIXI.Graphics()
-    this.mouseoverGraphics.depth = 1
     this.addChild(this.selectedGraphics)
     this.addChild(this.mouseoverGraphics)
 
@@ -170,7 +168,6 @@ export class Tilemap extends PIXI.Container {
   }
 
   generateMap() {
-
     for (let x = 0; x < this.tilesAmountX; x++) {
       for (let y = 0; y < this.tilesAmountY; y++) {
         this.addTile({x, y}, config.GRASS)
@@ -320,8 +317,6 @@ export default {
 
       menu = new Menubar(tilemap)
       container.addChild(menu)
-
-      container.sortChildrenByDepth()
 
       tilemap.selectTile(tilemap.startLocation)
       tilemap.zoomIn()

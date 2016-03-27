@@ -27,39 +27,6 @@ export const updatePixiAPI = () => {
 const p = Array.prototype as any;
 
 p.mergeSort = mergeSort;
-p.bubbleSort = bubbleSort;
-p.shuffle = shuffle;
-p.swap = swap;
-
-function shuffle() {
-  const o = this;
-  for (let j: number, x: number, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-  return o;
-}
-
-function swap(a: number, b: number) {
-  const o = this;
-  const temp = o[a];
-  o[a] = o[b];
-  o[b] = temp;
-  return o;
-}
-
-function bubbleSort(compare: (a: number, b: number) => number) {
-  const a = this;
-  let swapped: boolean;
-  do {
-    swapped = false;
-    for (let i = 0; i < a.length - 1; i++) {
-      if (compare(a[i], a[i + 1]) > 0) {
-        let temp = a[i];
-        a[i] = a[i + 1];
-        a[i + 1] = temp;
-        swapped = true;
-      }
-    }
-  } while (swapped);
-}
 
 function mergeSort(compare: (a: number, b: number) => number) {
   const items = this;

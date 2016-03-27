@@ -5,7 +5,7 @@ declare namespace Model {
   }
 
   interface TileStat {
-    nmae: string;
+    name: string;
     weight: number;
   }
 }
