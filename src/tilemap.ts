@@ -192,10 +192,10 @@ export class Tilemap extends PIXI.Container {
         Math.floor(LCGRandom.randomFloat() * config.tilesY - 1), config.WOOD)
     }
 
-    this.changeTile({x: 12, y: 12}, {name: 'House_corner_000', weight: 0})
-    this.changeTile({x: 13, y: 12}, {name: 'House_corner_090', weight: 0})
-    this.changeTile({x: 12, y: 13}, {name: 'House_corner_270', weight: 0})
-    this.changeTile({x: 13, y: 13}, {name: 'House_corner_180', weight: 0})
+    this.changeTile({x: 1, y: 1}, {name: 'House_corner_000', weight: 0})
+    this.changeTile({x: 2, y: 1}, {name: 'House_corner_090', weight: 0})
+    this.changeTile({x: 1, y: 2}, {name: 'House_corner_270', weight: 0})
+    this.changeTile({x: 2, y: 2}, {name: 'House_corner_180', weight: 0})
   }
 
   spawnLine(position: PIXI.Point, directionX: boolean, variability: number, element: any) {
