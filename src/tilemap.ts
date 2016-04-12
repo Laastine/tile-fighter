@@ -152,6 +152,9 @@ export class Tilemap extends PIXI.Container {
     tile.position.x -= this.tileSize / 2
     if (_.startsWith(terrain.name, 'House_corner')) {
       tile.position.y -= 32
+      tile.depth = 2
+    } else {
+      tile.depth = -1
     }
     tile.terrain = terrain.name
     tile.weight = terrain.weight
@@ -320,6 +323,7 @@ export default {
 
       tilemap.selectTile(tilemap.startLocation)
       tilemap.zoomIn()
+      tilemap.sortChildrenByDepth()
 
       requestAnimationFrame(animate)
     })
