@@ -45,6 +45,7 @@ class Character extends PIXI.Container {
     const tempPos = that.character.characterSprite.position
     that.character.characterSprite = PIXI.Sprite.fromFrame('Jog_' + that.character.direction + '_01')
     that.character.characterSprite.position = tempPos
+    that.character.characterSprite.depth = 1
 
     if (!that.character.characterSprite) {
       that.addChild(that.character.characterSprite)
@@ -79,6 +80,7 @@ class Character extends PIXI.Container {
       that.movie.anchor.set(0, 0)
       that.movie.pivot.set(1, 1)
       that.movie.animationSpeed = 0.7
+      that.movie.depth = 1
       that.movie.play()
       that.addChild(that.movie)
 

@@ -133,6 +133,7 @@ export class Tilemap extends PIXI.Container {
     const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
     const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
 
+    graphics.depth = 3
     graphics.clear()
     graphics.lineStyle(1, color, 0.8)
     graphics.moveTo(up[0], up[1])
@@ -158,6 +159,7 @@ export class Tilemap extends PIXI.Container {
     }
     tile.terrain = terrain.name
     tile.weight = terrain.weight
+
     this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
   }
 
@@ -280,10 +282,10 @@ export class Tilemap extends PIXI.Container {
   }
 
   constrainTilemap() {
-    this.position.x = Math.max(this.position.x, -2 * this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
+    this.position.x = Math.max(this.position.x, - 2 * this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
     this.position.x = Math.min(this.position.x, this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
-    this.position.y = Math.max(this.position.y, -2 * this.tileSize * this.tilesAmountY * this.zoom + config.screenY)
-    this.position.y = Math.min(this.position.y, +config.menuBarWidth)
+    this.position.y = Math.max(this.position.y, - 2 * this.tileSize * this.tilesAmountY * this.zoom + config.screenY)
+    this.position.y = Math.min(this.position.y, + config.menuBarWidth)
   }
 
   inputHandler() {
@@ -296,6 +298,7 @@ export class Tilemap extends PIXI.Container {
 const animate = () => {
   renderer.render(container)
   tilemap.inputHandler()
+  tilemap.sortChildrenByDepth()
   requestAnimationFrame(animate)
 }
 
@@ -323,7 +326,7 @@ export default {
 
       tilemap.selectTile(tilemap.startLocation)
       tilemap.zoomIn()
-      tilemap.sortChildrenByDepth()
+
 
       requestAnimationFrame(animate)
     })

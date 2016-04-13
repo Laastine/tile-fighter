@@ -13,8 +13,8 @@ export const updatePixiAPI = () => {
   };
 
   function sortByDepth(a: {depth: number}, b: {depth: number}) {
-    let left = a.depth;
-    let right = b.depth;
+    const left = a.depth;
+    const right = b.depth;
     if (left < right)
       return -1;
     if (left == right)
