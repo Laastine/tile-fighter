@@ -133,7 +133,7 @@ export class Tilemap extends PIXI.Container {
     const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
     const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
 
-    graphics.depth = 3
+    graphics.depth = 1
     graphics.clear()
     graphics.lineStyle(1, color, 0.8)
     graphics.moveTo(up[0], up[1])
