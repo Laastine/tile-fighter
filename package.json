@@ -4,26 +4,24 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "lodash": "4.11.1",
+    "lodash": "4.11.2",
     "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.10.tar.gz"
   },
   "devDependencies": {
     "browserify": "13.0.0",
-    "nodemon": "1.9.1",
+    "nodemon": "1.9.2",
     "supervisor": "0.10.0",
     "tsconfig-glob": "0.4.3",
     "tsconfig-lint": "0.11.0",
-    "tsify": "0.15.2",
+    "tsify": "0.15.3",
     "typescript": "1.8.10",
     "uglify-js": "2.6.2",
-    "watch": "0.17.1",
     "watchify": "3.7.0"
   },
   "scripts": {
     "build": "node tsconfig && browserify --entry src/app.ts -p tsify -o .generated/bundle.js",
     "build-min": "npm run build && node node_modules/uglify-js/bin/uglifyjs --compress -o .generated/bundle.js .generated/bundle.js",
     "watch": "watchify src/app.ts -p tsify --debug -v -o .generated/bundle.js",
-    "win-watch": "node node_modules/watch/cli.js \"npm run build\" src/",
     "lint": "tsconfig-lint",
     "clean": "find .generated -type f -name '*.js' -exec rm {} +"
   }
