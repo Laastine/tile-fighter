@@ -3,6 +3,9 @@
   "description": "Tile based strategy game",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "6.3.1"
+  },
   "dependencies": {
     "lodash": "4.13.1",
     "pixi.js": "https://github.com/pixijs/pixi.js/archive/v3.0.10.tar.gz"
