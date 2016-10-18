@@ -1,7 +1,7 @@
 /.idea
 node_modules/
 .idea/
-.generated/bundle.js
+.generated/*
 .DS_Store
 /npm-debug.log
 /deploy.sh
