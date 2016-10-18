@@ -1,6 +1,6 @@
 /// <reference path='./references.d.ts' />
 
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js'
 import {sortBy} from 'lodash'
 
 /**
