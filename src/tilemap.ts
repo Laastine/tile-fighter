@@ -151,10 +151,14 @@ export class Tilemap extends PIXI.Container {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
-    if (startsWith(terrain.name, 'House_corner')) {
+    if (/^House_corner.*/.test(terrain.name)) {
       tile.position.y -= 32
       tile.depth = 2
     } else {
+      tile.depth = -1
+    }
+    if(/^House_corner_180/.test(terrain.name)) {
+      tile.position.y -= 4
       tile.depth = -1
     }
     tile.terrain = terrain.name
@@ -196,10 +200,10 @@ export class Tilemap extends PIXI.Container {
         Math.floor(LCGRandom.randomFloat() * config.tilesY - 1), config.WOOD)
     }
 
-    this.changeTile({x: 1, y: 1}, {name: 'House_corner_000', weight: 0})
-    this.changeTile({x: 2, y: 1}, {name: 'House_corner_090', weight: 0})
-    this.changeTile({x: 1, y: 2}, {name: 'House_corner_270', weight: 0})
-    this.changeTile({x: 2, y: 2}, {name: 'House_corner_180', weight: 0})
+    this.changeTile({x: 1, y: 1}, config.HOUSE_000)
+    this.changeTile({x: 2, y: 1}, config.HOUSE_090)
+    this.changeTile({x: 1, y: 2}, config.HOUSE_270)
+    this.changeTile({x: 2, y: 2}, config.HOUSE_180)
   }
 
   spawnLine(position: Model.Tile, directionX: boolean, variability: number, element: Model.TileStat) {
