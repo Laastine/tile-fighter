@@ -12,7 +12,8 @@ Hobby project for testing [pixi.js](http://www.pixijs.com/) capabilities with Ty
 - [x] Animate character movement
 - [x] Shortest path functionality
 - [x] Keyboard camera movement (WASD)
-- [ ] Buildings
+- [x] Buildings
+- [ ] Z-index calculation
 - [ ] "Height differencies"
 - [ ] Replace placeholder graphics
 - [ ] LOS calculation and visualization
