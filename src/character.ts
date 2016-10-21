@@ -1,6 +1,8 @@
-/// <reference path="./references.d.ts" />
+/// <reference path='./references.d.ts' />
 
 import * as PIXI from 'pixi.js'
+import {mapObject} from './util'
+import {assign} from 'lodash'
 import {config} from './config'
 
 class Character extends PIXI.Container {
@@ -17,7 +19,7 @@ class Character extends PIXI.Container {
     this.isMoving = false
     this.isSelected = false
     this.tile = {x: 0, y: 0}
-    this.direction = 135;
+    this.direction = 135
     this.characterSprite = PIXI.Sprite.fromFrame('Jog_' + this.direction + '_01')
     this.characterSprite.position = {x: 0, y: -20}
   }
@@ -45,6 +47,7 @@ class Character extends PIXI.Container {
     const tempPos = that.character.characterSprite.position
     that.character.characterSprite = PIXI.Sprite.fromFrame('Jog_' + that.character.direction + '_01')
     that.character.characterSprite.position = tempPos
+    that.character.characterSprite.depth = 1
 
     if (!that.character.characterSprite) {
       that.addChild(that.character.characterSprite)
@@ -60,6 +63,28 @@ class Character extends PIXI.Container {
       frames.push(PIXI.Texture.fromFrame(fileNamePrefix + '_' + direction + '_' + val))
     }
     return frames
+  }
+
+  checkNearByTiles(that: any, character: any) {
+    console.log('checkNearByTiles', that.character, character)
+
+    const x = character.tile.x - 1 > 0 ? character.tile.x - 1 : 0
+    const y = character.tile.y - 1 > 0 ? character.tile.y - 1 : 0
+    console.log('checkNearByTiles', {x, y: character.tile.y}, {x: character.tile.x, y})
+
+    const tileUpperLeft: any = assign(that.getTile({x, y: character.tile.y}), {depth: -1})
+    const tileUpperRight: any = assign(that.getTile({x: character.tile.x, y}), {depth: -1})
+
+    console.log('tileUpperLeft', tileUpperLeft, {x, y: character.tile.y})
+    console.log('tileUpperRight', tileUpperRight, {x: character.tile.x, y})
+
+    if (/^House_corne/.test(tileUpperLeft.terrain)) {
+      that.changeTile({x, y: character.tile.y}, tileUpperLeft)
+    }
+    if (/^House_corne/.test(tileUpperRight.terrain)) {
+      that.changeTile({x: character.tile.x, y}, tileUpperRight)
+    }
+
   }
 
   moveCharacter(that: any, directions: number[], character: any, callback: any) {
@@ -79,25 +104,32 @@ class Character extends PIXI.Container {
       that.movie.anchor.set(0, 0)
       that.movie.pivot.set(1, 1)
       that.movie.animationSpeed = 0.7
+      that.movie.depth = 1
       that.movie.play()
       that.addChild(that.movie)
 
       while (click < config.tileSize) {
         window.setTimeout(() => {
           if (directions[0] === 45) {
+            character.tile.y -= 0.02
             that.movie.position.set(pos.x++, pos.y -= 0.5)
           } else if (directions[0] === 135) {
+            character.tile.x += 0.02
             that.movie.position.set(pos.x++, pos.y += 0.5)
           } else if (directions[0] === 225) {
+            character.tile.y += 0.02
             that.movie.position.set(pos.x--, pos.y += 0.5)
           } else if (directions[0] === 315) {
+            character.tile.x -= 0.02
             that.movie.position.set(pos.x--, pos.y -= 0.5)
           }
         }, click * movementTime)
         click++
       }
       window.setTimeout(() => {
+        character.tile = mapObject(character.tile, (x: number) => Math.round(x))
         that.removeChild(that.movie)
+
         character.direction = directions[0]
         if (directions.length > 1) {
           directions.shift()

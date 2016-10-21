@@ -53,3 +53,13 @@ export const isometricToCartesian = (pointX: number, pointY: number) => {
   const y = (2 * pointY - pointX) / 2
   return new PIXI.Point(x, y)
 }
+
+export const mapObject: any = function (o: any, f: Function) {
+  const res: any = {}
+  Object.keys(o).forEach(function (k) {
+    res[k] = f.call(this, o[k], k, o)
+  })
+  return res
+}
+
+export const getOrElse = (x: any, orElse: any) => x ? x : orElse

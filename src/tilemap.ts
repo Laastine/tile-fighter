@@ -1,7 +1,7 @@
 /// <reference path='./references.d.ts' />
 
 import * as PIXI from 'pixi.js'
-import * as _ from 'lodash'
+import {partial, isEqual, startsWith, times} from 'lodash'
 import Menubar from './menubar'
 import Character from './character'
 import {keyboard} from './keyboard'
@@ -133,6 +133,7 @@ export class Tilemap extends PIXI.Container {
     const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
     const down = [xValue + this.tileWidthHalf, yValue + this.tileSize]
 
+    graphics.depth = 1
     graphics.clear()
     graphics.lineStyle(1, color, 0.8)
     graphics.moveTo(up[0], up[1])
@@ -146,20 +147,27 @@ export class Tilemap extends PIXI.Container {
     graphics.endFill()
   }
 
-  addTile(coords: Model.Tile, terrain: any) {
+  addTile(coords: Model.Tile, terrain: Model.TileStat) {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
-    if (_.startsWith(terrain.name, 'House_corner')) {
+    if (/^House_corner.*/.test(terrain.name)) {
       tile.position.y -= 32
+      tile.depth = 2
+    } else {
+      tile.depth = -1
+    }
+    if(/^House_corner_180/.test(terrain.name)) {
+      tile.position.y -= 4
+      tile.depth = -1
     }
     tile.terrain = terrain.name
     tile.weight = terrain.weight
     this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
   }
 
-  changeTile(coords: Model.Tile, tile: any) {
-    this.removeChild(this.getTile(coords) as any)
+  changeTile(coords: Model.Tile, tile: Model.TileStat) {
+    this.removeChild(this.getTile(coords) as PIXI.DisplayObject)
     this.addTile(coords, tile)
   }
 
@@ -192,13 +200,13 @@ export class Tilemap extends PIXI.Container {
         Math.floor(LCGRandom.randomFloat() * config.tilesY - 1), config.WOOD)
     }
 
-    this.changeTile({x: 12, y: 12}, {name: 'House_corner_000', weight: 0})
-    this.changeTile({x: 13, y: 12}, {name: 'House_corner_090', weight: 0})
-    this.changeTile({x: 12, y: 13}, {name: 'House_corner_270', weight: 0})
-    this.changeTile({x: 13, y: 13}, {name: 'House_corner_180', weight: 0})
+    this.changeTile({x: 1, y: 1}, config.HOUSE_000)
+    this.changeTile({x: 2, y: 1}, config.HOUSE_090)
+    this.changeTile({x: 1, y: 2}, config.HOUSE_270)
+    this.changeTile({x: 2, y: 2}, config.HOUSE_180)
   }
 
-  spawnLine(position: PIXI.Point, directionX: boolean, variability: number, element: any) {
+  spawnLine(position: Model.Tile, directionX: boolean, variability: number, element: Model.TileStat) {
     this.changeTile(position, element)
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
@@ -207,7 +215,7 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  spawnChunks(size: number, x: number, y: number, element: any) {
+  spawnChunks(size: number, x: number, y: number, element: Model.TileStat) {
     x = Math.max(x, 0)
     x = Math.min(x, this.tilesAmountX - 1)
     y = Math.max(y, 0)
@@ -236,7 +244,7 @@ export class Tilemap extends PIXI.Container {
     if (this.getTile(coords).terrain === config.WOOD.name || this.getTile(coords).terrain === config.WATER.name
       && !this.character.isMoving) {
       menu.movementWarning.text = 'Can\'t move to ' + this.getTile(coords).terrain
-    } else if (_.isEqual(this.character.tile, this.selectedTileCoords) && !this.character.isMoving) {
+    } else if (isEqual(this.character.tile, this.selectedTileCoords) && !this.character.isMoving) {
       this.character.isSelected = !this.character.isSelected
       character.drawCharter(this)
     } else if (this.character.isSelected && !this.character.isMoving) {
@@ -244,8 +252,7 @@ export class Tilemap extends PIXI.Container {
       const startPosition = this.graph.grid[this.character.tile.x][this.character.tile.y]
       const path = PathFinder.search(this.graph, startPosition, this.graph.grid[coords.x][coords.y])
       const directions = character.getDirection(path, this.character.tile)
-      character.moveCharacter(this, directions, this.character, _.partial(character.drawCharter, this))
-      this.character.tile = coords
+      character.moveCharacter(this, directions, this.character, partial(character.drawCharter, this))
     } else if (!this.character.isMoving) {
       character.drawCharter(this)
     }
@@ -277,10 +284,10 @@ export class Tilemap extends PIXI.Container {
   }
 
   constrainTilemap() {
-    this.position.x = Math.max(this.position.x, -2 * this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
+    this.position.x = Math.max(this.position.x, - 2 * this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
     this.position.x = Math.min(this.position.x, this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
-    this.position.y = Math.max(this.position.y, -2 * this.tileSize * this.tilesAmountY * this.zoom + config.screenY)
-    this.position.y = Math.min(this.position.y, +config.menuBarWidth)
+    this.position.y = Math.max(this.position.y, - 2 * this.tileSize * this.tilesAmountY * this.zoom + config.screenY)
+    this.position.y = Math.min(this.position.y, + config.menuBarWidth)
   }
 
   inputHandler() {
@@ -293,6 +300,7 @@ export class Tilemap extends PIXI.Container {
 const animate = () => {
   renderer.render(container)
   tilemap.inputHandler()
+  tilemap.sortChildrenByDepth()
   requestAnimationFrame(animate)
 }
 

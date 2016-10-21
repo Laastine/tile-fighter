@@ -1,9 +1,9 @@
 /// <reference path="../references.d.ts" />
 
+import {times} from 'lodash'
 import GridNode from './gridnode'
 import PathFinder from './path-finder'
 import {config} from '../config'
-import {times} from 'lodash'
 
 class Graph {
   nodes: GridNode[]

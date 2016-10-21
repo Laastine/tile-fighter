@@ -7,5 +7,6 @@ declare namespace Model {
   interface TileStat {
     name: string;
     weight: number;
+    depth: number;
   }
 }

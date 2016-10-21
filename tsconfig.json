@@ -2,12 +2,15 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es5",
+    "moduleResolution": "node",
     "noImplicitAny": true,
+    "removeComments": true,
     "noImplicitReturns": true,
     "preserveConstEnums": true,
     "outDir": ".generated"
   },
   "exclude": [
+    ".generated",
     "node_modules"
   ],
   "filesGlob": [
