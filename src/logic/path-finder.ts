@@ -1,7 +1,7 @@
-import * as PIXI from 'pixi.js';
-import BinaryHeap from './heap'
-import Graph from './graph';
-import GridNode from './gridnode';
+import * as PIXI from "pixi.js";
+import Graph from "./graph";
+import GridNode from "./gridnode";
+import BinaryHeap from "./heap"
 
 function pathTo(node: GridNode) {
   let curr = node
@@ -14,7 +14,7 @@ function pathTo(node: GridNode) {
 }
 
 function getHeap() {
-  return new BinaryHeap(function (node: GridNode) {
+  return new BinaryHeap((node: GridNode) => {
     return node.f
   })
 }
@@ -83,5 +83,5 @@ export default {
     node.visited = false
     node.closed = false
     node.parent = null
-  }
+  },
 }

@@ -1,18 +1,18 @@
-import GridNode from './gridnode';
+import GridNode from "./gridnode";
 class BinaryHeap {
-  content: any[]
-  scoreFunction: any
+  public content: any[]
+  public scoreFunction: any
   constructor(scoreFunction: any) {
     this.content = []
     this.scoreFunction = scoreFunction
   }
 
-  push(tile: any) {
+  public push(tile: any) {
     this.content.push(tile)
     this.sinkDown(this.content.length - 1)
   }
 
-  pop() {
+  public pop() {
     const result = this.content[0]
     const end = this.content.pop()
 
@@ -23,7 +23,7 @@ class BinaryHeap {
     return result
   }
 
-  remove(node: any) {
+  public remove(node: any) {
     const i = this.content.indexOf(node)
     const end = this.content.pop()
 
@@ -38,15 +38,15 @@ class BinaryHeap {
     }
   }
 
-  size() {
+  public size() {
     return this.content.length
   }
 
-  rescoreElement(node: any) {
+  public rescoreElement(node: any) {
     this.sinkDown(this.content.indexOf(node))
   }
 
-  sinkDown(n: any) {
+  public sinkDown(n: any) {
     const element = this.content[n]
     while (n > 0) {
       const parentN = ((n + 1) >> 1) - 1
@@ -63,7 +63,7 @@ class BinaryHeap {
     }
   }
 
-  bubbleUp(n: any) {
+  public bubbleUp(n: any) {
     const length = this.content.length
     const element = this.content[n]
     const elemScore = this.scoreFunction(element)

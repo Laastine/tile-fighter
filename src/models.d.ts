@@ -1,10 +1,10 @@
-declare namespace Model {
-  interface Tile {
+declare namespace IModel {
+  interface ITile {
     x: number;
     y: number;
   }
 
-  interface TileStat {
+  interface ITileStat {
     name: string;
     weight: number;
     depth: number;

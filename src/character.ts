@@ -1,17 +1,17 @@
 /// <reference path='./references.d.ts' />
 
-import * as PIXI from 'pixi.js'
-import {mapObject} from './util'
-import {assign} from 'lodash'
-import {config} from './config'
+import {assign} from "lodash"
+import * as PIXI from "pixi.js"
+import {config} from "./config"
+import {mapObject} from "./util"
 
 class Character extends PIXI.Container {
-  tile: {x: number, y: number}
-  direction: number
-  isCrouched: boolean
-  isMoving: boolean
-  isSelected: boolean
-  characterSprite: any
+  public tile: {x: number, y: number}
+  public direction: number
+  public isCrouched: boolean
+  public isMoving: boolean
+  public isSelected: boolean
+  public characterSprite: any
 
   constructor(x: number, y: number) {
     super()
@@ -20,11 +20,11 @@ class Character extends PIXI.Container {
     this.isSelected = false
     this.tile = {x: 0, y: 0}
     this.direction = 135
-    this.characterSprite = PIXI.Sprite.fromFrame('Jog_' + this.direction + '_01')
+    this.characterSprite = PIXI.Sprite.fromFrame("Jog_" + this.direction + "_01")
     this.characterSprite.position = {x: 0, y: -30}
   }
 
-  getDirection(route: {x: number, y: number}[], currentPos: {x: number, y: number}) {
+  public getDirection(route: Array<{x: number, y: number}>, currentPos: {x: number, y: number}) {
     const directions: number[] = []
     let pos = {x: currentPos.x, y: currentPos.y}
     route.forEach((dir) => {
@@ -43,9 +43,9 @@ class Character extends PIXI.Container {
     return directions
   }
 
-  drawCharter(that: any) {
+  public drawCharter(that: any) {
     const tempPos = that.character.characterSprite.position
-    that.character.characterSprite = PIXI.Sprite.fromFrame('Jog_' + that.character.direction + '_01')
+    that.character.characterSprite = PIXI.Sprite.fromFrame("Jog_" + that.character.direction + "_01")
     that.character.characterSprite.position = tempPos
     that.character.characterSprite.depth = 1
 
@@ -55,28 +55,32 @@ class Character extends PIXI.Container {
     that.addChild(that.character.characterSprite)
   }
 
-  loadFrames(direction: number, isCrouched: boolean): PIXI.Texture[] {
+  public loadFrames(direction: number, isCrouched: boolean): PIXI.Texture[] {
     const frames: PIXI.Texture[] = []
-    const fileNamePrefix = isCrouched ? 'Crouch' : 'Jog'
-    for (var i = 1; i < 14; i++) {
-      const val = i < 10 ? '0' + i : i
-      frames.push(PIXI.Texture.fromFrame(fileNamePrefix + '_' + direction + '_' + val))
+    const fileNamePrefix = isCrouched ? "Crouch" : "Jog"
+    for (let i = 1; i < 14; i++) {
+      const val = i < 10 ? "0" + i : i
+      frames.push(PIXI.Texture.fromFrame(fileNamePrefix + "_" + direction + "_" + val))
     }
     return frames
   }
 
-  checkNearByTiles(that: any, character: any) {
-    console.log('checkNearByTiles', that.character, character)
+  public checkNearByTiles(that: any, character: any) {
+    // tslint:disable-next-line
+    console.log("checkNearByTiles", that.character, character)
 
     const x = character.tile.x - 1 > 0 ? character.tile.x - 1 : 0
     const y = character.tile.y - 1 > 0 ? character.tile.y - 1 : 0
-    console.log('checkNearByTiles', {x, y: character.tile.y}, {x: character.tile.x, y})
+    // tslint:disable-next-line
+    console.log("checkNearByTiles", {x, y: character.tile.y}, {x: character.tile.x, y})
 
     const tileUpperLeft: any = assign(that.getTile({x, y: character.tile.y}), {depth: -1})
     const tileUpperRight: any = assign(that.getTile({x: character.tile.x, y}), {depth: -1})
 
-    console.log('tileUpperLeft', tileUpperLeft, {x, y: character.tile.y})
-    console.log('tileUpperRight', tileUpperRight, {x: character.tile.x, y})
+    // tslint:disable-next-line
+    console.log("tileUpperLeft", tileUpperLeft, {x, y: character.tile.y})
+    // tslint:disable-next-line
+    console.log("tileUpperRight", tileUpperRight, {x: character.tile.x, y})
 
     if (/^House_corne/.test(tileUpperLeft.terrain)) {
       that.changeTile({x, y: character.tile.y}, tileUpperLeft)
@@ -87,7 +91,7 @@ class Character extends PIXI.Container {
 
   }
 
-  moveCharacter(that: any, directions: number[], character: any, callback: any) {
+  public moveCharacter(that: any, directions: number[], character: any, callback: any) {
     const pos = character.characterSprite.position
     const isCrouched = character.isCrouched
     character.isMoving = true

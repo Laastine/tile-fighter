@@ -1,15 +1,15 @@
 /// <reference path='./references.d.ts' />
 
-import * as PIXI from 'pixi.js'
-import {partial, isEqual} from 'lodash'
-import Menubar from './menubar'
-import Character from './character'
-import {keyboard} from './keyboard'
-import Graph from './logic/graph'
-import PathFinder from './logic/path-finder'
-import {config} from './config'
-import {LCG, cartesianToIsometric} from './util'
-import {updatePixiAPI} from './zIndex'
+import {isEqual, partial} from "lodash"
+import * as PIXI from "pixi.js"
+import Character from "./character"
+import {config} from "./config"
+import {keyboard} from "./keyboard"
+import Graph from "./logic/graph"
+import PathFinder from "./logic/path-finder"
+import Menubar from "./menubar"
+import {cartesianToIsometric, LCG} from "./util"
+import {updatePixiAPI} from "./zIndex"
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -21,33 +21,33 @@ const LCGRandom = new LCG(1)
 updatePixiAPI()
 
 export class Tilemap extends PIXI.Container {
-  tilesAmountX: number
-  tilesAmountY: number
-  startLocation: PIXI.Point
-  zoom: number
-  scale: PIXI.Point
-  graph: Graph
-  keyW: any
-  keyA: any
-  keyS: any
-  keyD: any
-  keyC: any
-  interactive: boolean
-  character: Character
-  position: PIXI.Point
-  vx: number
-  vy: number
-  tileSize: number
-  tileWidthHalf: number
-  tileHeightHalf: number
-  selectedGraphics: PIXI.Graphics
-  mouseoverGraphics: PIXI.Graphics
-  mousedown: any
-  touchstart: any
-  touchmove: any
-  mousemove: any
-  selectedTileCoords: Model.Tile
-  mousePressPoint: Model.Tile
+  public tilesAmountX: number
+  public tilesAmountY: number
+  public startLocation: PIXI.Point
+  public zoom: number
+  public scale: PIXI.Point
+  public graph: Graph
+  public keyW: any
+  public keyA: any
+  public keyS: any
+  public keyD: any
+  public keyC: any
+  public interactive: boolean
+  public character: Character
+  public position: PIXI.Point
+  public vx: number
+  public vy: number
+  public tileSize: number
+  public tileWidthHalf: number
+  public tileHeightHalf: number
+  public selectedGraphics: PIXI.Graphics
+  public mouseoverGraphics: PIXI.Graphics
+  public mousedown: any
+  public touchstart: any
+  public touchmove: any
+  public mousemove: any
+  public selectedTileCoords: IModel.ITile
+  public mousePressPoint: IModel.ITile
 
   constructor(width: number, height: number) {
     super()
@@ -89,17 +89,17 @@ export class Tilemap extends PIXI.Container {
     this.configEventHandlers()
   }
 
-  configEventHandlers() {
-    this.mousedown = this.touchstart = function (event: any) {
+  public configEventHandlers() {
+    this.mousedown = this.touchstart = function(event: any) {
       if (event.data.global.x > config.menuBarWidth) {
         this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
         this.mousePressPoint[1] = event.data.global.y - this.position.y
-        this.selectTile(this.mapGlobalCoordinatesToGame(this.mousePressPoint)
+        this.selectTile(this.mapGlobalCoordinatesToGame(this.mousePressPoint),
         )
       }
     }
 
-    this.mousemove = this.touchmove = function (event: any) {
+    this.mousemove = this.touchmove = function(event: any) {
       const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
       const mouseoverTileCoords = this.mapGlobalCoordinatesToGame(mouseOverPoint)
 
@@ -121,18 +121,18 @@ export class Tilemap extends PIXI.Container {
     this.keyC.press = () => this.character.isCrouched = !this.character.isCrouched
   }
 
-  mapGlobalCoordinatesToGame(coords: number[]) {
-    const [x,y] = coords
+  public mapGlobalCoordinatesToGame(coords: number[]) {
+    const [x, y] = coords
     return {
       x: Math.floor(
         (x / (this.tileWidthHalf * this.zoom / 2) +
         y / (this.tileHeightHalf * this.zoom / 2)) / 8),
       y: Math.floor((y / (this.tileHeightHalf * this.zoom / 2) -
-        (x / (this.tileWidthHalf * this.zoom / 2))) / 8)
+        (x / (this.tileWidthHalf * this.zoom / 2))) / 8),
     }
   }
 
-  drawRectangle(graphics: PIXI.Graphics, xValue: number, yValue: number, color: number) {
+  public drawRectangle(graphics: PIXI.Graphics, xValue: number, yValue: number, color: number) {
     const up = [xValue - this.tileWidthHalf, yValue + this.tileWidthHalf]
     const left = [xValue + this.tileWidthHalf, yValue]
     const right = [xValue + this.tileSize + this.tileWidthHalf, yValue + this.tileWidthHalf]
@@ -152,7 +152,7 @@ export class Tilemap extends PIXI.Container {
     graphics.endFill()
   }
 
-  addTile(coords: Model.Tile, terrain: Model.TileStat) {
+  public addTile(coords: IModel.ITile, terrain: IModel.ITileStat) {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
@@ -161,16 +161,16 @@ export class Tilemap extends PIXI.Container {
     this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
   }
 
-  changeTile(coords: Model.Tile, tile: Model.TileStat) {
+  public changeTile(coords: IModel.ITile, tile: IModel.ITileStat) {
     this.removeChild(this.getTile(coords) as PIXI.DisplayObject)
     this.addTile(coords, tile)
   }
 
-  getTile(coords: Model.Tile) {
+  public getTile(coords: IModel.ITile) {
     return this.getChildAt(coords.x * this.tilesAmountY + coords.y) as any
   }
 
-  generateMap() {
+  public generateMap() {
     for (let x = 0; x < this.tilesAmountX; x++) {
       for (let y = 0; y < this.tilesAmountY; y++) {
         this.addTile({x, y}, config.GRASS)
@@ -196,7 +196,7 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  spawnLine(position: Model.Tile, directionX: boolean, variability: number, element: Model.TileStat) {
+  public spawnLine(position: IModel.ITile, directionX: boolean, variability: number, element: IModel.ITileStat) {
     this.changeTile(position, element)
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
@@ -205,7 +205,7 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  spawnChunks(size: number, x: number, y: number, element: Model.TileStat) {
+  public spawnChunks(size: number, x: number, y: number, element: IModel.ITileStat) {
     x = Math.max(x, 0)
     x = Math.min(x, this.tilesAmountX - 1)
     y = Math.max(y, 0)
@@ -220,10 +220,10 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  selectTile(coords: Model.Tile) {
+  public selectTile(coords: IModel.ITile) {
     this.selectedTileCoords = {x: coords.x, y: coords.y}
-    menu.selectedTileCoordText.text = 'Tile: ' + this.selectedTileCoords.x + ',' + this.selectedTileCoords.y
-    menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(coords).terrain
+    menu.selectedTileCoordText.text = "ITile: " + this.selectedTileCoords.x + "," + this.selectedTileCoords.y
+    menu.selectedTileTypeText.text = "Terrain: " + this.getTile(coords).terrain
 
     const xValue = (this.selectedTileCoords.x - this.selectedTileCoords.y) * this.tileSize
     const yValue = ((this.selectedTileCoords.x >= this.selectedTileCoords.y ?
@@ -233,12 +233,12 @@ export class Tilemap extends PIXI.Container {
 
     if (this.getTile(coords).terrain === config.WOOD.name || this.getTile(coords).terrain === config.WATER.name
       && !this.character.isMoving) {
-      menu.movementWarning.text = 'Can\'t move to ' + this.getTile(coords).terrain
+      menu.movementWarning.text = "Can't move to " + this.getTile(coords).terrain
     } else if (isEqual(this.character.tile, this.selectedTileCoords) && !this.character.isMoving) {
       this.character.isSelected = !this.character.isSelected
       character.drawCharter(this)
     } else if (this.character.isSelected && !this.character.isMoving) {
-      menu.movementWarning.text = ''
+      menu.movementWarning.text = ""
       const startPosition = this.graph.grid[this.character.tile.x][this.character.tile.y]
       const path = PathFinder.search(this.graph, startPosition, this.graph.grid[coords.x][coords.y])
       const directions = character.getDirection(path, this.character.tile)
@@ -249,14 +249,14 @@ export class Tilemap extends PIXI.Container {
     this.drawRectangle(this.selectedGraphics, xValue, yValue, this.character.isSelected ? 0xFF0000 : 0xFFFFFF)
   }
 
-  zoomIn() {
+  public zoomIn() {
     this.zoom = Math.min(this.zoom * 2, 8)
     this.scale.x = this.scale.y = this.zoom
     this.centerOnSelectedTile()
     this.constrainTilemap()
   }
 
-  zoomOut() {
+  public zoomOut() {
     this.mouseoverGraphics.clear()
     this.zoom = Math.max(this.zoom / 2, 0.5)
     this.scale.x = this.scale.y = this.zoom
@@ -264,7 +264,7 @@ export class Tilemap extends PIXI.Container {
     this.constrainTilemap()
   }
 
-  centerOnSelectedTile() {
+  public centerOnSelectedTile() {
     this.position.x = (config.screenX - config.menuBarWidth) / 2 -
       this.selectedTileCoords.x * this.zoom * this.tileSize -
       this.tileSize * this.zoom / 2 + config.menuBarWidth
@@ -273,14 +273,14 @@ export class Tilemap extends PIXI.Container {
       this.tileSize * this.zoom / 2
   }
 
-  constrainTilemap() {
+  public constrainTilemap() {
     this.position.x = Math.max(this.position.x, - 2 * this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
     this.position.x = Math.min(this.position.x, this.tileSize * this.tilesAmountX * this.zoom + config.screenX)
     this.position.y = Math.max(this.position.y, - 2 * this.tileSize * this.tilesAmountY * this.zoom + config.screenY)
     this.position.y = Math.min(this.position.y, + config.menuBarWidth)
   }
 
-  inputHandler() {
+  public inputHandler() {
     this.position.x += this.vx
     this.position.y += this.vy
     this.constrainTilemap()
@@ -297,7 +297,7 @@ const animate = () => {
 export default {
   initRenderer: () => {
     renderer = PIXI.autoDetectRenderer(config.screenX, config.screenY)
-    renderer.view.style.border = '2px solid #000'
+    renderer.view.style.border = "2px solid #000"
     renderer.backgroundColor = 0xDDDDDD
     document.body.appendChild(renderer.view)
     container = new PIXI.Container()
@@ -306,7 +306,7 @@ export default {
   loadTexture: (tileFilePath: string, characterFilePath: string, houseFilePath: string) => {
     const loader = new PIXI.loaders.Loader()
     loader.add([tileFilePath, characterFilePath, houseFilePath])
-    loader.once('complete', () => {
+    loader.once("complete", () => {
       tilemap = new Tilemap(config.tilesX, config.tilesY)
       container.addChild(tilemap)
 
@@ -322,5 +322,5 @@ export default {
       requestAnimationFrame(animate)
     })
     loader.load()
-  }
+  },
 }

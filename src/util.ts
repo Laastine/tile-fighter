@@ -2,10 +2,10 @@
  * Linear congruential generator
  */
 export class LCG {
-  m: number
-  a: number
-  c: number
-  state: number
+  public m: number
+  public a: number
+  public c: number
+  public state: number
 
   constructor(seed: number) {
     this.m = 0x80000000; // 2**31;
@@ -14,7 +14,7 @@ export class LCG {
     this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1))
   }
 
-  randomInt() {
+  public randomInt() {
     this.state = (this.a * this.state + this.c) % this.m;
     return this.state;
   }
@@ -23,7 +23,7 @@ export class LCG {
    * returns in range [0,1]
    * @returns {number}
    */
-  randomFloat() {
+  public randomFloat() {
     return this.randomInt() / (this.m - 1);
   }
 
@@ -33,11 +33,11 @@ export class LCG {
    * @param end
    * @returns {number}
    */
-  nextRange(start: number, end: number) {
+  public nextRange(start: number, end: number) {
     return start + Math.floor(this.randomInt() / this.m * end - start);
   }
 
-  choice(array: number[]) {
+  public choice(array: number[]) {
     return array[this.nextRange(0, array.length)];
   }
 }
@@ -54,9 +54,9 @@ export const isometricToCartesian = (pointX: number, pointY: number) => {
   return new PIXI.Point(x, y)
 }
 
-export const mapObject: any = function (o: any, f: Function) {
+export const mapObject: any = (o: any, f: () => void) => {
   const res: any = {}
-  Object.keys(o).forEach(function (k) {
+  Object.keys(o).forEach((k) => {
     res[k] = f.call(this, o[k], k, o)
   })
   return res
