@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "@types/lodash": "4.14.106",
-    "@types/pixi.js": "4.7.2",
     "browserify": "16.1.1",
     "nodemon": "1.17.3",
     "supervisor": "0.12.0",
