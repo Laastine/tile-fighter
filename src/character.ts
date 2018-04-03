@@ -55,7 +55,7 @@ class Character extends PIXI.Container {
     that.addChild(that.character.characterSprite)
   }
 
-  loadFrames(direction: number, isCrouched: boolean) {
+  loadFrames(direction: number, isCrouched: boolean): PIXI.Texture[] {
     const frames: PIXI.Texture[] = []
     const fileNamePrefix = isCrouched ? 'Crouch' : 'Jog'
     for (var i = 1; i < 14; i++) {
@@ -99,11 +99,11 @@ class Character extends PIXI.Container {
       that.removeChild(that.character.characterSprite)
       let click = 0
       const movementTime = 10
-      that.movie = new PIXI.extras.MovieClip(this.loadFrames(directions[0], isCrouched))
+      that.movie = new PIXI.extras.AnimatedSprite(this.loadFrames(directions[0], isCrouched))
       that.movie.position.set(pos.x, pos.y)
       that.movie.anchor.set(0, 0)
       that.movie.pivot.set(1, 1)
-      that.movie.animationSpeed = 0.7
+      that.movie.animationSpeed = 0.4
       that.movie.depth = 1
       that.movie.play()
       that.addChild(that.movie)
