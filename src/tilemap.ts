@@ -1,7 +1,7 @@
 /// <reference path='./references.d.ts' />
 
 import * as PIXI from 'pixi.js'
-import {partial, isEqual, startsWith, times} from 'lodash'
+import {partial, isEqual} from 'lodash'
 import Menubar from './menubar'
 import Character from './character'
 import {keyboard} from './keyboard'
@@ -86,6 +86,10 @@ export class Tilemap extends PIXI.Container {
     this.addChild(this.selectedGraphics)
     this.addChild(this.mouseoverGraphics)
 
+    this.configEventHandlers()
+  }
+
+  configEventHandlers() {
     this.mousedown = this.touchstart = function (event: any) {
       if (event.data.global.x > config.menuBarWidth) {
         this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
@@ -101,8 +105,8 @@ export class Tilemap extends PIXI.Container {
 
       const xValue = (mouseoverTileCoords.x - mouseoverTileCoords.y) * this.tileSize
       const yValue = ((mouseoverTileCoords.x >= mouseoverTileCoords.y ?
-          mouseoverTileCoords.x :
-          mouseoverTileCoords.y) - Math.abs(mouseoverTileCoords.x - mouseoverTileCoords.y) / 2) * this.tileSize
+        mouseoverTileCoords.x :
+        mouseoverTileCoords.y) - Math.abs(mouseoverTileCoords.x - mouseoverTileCoords.y) / 2) * this.tileSize
 
       this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
     }
@@ -118,12 +122,13 @@ export class Tilemap extends PIXI.Container {
   }
 
   mapGlobalCoordinatesToGame(coords: number[]) {
+    const [x,y] = coords
     return {
       x: Math.floor(
-        (coords[0] / (this.tileWidthHalf * this.zoom / 2) +
-        coords[1] / (this.tileHeightHalf * this.zoom / 2)) / 8),
-      y: Math.floor((coords[1] / (this.tileHeightHalf * this.zoom / 2) -
-        (coords[0] / (this.tileWidthHalf * this.zoom / 2))) / 8)
+        (x / (this.tileWidthHalf * this.zoom / 2) +
+        y / (this.tileHeightHalf * this.zoom / 2)) / 8),
+      y: Math.floor((y / (this.tileHeightHalf * this.zoom / 2) -
+        (x / (this.tileWidthHalf * this.zoom / 2))) / 8)
     }
   }
 
