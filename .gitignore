@@ -1,12 +1,9 @@
-/.idea
-node_modules/
-.idea/
-.generated/*
+node_modules
+.idea
+.generated
 .DS_Store
 /npm-debug.log
 /deploy.sh
 /tile-fighter.iml
-.generated/*.js
-.generated/**/*.js
 src/**.js*
 tile-fighter-assets/

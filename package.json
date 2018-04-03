@@ -24,10 +24,10 @@
     "watchify": "3.11.0"
   },
   "scripts": {
-    "build": "node tsconfig && browserify --entry src/app.ts -p tsify -o .generated/bundle.js",
-    "build-min": "npm run build && node node_modules/uglify-js/bin/uglifyjs --compress -o .generated/bundle.js .generated/bundle.js",
-    "watch": "watchify src/app.ts -p tsify --debug -v -o .generated/bundle.js",
-    "lint": "tsconfig-lint",
+    "init-build-dir": "mkdir -p .generated",
+    "build": "npm run init-build-dir && node tsconfig && browserify --entry src/app.ts -p tsify -o .generated/bundle.js",
+    "build-min": "npm run init-build-dir && npm run build && node node_modules/uglify-js/bin/uglifyjs --compress -o .generated/bundle.js .generated/bundle.js",
+    "watch": "npm run init-build-dir && watchify src/app.ts -p tsify --debug -v -o .generated/bundle.js",
     "clean": "find .generated -type f -name '*.js' -exec rm {} +"
   }
 }
