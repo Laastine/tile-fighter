@@ -24,11 +24,11 @@ class Menubar extends PIXI.Container {
     this.addChild(this.background)
 
     this.selectedTileCoordText = new PIXI.Text('Tile: ',
-      {font: '12px Helvetica', fill: '#777', align: 'left'})
+      {fontSize: '12px', fill: '#777', align: 'left'})
     this.selectedTileTypeText = new PIXI.Text('Terrain: ',
-      {font: '12px Helvetica', fill: '#777', align: 'left'})
+      {fontSize: '12px', fill: '#777', align: 'left'})
     this.movementWarning = new PIXI.Text('',
-      {font: '8px Helvetica', fill: '#F00', align: 'left'})
+      {fontSize: '8px', fill: '#F00', align: 'left'})
     this.selectedTileTypeText.position.y = 17
     this.movementWarning.position.y = 70
     this.addChild(this.selectedTileCoordText)
@@ -40,27 +40,27 @@ class Menubar extends PIXI.Container {
 
   addMenuButton(that: any, text: string, x: number, y: number, obj: any, callback: any) {
     const textColor = '#777'
-    const button = new PIXI.Text(text, {font: '40px Helvetica', fill: textColor}) as any
+    const button = new PIXI.Text(text, {fontSize: '40px', fill: textColor}) as any
     button.position.x = x
     button.position.y = y
     button.interactive = true
     button.buttonMode = true
     button.hitArea = new PIXI.Rectangle(0, 12, 30, 30)
     button.mousedown = button.touchstart = () => {
-      button.style = {font: '40px Helvetica', fill: '#333'}
+      button.style = {fontSize: '40px', fill: '#333'}
     }
     button.mouseover = () => {
-      button.style = {font: '40px Helvetica', fill: '#333'}
+      button.style = {fontSize: '40px', fill: '#333'}
     }
     button.mouseup = button.touchend = () => {
       callback.call(obj)
-      button.style = {font: '40px Helvetica', fill: textColor}
+      button.style = {fontSize: '40px', fill: textColor}
     }
     button.mouseupoutside = button.touchendoutside = () => {
-      button.style = {font: '40px Helvetica', fill: textColor}
+      button.style = {fontSize: '40px', fill: textColor}
     }
     button.mouseout = () => {
-      button.style = {font: '40px Helvetica', fill: textColor}
+      button.style = {fontSize: '40px', fill: textColor}
     }
     that.addChild(button)
   }
