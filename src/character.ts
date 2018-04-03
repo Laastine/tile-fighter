@@ -21,7 +21,7 @@ class Character extends PIXI.Container {
     this.tile = {x: 0, y: 0}
     this.direction = 135
     this.characterSprite = PIXI.Sprite.fromFrame('Jog_' + this.direction + '_01')
-    this.characterSprite.position = {x: 0, y: -20}
+    this.characterSprite.position = {x: 0, y: -30}
   }
 
   getDirection(route: {x: number, y: number}[], currentPos: {x: number, y: number}) {
