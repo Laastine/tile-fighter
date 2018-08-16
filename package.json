@@ -7,20 +7,20 @@
     "node": "8.11.1"
   },
   "dependencies": {
-    "lodash": "4.17.5",
-    "pixi.js": "4.7.1"
+    "lodash": "4.17.10",
+    "pixi.js": "4.8.1"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.106",
-    "browserify": "16.1.1",
-    "nodemon": "1.17.3",
+    "@types/lodash": "4.14.116",
+    "browserify": "16.2.2",
+    "nodemon": "1.18.3",
     "supervisor": "0.12.0",
     "tsconfig-glob": "0.4.3",
     "tsconfig-lint": "0.12.0",
-    "tsify": "3.0.4",
-    "tslint": "5.9.1",
-    "typescript": "2.8.1",
-    "uglify-js": "3.3.18",
+    "tsify": "4.0.0",
+    "tslint": "5.11.0",
+    "typescript": "3.0.1",
+    "uglify-js": "3.4.7",
     "watchify": "3.11.0"
   },
   "scripts": {
