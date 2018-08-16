@@ -1,15 +1,15 @@
 /// <reference path='./references.d.ts' />
 
-import {isEqual, partial} from "lodash"
-import * as PIXI from "pixi.js"
-import Character from "./character"
-import {config} from "./config"
-import {keyboard} from "./keyboard"
-import Graph from "./logic/graph"
-import PathFinder from "./logic/path-finder"
-import Menubar from "./menubar"
-import {cartesianToIsometric, LCG} from "./util"
-import {updatePixiAPI} from "./zIndex"
+import {isEqual, partial} from 'lodash'
+import * as PIXI from 'pixi.js'
+import Character from './character'
+import {config} from './config'
+import {keyboard} from './keyboard'
+import Graph from './logic/graph'
+import PathFinder from './logic/path-finder'
+import Menubar from './menubar'
+import {cartesianToIsometric, LCG} from './util'
+import {updatePixiAPI} from './zIndex'
 
 let renderer: PIXI.WebGLRenderer|PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -17,7 +17,7 @@ let menu: Menubar
 let character: Character
 let tilemap: Tilemap
 
-const LCGRandom = new LCG(1)
+const LCGRANDOM = new LCG(1)
 updatePixiAPI()
 
 export class Tilemap extends PIXI.Container {
@@ -191,8 +191,8 @@ export class Tilemap extends PIXI.Container {
       config.WATER)
 
     for (let i = 0; i < 28; i++) {
-      this.spawnChunks(4, Math.floor(LCGRandom.randomFloat() * config.tilesX - 1),
-        Math.floor(LCGRandom.randomFloat() * config.tilesY - 1), config.WOOD)
+      this.spawnChunks(4, Math.floor(LCGRANDOM.randomFloat() * config.tilesX - 1),
+        Math.floor(LCGRANDOM.randomFloat() * config.tilesY - 1), config.WOOD)
     }
   }
 
@@ -201,7 +201,7 @@ export class Tilemap extends PIXI.Container {
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
     if (x < this.tilesAmountX && y < this.tilesAmountY - 1 && x >= 0 && y >= 0) {
-      this.spawnLine(new PIXI.Point(x, y), LCGRandom.randomFloat() < variability, variability, element)
+      this.spawnLine(new PIXI.Point(x, y), LCGRANDOM.randomFloat() < variability, variability, element)
     }
   }
 
@@ -214,16 +214,16 @@ export class Tilemap extends PIXI.Container {
     this.changeTile({x, y}, element)
 
     for (let i = 0; i < size; i++) {
-      const horizontal = Math.floor(LCGRandom.randomFloat() * 2) - 1
-      const vertical = Math.floor(LCGRandom.randomFloat() * 2) - 1
+      const horizontal = Math.floor(LCGRANDOM.randomFloat() * 2) - 1
+      const vertical = Math.floor(LCGRANDOM.randomFloat() * 2) - 1
       this.spawnChunks(size - 1, x + horizontal, y + vertical, element)
     }
   }
 
   public selectTile(coords: IModel.ITile) {
     this.selectedTileCoords = {x: coords.x, y: coords.y}
-    menu.selectedTileCoordText.text = "ITile: " + this.selectedTileCoords.x + "," + this.selectedTileCoords.y
-    menu.selectedTileTypeText.text = "Terrain: " + this.getTile(coords).terrain
+    menu.selectedTileCoordText.text = 'ITile: ' + this.selectedTileCoords.x + ',' + this.selectedTileCoords.y
+    menu.selectedTileTypeText.text = 'Terrain: ' + this.getTile(coords).terrain
 
     const xValue = (this.selectedTileCoords.x - this.selectedTileCoords.y) * this.tileSize
     const yValue = ((this.selectedTileCoords.x >= this.selectedTileCoords.y ?
@@ -238,7 +238,7 @@ export class Tilemap extends PIXI.Container {
       this.character.isSelected = !this.character.isSelected
       character.drawCharter(this)
     } else if (this.character.isSelected && !this.character.isMoving) {
-      menu.movementWarning.text = ""
+      menu.movementWarning.text = ''
       const startPosition = this.graph.grid[this.character.tile.x][this.character.tile.y]
       const path = PathFinder.search(this.graph, startPosition, this.graph.grid[coords.x][coords.y])
       const directions = character.getDirection(path, this.character.tile)
@@ -297,7 +297,7 @@ const animate = () => {
 export default {
   initRenderer: () => {
     renderer = PIXI.autoDetectRenderer(config.screenX, config.screenY)
-    renderer.view.style.border = "2px solid #000"
+    renderer.view.style.border = '2px solid #000'
     renderer.backgroundColor = 0xDDDDDD
     document.body.appendChild(renderer.view)
     container = new PIXI.Container()
@@ -306,7 +306,7 @@ export default {
   loadTexture: (tileFilePath: string, characterFilePath: string, houseFilePath: string) => {
     const loader = new PIXI.loaders.Loader()
     loader.add([tileFilePath, characterFilePath, houseFilePath])
-    loader.once("complete", () => {
+    loader.once('complete', () => {
       tilemap = new Tilemap(config.tilesX, config.tilesY)
       container.addChild(tilemap)
 

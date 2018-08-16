@@ -21,7 +21,7 @@ class GridNode {
   }
 
   public toString() {
-    return "[" + this.x + " " + this.y + "]"
+    return '[' + this.x + ' ' + this.y + ']'
   }
 
   public getCost(fromNeighbor: GridNode) {

@@ -1,9 +1,9 @@
 /// <reference path="../references.d.ts" />
 
-import {times} from "lodash"
-import {config} from "../config"
-import GridNode from "./gridnode"
-import PathFinder from "./path-finder"
+import {times} from 'lodash'
+import {config} from '../config'
+import GridNode from './gridnode'
+import PathFinder from './path-finder'
 
 class Graph {
   public nodes: GridNode[]
@@ -34,14 +34,14 @@ class Graph {
 
   public init() {
     this.dirtyNodes = []
-    for (let i = 0; i < this.nodes.length; i++) {
-      PathFinder.cleanNode(this.nodes[i])
+    for (const i of this.nodes) {
+      PathFinder.cleanNode(i)
     }
   }
 
   public cleanDirty() {
-    for (let i = 0; i < this.dirtyNodes.length; i++) {
-      PathFinder.cleanNode(this.dirtyNodes[i])
+    for (const i of this.dirtyNodes) {
+      PathFinder.cleanNode(i)
     }
     this.dirtyNodes = []
   }
@@ -82,15 +82,15 @@ class Graph {
   public toString() {
     const graphString: string[] = []
     const nodes = this.grid
-    for (let x = 0; x < nodes.length; x++) {
+    for (const x of nodes) {
       const rowDebug: number[] = []
-      const row = nodes[x]
-      for (let y = 0; y < row.length; y++) {
-        rowDebug.push(row[y].weight)
+      const row = x
+      for (const y of row) {
+        rowDebug.push(y.weight)
       }
-      graphString.push(rowDebug.join(" "))
+      graphString.push(rowDebug.join(' '))
     }
-    return graphString.join("\n")
+    return graphString.join('\n')
   }
 }
 

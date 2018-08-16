@@ -8,15 +8,15 @@ export class LCG {
   public state: number
 
   constructor(seed: number) {
-    this.m = 0x80000000; // 2**31;
-    this.a = 1103515245;
-    this.c = 12345;
+    this.m = 0x80000000 // 2**31;
+    this.a = 1103515245
+    this.c = 12345
     this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1))
   }
 
   public randomInt() {
-    this.state = (this.a * this.state + this.c) % this.m;
-    return this.state;
+    this.state = (this.a * this.state + this.c) % this.m
+    return this.state
   }
 
   /**
@@ -24,7 +24,7 @@ export class LCG {
    * @returns {number}
    */
   public randomFloat() {
-    return this.randomInt() / (this.m - 1);
+    return this.randomInt() / (this.m - 1)
   }
 
   /**
@@ -34,11 +34,11 @@ export class LCG {
    * @returns {number}
    */
   public nextRange(start: number, end: number) {
-    return start + Math.floor(this.randomInt() / this.m * end - start);
+    return start + Math.floor(this.randomInt() / this.m * end - start)
   }
 
   public choice(array: number[]) {
-    return array[this.nextRange(0, array.length)];
+    return array[this.nextRange(0, array.length)]
   }
 }
 

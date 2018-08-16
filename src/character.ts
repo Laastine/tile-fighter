@@ -1,9 +1,9 @@
 /// <reference path='./references.d.ts' />
 
-import {assign} from "lodash"
-import * as PIXI from "pixi.js"
-import {config} from "./config"
-import {mapObject} from "./util"
+import {assign} from 'lodash'
+import * as PIXI from 'pixi.js'
+import {config} from './config'
+import {mapObject} from './util'
 
 class Character extends PIXI.Container {
   public tile: {x: number, y: number}
@@ -20,11 +20,11 @@ class Character extends PIXI.Container {
     this.isSelected = false
     this.tile = {x: 0, y: 0}
     this.direction = 135
-    this.characterSprite = PIXI.Sprite.fromFrame("Jog_" + this.direction + "_01")
+    this.characterSprite = PIXI.Sprite.fromFrame('Jog_' + this.direction + '_01')
     this.characterSprite.position = {x: 0, y: -30}
   }
 
-  public getDirection(route: Array<{x: number, y: number}>, currentPos: {x: number, y: number}) {
+  public getDirection(route: {x: number, y: number}[], currentPos: {x: number, y: number}) {
     const directions: number[] = []
     let pos = {x: currentPos.x, y: currentPos.y}
     route.forEach((dir) => {
@@ -45,7 +45,7 @@ class Character extends PIXI.Container {
 
   public drawCharter(that: any) {
     const tempPos = that.character.characterSprite.position
-    that.character.characterSprite = PIXI.Sprite.fromFrame("Jog_" + that.character.direction + "_01")
+    that.character.characterSprite = PIXI.Sprite.fromFrame('Jog_' + that.character.direction + '_01')
     that.character.characterSprite.position = tempPos
     that.character.characterSprite.depth = 1
 
@@ -57,10 +57,10 @@ class Character extends PIXI.Container {
 
   public loadFrames(direction: number, isCrouched: boolean): PIXI.Texture[] {
     const frames: PIXI.Texture[] = []
-    const fileNamePrefix = isCrouched ? "Crouch" : "Jog"
+    const fileNamePrefix = isCrouched ? 'Crouch' : 'Jog'
     for (let i = 1; i < 14; i++) {
-      const val = i < 10 ? "0" + i : i
-      frames.push(PIXI.Texture.fromFrame(fileNamePrefix + "_" + direction + "_" + val))
+      const val = i < 10 ? '0' + i : i
+      frames.push(PIXI.Texture.fromFrame(fileNamePrefix + '_' + direction + '_' + val))
     }
     return frames
   }

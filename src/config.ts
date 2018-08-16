@@ -1,41 +1,41 @@
 export const config = {
   GRASS: {
-    name: "grass",
+    name: 'grass',
     weight: 3,
     depth: -1,
   },
   ROAD: {
-    name: "dirt",
+    name: 'dirt',
     weight: 2,
     depth: -1,
   },
   WATER: {
-    name: "water",
+    name: 'water',
     weight: 0,
     depth: -1,
   },
   WOOD: {
-    name: "wood",
+    name: 'wood',
     weight: 0,
     depth: -1,
   },
   HOUSE_000: {
-    name: "House_corner_000",
+    name: 'House_corner_000',
     weight: 0,
     depth: 2,
   },
   HOUSE_090: {
-    name: "House_corner_090",
+    name: 'House_corner_090',
     weight: 0,
     depth: 2,
   },
   HOUSE_180: {
-    name: "House_corner_180",
+    name: 'House_corner_180',
     weight: 0,
     depth: -1,
   },
   HOUSE_270: {
-    name: "House_corner_270",
+    name: 'House_corner_270',
     weight: 0,
     depth: 2,
   },

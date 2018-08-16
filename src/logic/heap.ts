@@ -1,4 +1,4 @@
-import GridNode from "./gridnode";
+import GridNode from './gridnode'
 class BinaryHeap {
   public content: any[]
   public scoreFunction: any

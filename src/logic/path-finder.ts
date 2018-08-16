@@ -1,7 +1,7 @@
-import * as PIXI from "pixi.js";
-import Graph from "./graph";
-import GridNode from "./gridnode";
-import BinaryHeap from "./heap"
+import * as PIXI from 'pixi.js'
+import Graph from './graph'
+import GridNode from './gridnode'
+import BinaryHeap from './heap'
 
 function pathTo(node: GridNode) {
   let curr = node

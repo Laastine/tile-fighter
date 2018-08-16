@@ -1,7 +1,7 @@
 /// <reference path='./references.d.ts' />
 
-import {sortBy} from "lodash"
-import * as PIXI from "pixi.js"
+import {sortBy} from 'lodash'
+import * as PIXI from 'pixi.js'
 
 // Monkey-patch PIXI.js API
 export const updatePixiAPI = () => {
