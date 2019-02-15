@@ -4,10 +4,10 @@ import GridNode from './gridnode'
 import PathFinder from './path-finder'
 
 export interface IGraph {
-  nodes: GridNode[]
-  grid: GridNode[][]
-  dirtyNodes: GridNode[]
-  cleanDirty: () => void
+  nodes: GridNode[];
+  grid: GridNode[][];
+  dirtyNodes: GridNode[];
+  cleanDirty: () => void;
 }
 
 class Graph {

@@ -237,7 +237,8 @@ export class Tilemap extends PIXI.Container {
       menu.movementWarning.text = ''
       const startPosition = this.graph.grid[this.character.tile.x][this.character.tile.y]
       const path = PathFinder.search(this.graph, startPosition, this.graph.grid[coords.x][coords.y])
-      const directions = character.getDirection(path, this.character.tile)
+      const route: PIXI.Point[] = path.map(({x,y}) => new PIXI.Point(x,y))
+      const directions = character.getDirection(route, this.character.tile)
       character.moveCharacter(this, directions, this.character, partial(character.drawCharter, this))
     } else if (!this.character.isMoving) {
       character.drawCharter(this)
