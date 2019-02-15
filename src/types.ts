@@ -1,4 +1,4 @@
-export interface ITile {
+export interface ICoord {
   x: number;
   y: number;
 }

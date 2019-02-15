@@ -7,7 +7,7 @@ import Graph from './logic/graph'
 import PathFinder from './logic/path-finder'
 import Menubar from './menubar'
 import {cartesianToIsometric, LCG} from './util'
-import {ITile, ITileStat} from './types'
+import {ICoord, ITileStat} from './types'
 
 let renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -43,8 +43,8 @@ export class Tilemap extends PIXI.Container {
   public touchstart: any
   public touchmove: any
   public mousemove: any
-  public selectedTileCoords: ITile
-  public mousePressPoint: ITile
+  public selectedTileCoords: ICoord
+  public mousePressPoint: ICoord
 
   public constructor(width: number, height: number) {
     super()
@@ -58,7 +58,7 @@ export class Tilemap extends PIXI.Container {
     this.tileHeightHalf = this.tileSize / 4
 
     this.zoom = 0.5
-    this.scale.x = this.scale.y = this.zoom
+    this.scale = new PIXI.Point(this.zoom, this.zoom)
 
     this.startLocation = this.position = new PIXI.Point(0, 0)
 
@@ -89,15 +89,15 @@ export class Tilemap extends PIXI.Container {
   public configEventHandlers() {
     this.mousedown = this.touchstart = function (event: any) {
       if (event.data.global.x > config.menuBarWidth) {
-        this.mousePressPoint[0] = event.data.global.x - this.position.x - this.tileSize
-        this.mousePressPoint[1] = event.data.global.y - this.position.y
+        this.mousePressPoint.x = event.data.global.x - this.position.x - this.tileSize
+        this.mousePressPoint.y = event.data.global.y - this.position.y
         this.selectTile(this.mapGlobalCoordinatesToGame(this.mousePressPoint),
         )
       }
     }
 
     this.mousemove = this.touchmove = function (event: any) {
-      const mouseOverPoint = [event.data.global.x - this.position.x, event.data.global.y - this.position.y]
+      const mouseOverPoint = {x: event.data.global.x - this.position.x, y: event.data.global.y - this.position.y}
       const mouseoverTileCoords = this.mapGlobalCoordinatesToGame(mouseOverPoint)
 
       const xValue = (mouseoverTileCoords.x - mouseoverTileCoords.y) * this.tileSize
@@ -132,8 +132,8 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  public mapGlobalCoordinatesToGame(coords: number[]) {
-    const [x, y] = coords
+  public mapGlobalCoordinatesToGame(coords: ICoord) {
+    const {x, y} = coords
     return {
       x: Math.floor(
         (x / (this.tileWidthHalf * this.zoom / 2) +
@@ -162,7 +162,7 @@ export class Tilemap extends PIXI.Container {
     graphics.endFill()
   }
 
-  public addTile(coords: ITile, terrain: ITileStat) {
+  public addTile(coords: ICoord, terrain: ITileStat) {
     const tile = PIXI.Sprite.fromFrame(terrain.name) as any
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
@@ -171,12 +171,12 @@ export class Tilemap extends PIXI.Container {
     this.addChildAt(tile, coords.x * this.tilesAmountY + coords.y)
   }
 
-  public changeTile(coords: ITile, tile: ITileStat) {
+  public changeTile(coords: ICoord, tile: ITileStat) {
     this.removeChild(this.getTile(coords) as PIXI.DisplayObject)
     this.addTile(coords, tile)
   }
 
-  public getTile(coords: ITile) {
+  public getTile(coords: ICoord) {
     return this.getChildAt(coords.x * this.tilesAmountY + coords.y) as any
   }
 
@@ -206,7 +206,7 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  public spawnLine(position: ITile, directionX: boolean, variability: number, element: ITileStat) {
+  public spawnLine(position: ICoord, directionX: boolean, variability: number, element: ITileStat) {
     this.changeTile(position, element)
     const x: number = directionX ? position.x + 1 : position.x - 1
     const y: number = directionX ? position.y : position.y + 1
@@ -228,7 +228,7 @@ export class Tilemap extends PIXI.Container {
     }
   }
 
-  public selectTile(coords: ITile) {
+  public selectTile(coords: ICoord) {
     this.selectedTileCoords = {x: coords.x, y: coords.y}
     menu.selectedTileCoordText.text = `ITile: ${this.selectedTileCoords.x},${this.selectedTileCoords.y}`
     menu.selectedTileTypeText.text = `Terrain: ${this.getTile(coords).terrain}`
