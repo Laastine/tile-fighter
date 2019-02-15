@@ -9,7 +9,7 @@ class Menubar extends PIXI.Container {
   public movementWarning: PIXI.Text
   private depth: number
 
-  constructor(tilemap: Tilemap) {
+  public constructor(tilemap: Tilemap) {
     super()
     this.interactive = true
     const marginWidth = 2

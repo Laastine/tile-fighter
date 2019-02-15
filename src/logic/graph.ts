@@ -11,11 +11,11 @@ export interface IGraph {
 }
 
 class Graph {
-  readonly nodes: GridNode[]
+  public readonly nodes: GridNode[]
   public readonly grid: GridNode[][]
   public dirtyNodes: GridNode[]
 
-  constructor(tiles: any[]) {
+  public constructor(tiles: any[]) {
     const grid: any[][] = []
     times(config.tilesY, () => grid.push([]))
     tiles.forEach((tile: any, index: number) => {

@@ -1,7 +1,7 @@
 class BinaryHeap {
     public content: any[]
     public scoreFunction: any
-    constructor(scoreFunction: any) {
+    public constructor(scoreFunction: any) {
       this.content = []
       this.scoreFunction = scoreFunction
     }

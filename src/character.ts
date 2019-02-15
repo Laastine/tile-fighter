@@ -11,7 +11,7 @@ class Character extends PIXI.Container {
     public isSelected: boolean
     public characterSprite: any
 
-    constructor() {
+    public constructor() {
       super()
       this.isCrouched = false
       this.isMoving = false

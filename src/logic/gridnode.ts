@@ -20,7 +20,7 @@ class GridNode {
     public visited: boolean
     public closed: boolean
     public parent: GridNode | null
-    constructor(x: number, y: number, weight: number) {
+    public constructor(x: number, y: number, weight: number) {
       this.x = x
       this.y = y
       this.weight = weight

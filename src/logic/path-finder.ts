@@ -1,10 +1,10 @@
-import {IGridNode} from './gridnode'
+import GridNode from './gridnode'
 import BinaryHeap from './heap'
-import {IGraph} from './graph'
+import Graph from './graph'
 
-function pathTo(node: IGridNode) {
+function pathTo(node: GridNode) {
   let curr = node
-  const path: IGridNode[] = []
+  const path: GridNode[] = []
   while (curr.parent) {
     path.unshift(curr)
     curr = curr.parent
@@ -13,17 +13,17 @@ function pathTo(node: IGridNode) {
 }
 
 function getHeap() {
-  return new BinaryHeap((node: IGridNode) => node.f)
+  return new BinaryHeap((node: GridNode) => node.f)
 }
 
 export default {
-  search(graph: IGraph, start: IGridNode, end: IGridNode) {
+  search(graph: Graph, start: GridNode, end: GridNode) {
     graph.cleanDirty()
     const heuristic = this.heuristics
     const openHeap = getHeap()
 
     start.h = heuristic(start, end)
-    this.graph.markDirty(start)
+    graph.markDirty(start)
 
     openHeap.push(start)
 
@@ -34,7 +34,7 @@ export default {
       }
 
       currentNode.closed = true
-      const neighbors = this.graph.neighbors(currentNode)
+      const neighbors = graph.neighbors(currentNode)
 
       for (let i = 0, il = neighbors.length; i < il; ++i) {
         const neighbor = neighbors[i]
@@ -52,7 +52,7 @@ export default {
           neighbor.h = neighbor.h || heuristic(neighbor, end)
           neighbor.g = gScore
           neighbor.f = neighbor.g + neighbor.h
-          this.graph.markDirty(neighbor)
+          graph.markDirty(neighbor)
 
           if (!beenVisited) {
             openHeap.push(neighbor)
@@ -71,7 +71,7 @@ export default {
     return d1 + d2
   },
 
-  cleanNode(node: IGridNode) {
+  cleanNode(node: GridNode) {
     node.f = 0
     node.g = 0
     node.h = 0

@@ -1,4 +1,4 @@
-import {isEqual, partial} from 'lodash'
+import _ from 'lodash'
 import * as PIXI from 'pixi.js'
 import Character from './character'
 import {config} from './config'
@@ -46,7 +46,7 @@ export class Tilemap extends PIXI.Container {
   public selectedTileCoords: ITile
   public mousePressPoint: ITile
 
-  constructor(width: number, height: number) {
+  public constructor(width: number, height: number) {
     super()
     this.interactive = true
 
@@ -108,14 +108,28 @@ export class Tilemap extends PIXI.Container {
       this.drawRectangle(this.mouseoverGraphics, xValue, yValue, 0xFFFFFF)
     }
 
-    this.keyW.press = () => this.vy = config.mapScrollSpeed
-    this.keyD.press = () => this.vx = -config.mapScrollSpeed
-    this.keyA.press = () => this.vx = config.mapScrollSpeed
-    this.keyS.press = () => this.vy = -config.mapScrollSpeed
+    this.keyW.press = () => {
+      this.vy = config.mapScrollSpeed
+    }
+    this.keyD.press = () => {
+      this.vx = -config.mapScrollSpeed
+    }
+    this.keyA.press = () => {
+      this.vx = config.mapScrollSpeed
+    }
+    this.keyS.press = () => {
+      this.vy = -config.mapScrollSpeed
+    }
 
-    this.keyD.release = this.keyA.release = () => this.vx = 0
-    this.keyW.release = this.keyS.release = () => this.vy = 0
-    this.keyC.press = () => this.character.isCrouched = !this.character.isCrouched
+    this.keyD.release = this.keyA.release = () => {
+      this.vx = 0
+    }
+    this.keyW.release = this.keyS.release = () => {
+      this.vy = 0
+    }
+    this.keyC.press = () => {
+      this.character.isCrouched = !this.character.isCrouched
+    }
   }
 
   public mapGlobalCoordinatesToGame(coords: number[]) {
@@ -202,12 +216,10 @@ export class Tilemap extends PIXI.Container {
   }
 
   public spawnChunks(size: number, x: number, y: number, element: ITileStat) {
-    x = Math.max(x, 0)
-    x = Math.min(x, this.tilesAmountX - 1)
-    y = Math.max(y, 0)
-    y = Math.min(y, this.tilesAmountY - 1)
+    const xVal = _.inRange(x, 0, this.tilesAmountX - 1) ? x : 0
+    const yVal = _.inRange(y, 0, this.tilesAmountY - 1) ? y : 0
 
-    this.changeTile({x, y}, element)
+    this.changeTile({x: xVal, y: yVal}, element)
 
     for (let i = 0; i < size; i++) {
       const horizontal = Math.floor(LCGRANDOM.randomFloat() * 2) - 1
@@ -230,16 +242,16 @@ export class Tilemap extends PIXI.Container {
     if (this.getTile(coords).terrain === config.WOOD.name || this.getTile(coords).terrain === config.WATER.name &&
       !this.character.isMoving) {
       menu.movementWarning.text = `Can't move to ${this.getTile(coords).terrain}`
-    } else if (isEqual(this.character.tile, this.selectedTileCoords) && !this.character.isMoving) {
+    } else if (_.isEqual(this.character.tile, this.selectedTileCoords) && !this.character.isMoving) {
       this.character.isSelected = !this.character.isSelected
       character.drawCharter(this)
     } else if (this.character.isSelected && !this.character.isMoving) {
       menu.movementWarning.text = ''
       const startPosition = this.graph.grid[this.character.tile.x][this.character.tile.y]
       const path = PathFinder.search(this.graph, startPosition, this.graph.grid[coords.x][coords.y])
-      const route: PIXI.Point[] = path.map(({x,y}) => new PIXI.Point(x,y))
+      const route: PIXI.Point[] = path.map(({x, y}) => new PIXI.Point(x, y))
       const directions = character.getDirection(route, this.character.tile)
-      character.moveCharacter(this, directions, this.character, partial(character.drawCharter, this))
+      character.moveCharacter(this, directions, this.character, _.partial(character.drawCharter, this))
     } else if (!this.character.isMoving) {
       character.drawCharter(this)
     }

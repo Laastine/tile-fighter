@@ -1,3 +1,5 @@
+import {Point} from 'pixi.js'
+
 /**
  * Linear congruential generator
  */
@@ -7,7 +9,7 @@ export class LCG {
     public c: number
     public state: number
 
-    constructor(seed: number) {
+    public constructor(seed: number) {
       this.m = 0x80000000 // 2**31;
       this.a = 1103515245
       this.c = 12345
@@ -45,13 +47,13 @@ export class LCG {
 export const cartesianToIsometric = (pointX: number, pointY: number) => {
   const x = pointX - pointY
   const y = (pointX + pointY) / 2
-  return new PIXI.Point(x, y)
+  return new Point(x, y)
 }
 
 export const isometricToCartesian = (pointX: number, pointY: number) => {
   const x = (2 * pointY + pointX) / 2
   const y = (2 * pointY - pointX) / 2
-  return new PIXI.Point(x, y)
+  return new Point(x, y)
 }
 
 export const mapObject: any = (o: any, f: () => void) => {
