@@ -32,7 +32,7 @@ npm run watch
 open index.html in browser
 ```
 
-Linter: `npm run lint`
+Linter: `npm run eslint`
 
 ### Implementation resources & references:
 A* implementation: [Github repo](https://github.com/bgrins/javascript-astar)<br/>
