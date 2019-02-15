@@ -20,6 +20,7 @@ class Graph {
     })
     this.nodes = []
     this.grid = []
+    this.dirtyNodes = []
     for (let x = 0; x < grid.length; x++) {
       this.grid[x] = []
 
