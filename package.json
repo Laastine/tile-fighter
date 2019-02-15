@@ -3,9 +3,6 @@
   "description": "Tile based strategy game",
   "version": "0.0.1",
   "private": true,
-  "engines": {
-    "node": "8.11.1"
-  },
   "dependencies": {
     "lodash": "4.17.11",
     "pixi.js": "4.8.5"
