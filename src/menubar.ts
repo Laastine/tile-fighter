@@ -7,6 +7,8 @@ class Menubar extends PIXI.Container {
   public selectedTileCoordText: PIXI.Text
   public selectedTileTypeText: PIXI.Text
   public movementWarning: PIXI.Text
+  private depth: number
+
   constructor(tilemap: Tilemap) {
     super()
     this.interactive = true

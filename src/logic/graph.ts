@@ -1,13 +1,18 @@
-/// <reference path="../references.d.ts" />
-
 import {times} from 'lodash'
 import {config} from '../config'
 import GridNode from './gridnode'
 import PathFinder from './path-finder'
 
+export interface IGraph {
+  nodes: GridNode[]
+  grid: GridNode[][]
+  dirtyNodes: GridNode[]
+  cleanDirty: () => void
+}
+
 class Graph {
-  public nodes: GridNode[]
-  public grid: GridNode[][]
+  readonly nodes: GridNode[]
+  public readonly grid: GridNode[][]
   public dirtyNodes: GridNode[]
 
   constructor(tiles: any[]) {
@@ -53,9 +58,8 @@ class Graph {
 
   public neighbors(node: GridNode) {
     const ret: GridNode[] = []
-    const x: number = node.x
-    const y: number = node.y
-    const grid = this.grid
+    const {x, y} = node
+    const {grid} = this
 
     // 315
     if (grid[x - 1] && grid[x - 1][y]) {

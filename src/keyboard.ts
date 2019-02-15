@@ -22,7 +22,7 @@ export function keyboard(keyCode: number) {
         key.isDown = false
         key.isUp = true
       }
-    },
+    }
   }
 
   window.addEventListener('keydown', key.downHandler.bind(key), false)

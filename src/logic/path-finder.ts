@@ -1,11 +1,10 @@
-import * as PIXI from 'pixi.js'
-import Graph from './graph'
-import GridNode from './gridnode'
+import {IGridNode} from './gridnode'
 import BinaryHeap from './heap'
+import {IGraph} from './graph'
 
-function pathTo(node: GridNode) {
+function pathTo(node: IGridNode) {
   let curr = node
-  const path: GridNode[] = []
+  const path: IGridNode[] = []
   while (curr.parent) {
     path.unshift(curr)
     curr = curr.parent
@@ -14,19 +13,17 @@ function pathTo(node: GridNode) {
 }
 
 function getHeap() {
-  return new BinaryHeap((node: GridNode) => {
-    return node.f
-  })
+  return new BinaryHeap((node: IGridNode) => node.f)
 }
 
 export default {
-  search(graph: Graph, start: GridNode, end: GridNode) {
+  search(graph: IGraph, start: IGridNode, end: IGridNode) {
     graph.cleanDirty()
     const heuristic = this.heuristics
     const openHeap = getHeap()
 
     start.h = heuristic(start, end)
-    graph.markDirty(start)
+    this.graph.markDirty(start)
 
     openHeap.push(start)
 
@@ -37,7 +34,7 @@ export default {
       }
 
       currentNode.closed = true
-      const neighbors = graph.neighbors(currentNode)
+      const neighbors = this.graph.neighbors(currentNode)
 
       for (let i = 0, il = neighbors.length; i < il; ++i) {
         const neighbor = neighbors[i]
@@ -50,13 +47,12 @@ export default {
         const beenVisited = neighbor.visited
 
         if (!beenVisited || gScore < neighbor.g) {
-
           neighbor.visited = true
           neighbor.parent = currentNode
           neighbor.h = neighbor.h || heuristic(neighbor, end)
           neighbor.g = gScore
           neighbor.f = neighbor.g + neighbor.h
-          graph.markDirty(neighbor)
+          this.graph.markDirty(neighbor)
 
           if (!beenVisited) {
             openHeap.push(neighbor)
@@ -69,19 +65,18 @@ export default {
     return []
   },
 
-  heuristics(pos1: PIXI.Point, pos2: PIXI.Point) {
+  heuristics(pos1: any, pos2: any) {
     const d1 = Math.abs(pos2.x - pos1.x)
     const d2 = Math.abs(pos2.y - pos1.y)
     return d1 + d2
-
   },
 
-  cleanNode(node: GridNode) {
+  cleanNode(node: IGridNode) {
     node.f = 0
     node.g = 0
     node.h = 0
     node.visited = false
     node.closed = false
     node.parent = null
-  },
+  }
 }
