@@ -1,6 +1,6 @@
 node_modules
 .idea
-.generated
+public/*.js
 .DS_Store
 /npm-debug.log
 /deploy.sh
