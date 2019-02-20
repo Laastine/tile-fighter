@@ -18,7 +18,7 @@ http.createServer((req, res) => {
   const requestUrl = url.parse(req.url)
   const reqPath = path.normalize(requestUrl.pathname)
   // eslint-disable-next-line no-console
-  console.log('reqPath', req.headers)
+  console.log('HTTP GET', req.headers.referer)
   const fsPublicPath = path.join(`${__dirname}/../public/${reqPath === '/' ? 'index.html' : reqPath}`)
   const fsAssetsPath = path.join(`${__dirname}/../${reqPath}`)
   try {
