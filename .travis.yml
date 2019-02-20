@@ -8,3 +8,4 @@ dist: xenial
 
 script:
   - npm run eslint
+  - npm run typecheck

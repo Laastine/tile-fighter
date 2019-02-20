@@ -28,6 +28,7 @@
     "build-min": "npm run init-build-dir && npm run build && node node_modules/uglify-js/bin/uglifyjs --compress -o public/bundle.js public/bundle.js",
     "watch": "npm run init-build-dir && watchify src/app.ts -p tsify --debug -v -o public/bundle.js",
     "eslint": "eslint --report-unused-disable-directives --ext .ts --fix 'src' 'server/*.js'",
+    "typecheck": "tsc -p tsconfig.json",
     "start": "node server/index.js",
     "clean": "find public -type f -name '*.js' -exec rm {} +"
   }
