@@ -1,0 +1,10 @@
+language: node_js
+
+node_js:
+  - lts/*
+
+sudo: required
+dist: xenial
+
+script:
+  - npm run eslint
