@@ -29,7 +29,7 @@ WASD - camera movement
 ```
 npm install
 npm run watch
-open index.html in browser
+open http://localhost:4000
 ```
 
 Linter: `npm run eslint`
