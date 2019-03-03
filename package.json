@@ -10,10 +10,10 @@
   "devDependencies": {
     "@types/lodash": "4.14.121",
     "@types/pixi.js": "4.8.6",
-    "@typescript-eslint/eslint-plugin": "1.4.0",
-    "@typescript-eslint/parser": "1.4.0",
+    "@typescript-eslint/eslint-plugin": "1.4.2",
+    "@typescript-eslint/parser": "1.4.2",
     "browserify": "16.2.3",
-    "eslint": "5.14.1",
+    "eslint": "5.15.0",
     "nodemon": "1.18.10",
     "supervisor": "0.12.0",
     "tsify": "4.0.1",
