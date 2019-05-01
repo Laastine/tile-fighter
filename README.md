@@ -26,11 +26,14 @@ Hobby project for testing [pixi.js](http://www.pixijs.com/) capabilities with Ty
 WASD - camera movement
 
 ### Build & run app:
-```
-npm install
-npm run watch
-open http://localhost:4000
-```
+
+`npm install`
+
+`npm run watch` - Compile browser code
+
+`npm start` - Start server
+
+`open http://localhost:4000`
 
 Linter: `npm run eslint`
 
