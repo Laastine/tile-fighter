@@ -4,22 +4,22 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "lodash": "4.17.11",
+    "lodash": "4.17.14",
     "pixi.js": "4.8.6"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.132",
-    "@types/pixi.js": "4.8.7",
-    "@typescript-eslint/eslint-plugin": "1.9.0",
-    "@typescript-eslint/parser": "1.9.0",
-    "browserify": "16.2.3",
-    "eslint": "5.16.0",
+    "@types/lodash": "4.14.136",
+    "@types/pixi.js": "4.8.8",
+    "@typescript-eslint/eslint-plugin": "1.12.0",
+    "@typescript-eslint/parser": "1.12.0",
+    "browserify": "16.3.0",
+    "eslint": "6.0.1",
     "nodemon": "1.19.1",
     "supervisor": "0.12.0",
     "tsify": "4.0.1",
-    "typescript": "3.5.1",
+    "typescript": "3.5.3",
     "typescript-eslint-parser": "22.0.0",
-    "uglify-js": "3.5.15",
+    "uglify-js": "3.6.0",
     "watchify": "3.11.1"
   },
   "scripts": {
