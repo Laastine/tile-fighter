@@ -1,6 +1,7 @@
 import GridNode from './gridnode'
 import BinaryHeap from './heap'
 import Graph from './graph'
+import {ICoord} from '../types'
 
 function pathTo(node: GridNode) {
   let curr = node
@@ -65,7 +66,7 @@ export default {
     return []
   },
 
-  heuristics(pos1: any, pos2: any) {
+  heuristics(pos1: ICoord, pos2: ICoord) {
     const d1 = Math.abs(pos2.x - pos1.x)
     const d2 = Math.abs(pos2.y - pos1.y)
     return d1 + d2

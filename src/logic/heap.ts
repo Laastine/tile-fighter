@@ -1,30 +1,38 @@
+import GridNode from './gridnode'
+
 class BinaryHeap {
-    public content: any[]
-    public scoreFunction: any
-    public constructor(scoreFunction: any) {
+    public content: GridNode[]
+    public scoreFunction: (arg: GridNode) => number
+    public constructor(scoreFunction: (arg: GridNode) => number) {
       this.content = []
       this.scoreFunction = scoreFunction
     }
 
-    public push(tile: any) {
+    public push(tile: GridNode) {
       this.content.push(tile)
       this.sinkDown(this.content.length - 1)
     }
 
     public pop() {
       const [result] = this.content
-      const end = this.content.pop()
+      const content = this.content.pop()
+      if (content) {
+        const end = content
 
-      if (this.content.length > 0) {
-        this.content[0] = end
-        this.bubbleUp(0)
+        if (this.content.length > 0) {
+          this.content[0] = end
+          this.bubbleUp(0)
+        }
       }
       return result
     }
 
-    public remove(node: any) {
+    public remove(node: GridNode) {
       const i = this.content.indexOf(node)
-      const end = this.content.pop()
+      if (!i) {
+        return
+      }
+      const end = this.content[this.content.length]
 
       if (i !== this.content.length - 1) {
         this.content[i] = end
@@ -41,11 +49,11 @@ class BinaryHeap {
       return this.content.length
     }
 
-    public rescoreElement(node: any) {
+    public rescoreElement(node: GridNode) {
       this.sinkDown(this.content.indexOf(node))
     }
 
-    public sinkDown(nParam: any) {
+    public sinkDown(nParam: number) {
       let n = nParam
       const element = this.content[n]
       while (n > 0) {
@@ -63,7 +71,7 @@ class BinaryHeap {
       }
     }
 
-    public bubbleUp(nParam: any) {
+    public bubbleUp(nParam: number) {
       let n = nParam
       const {length} = this.content
       const element = this.content[n]
@@ -73,7 +81,7 @@ class BinaryHeap {
       while (true) {
         const child2N = (n + 1) << 1
         const child1N = child2N - 1
-        let swap: any = null as any
+        let swap: number | null = null
         let child1Score = 0
 
         if (child1N < length) {

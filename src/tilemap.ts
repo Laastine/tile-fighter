@@ -2,7 +2,7 @@ import _ from 'lodash'
 import * as PIXI from 'pixi.js'
 import Character from './character'
 import {config} from './config'
-import {keyboard} from './keyboard'
+import {IKey, keyboard} from './keyboard'
 import Graph from './logic/graph'
 import PathFinder from './logic/path-finder'
 import Menubar from './menubar'
@@ -17,6 +17,11 @@ let tilemap: Tilemap
 
 const LCGRANDOM = new LCG(1)
 
+interface ITile extends PIXI.Sprite {
+  weight: number
+  terrain: string
+}
+
 export class Tilemap extends PIXI.Container {
   public tilesAmountX: number
   public tilesAmountY: number
@@ -24,11 +29,11 @@ export class Tilemap extends PIXI.Container {
   public zoom: number
   public scale: PIXI.Point
   public graph: Graph
-  public keyW: any
-  public keyA: any
-  public keyS: any
-  public keyD: any
-  public keyC: any
+  public keyW: IKey
+  public keyA: IKey
+  public keyS: IKey
+  public keyD: IKey
+  public keyC: IKey
   public interactive: boolean
   public character: Character
   public position: PIXI.Point
@@ -39,10 +44,10 @@ export class Tilemap extends PIXI.Container {
   public tileHeightHalf: number
   public selectedGraphics: PIXI.Graphics
   public mouseoverGraphics: PIXI.Graphics
-  public mousedown: any
-  public touchstart: any
-  public touchmove: any
-  public mousemove: any
+  public mousedown: ((arg: any) => void) | null = null
+  public touchstart: ((arg: any) => void) | null = null
+  public touchmove: ((arg: any) => void) | null = null
+  public mousemove: ((arg: any) => void) | null = null
   public selectedTileCoords: ICoord
   public mousePressPoint: ICoord
 
@@ -87,16 +92,16 @@ export class Tilemap extends PIXI.Container {
   }
 
   public configEventHandlers() {
-    this.mousedown = this.touchstart = function (event: any) {
+    this.mousedown = this.touchstart = function (event) {
       if (event.data.global.x > config.menuBarWidth) {
         this.mousePressPoint.x = event.data.global.x - this.position.x - this.tileSize
         this.mousePressPoint.y = event.data.global.y - this.position.y
-        this.selectTile(this.mapGlobalCoordinatesToGame(this.mousePressPoint),
+        this.selectTile(this.mapGlobalCoordinatesToGame(this.mousePressPoint)
         )
       }
     }
 
-    this.mousemove = this.touchmove = function (event: any) {
+    this.mousemove = this.touchmove = function (event) {
       const mouseOverPoint = {x: event.data.global.x - this.position.x, y: event.data.global.y - this.position.y}
       const mouseoverTileCoords = this.mapGlobalCoordinatesToGame(mouseOverPoint)
 
@@ -163,7 +168,7 @@ export class Tilemap extends PIXI.Container {
   }
 
   public addTile(coords: ICoord, terrain: ITileStat) {
-    const tile = PIXI.Sprite.fromFrame(terrain.name) as any
+    const tile = PIXI.Sprite.fromFrame(terrain.name) as ITile
     tile.position = cartesianToIsometric(coords.x * this.tileSize, coords.y * this.tileSize)
     tile.position.x -= this.tileSize / 2
     tile.terrain = terrain.name
@@ -172,7 +177,7 @@ export class Tilemap extends PIXI.Container {
   }
 
   public changeTile(coords: ICoord, tile: ITileStat) {
-    this.removeChild(this.getTile(coords) as PIXI.DisplayObject)
+    this.removeChild(this.getTile(coords))
     this.addTile(coords, tile)
   }
 

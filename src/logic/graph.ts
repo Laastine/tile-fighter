@@ -3,20 +3,13 @@ import {config} from '../config'
 import GridNode from './gridnode'
 import PathFinder from './path-finder'
 
-export interface IGraph {
-  nodes: GridNode[];
-  grid: GridNode[][];
-  dirtyNodes: GridNode[];
-  cleanDirty: () => void;
-}
-
 class Graph {
   public readonly nodes: GridNode[]
   public readonly grid: GridNode[][]
   public dirtyNodes: GridNode[]
 
   public constructor(tiles: any[]) {
-    const grid: any[][] = []
+    const grid: number[][] = []
     times(config.tilesY, () => grid.push([]))
     tiles.forEach((tile: any, index: number) => {
       const i = Math.floor(index / config.tilesY)

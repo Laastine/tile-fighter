@@ -1,3 +1,13 @@
+export interface IKey {
+  code: number
+  isDown: boolean
+  isUp: boolean
+  press: () => void
+  release: () => void
+  downHandler: (arg: KeyboardEvent) => void
+  upHandler: (arg: KeyboardEvent) => void
+}
+
 export function keyboard(keyCode: number) {
   const key = {
     code: keyCode,

@@ -56,13 +56,11 @@ export const isometricToCartesian = (pointX: number, pointY: number) => {
   return new Point(x, y)
 }
 
-export const mapObject: any = (o: any, f: () => void) => {
-  const res: any = {}
+export const mapObject = (o: object, f: (arg: number) => number) => {
+  const res = {}
   Object.keys(o).forEach(k => {
     // @ts-ignore
     res[k] = f.call(this, o[k], k, o)
   })
   return res
 }
-
-export const getOrElse = (x: any, orElse: any) => x ? x : orElse

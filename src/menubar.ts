@@ -40,7 +40,7 @@ class Menubar extends PIXI.Container {
     this.addMenuButton(this, '-', 30, 24, tilemap, tilemap.zoomOut)
   }
 
-  public addMenuButton(that: any, text: string, x: number, y: number, obj: any, callback: any) {
+  public addMenuButton(that: Menubar, text: string, x: number, y: number, obj: Tilemap, callback: () => void) {
     const textColor = '#777'
     const button = new PIXI.Text(text, {fontSize: '40px', fill: textColor}) as any
     button.position.x = x

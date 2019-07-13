@@ -2,6 +2,7 @@ import {assign} from 'lodash'
 import * as PIXI from 'pixi.js'
 import {config} from './config'
 import {mapObject} from './util'
+import {Tilemap} from './tilemap'
 
 class Character extends PIXI.Container {
     public tile: { x: number; y: number }
@@ -41,7 +42,7 @@ class Character extends PIXI.Container {
       return directions
     }
 
-    public drawCharter(that: any) {
+    public drawCharter(that: Tilemap) {
       const tempPos = that.character.characterSprite.position
       that.character.characterSprite = PIXI.Sprite.fromFrame(`Jog_${that.character.direction}_01`)
       that.character.characterSprite.position = tempPos
