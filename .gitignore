@@ -7,3 +7,4 @@ public/*.js
 /tile-fighter.iml
 src/**.js*
 tile-fighter-assets/
+.eslintcache
