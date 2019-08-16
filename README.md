@@ -1,5 +1,7 @@
 # Tile-fighter
 
+[![Build Status](https://travis-ci.org/Laastine/tile-fighter.svg?branch=master)](https://travis-ci.org/Laastine/tile-fighter)
+
 Hobby project for testing [pixi.js](http://www.pixijs.com/) capabilities with Typescript.
 
 [Test it](http://laastine.kapsi.fi/tile-fighter/)
