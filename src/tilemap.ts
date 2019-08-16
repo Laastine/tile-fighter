@@ -50,6 +50,7 @@ export class Tilemap extends PIXI.Container {
   public mousemove: ((arg: any) => void) | null = null
   public selectedTileCoords: ICoord
   public mousePressPoint: ICoord
+  public movie: PIXI.extras.AnimatedSprite | null = null
 
   public constructor(width: number, height: number) {
     super()

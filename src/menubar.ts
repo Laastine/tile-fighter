@@ -7,7 +7,6 @@ class Menubar extends PIXI.Container {
   public selectedTileCoordText: PIXI.Text
   public selectedTileTypeText: PIXI.Text
   public movementWarning: PIXI.Text
-  private depth: number
 
   public constructor(tilemap: Tilemap) {
     super()
@@ -22,7 +21,6 @@ class Menubar extends PIXI.Container {
     this.background.beginFill(0xDDDDDD, 1)
     this.background.drawRect(0, 0, config.menuBarWidth - marginWidth, config.screenX)
     this.background.endFill()
-    this.depth = 2
     this.addChild(this.background)
 
     this.selectedTileCoordText = new PIXI.Text('Tile: ',

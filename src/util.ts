@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {Point} from 'pixi.js'
 
 /**
@@ -56,11 +57,4 @@ export const isometricToCartesian = (pointX: number, pointY: number) => {
   return new Point(x, y)
 }
 
-export const mapObject = (o: object, f: (arg: number) => number) => {
-  const res = {}
-  Object.keys(o).forEach(k => {
-    // @ts-ignore
-    res[k] = f.call(this, o[k], k, o)
-  })
-  return res
-}
+export const mapObject = (o: { x: number; y: number }) => _.mapValues(o, Math.round)
