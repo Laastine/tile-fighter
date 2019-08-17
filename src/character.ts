@@ -62,22 +62,7 @@ class Character extends PIXI.Container {
       return frames
     }
 
-    public checkNearByTiles(that: any, character: Character) {
-      const x = character.tile.x - 1 > 0 ? character.tile.x - 1 : 0
-      const y = character.tile.y - 1 > 0 ? character.tile.y - 1 : 0
-
-      const tileUpperLeft = that.getTile({x, y: character.tile.y})
-      const tileUpperRight = that.getTile({x: character.tile.x, y})
-
-      if (/^House_corne/.test(tileUpperLeft.terrain)) {
-        that.changeTile({x, y: character.tile.y}, tileUpperLeft)
-      }
-      if (/^House_corne/.test(tileUpperRight.terrain)) {
-        that.changeTile({x: character.tile.x, y}, tileUpperRight)
-      }
-    }
-
-    public moveCharacter(tilemap: Tilemap, directions: number[], character: Character, callback: (arg: any) => void) {
+    public moveCharacter(tilemap: Tilemap, directions: number[], character: Character, callback: (arg: Tilemap) => void) {
       const {isCrouched, characterSprite: {position}} = character
       character.isMoving = true
       // eslint-disable-next-line consistent-return

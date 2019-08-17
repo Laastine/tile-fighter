@@ -183,7 +183,7 @@ export class Tilemap extends PIXI.Container {
   }
 
   public getTile(coords: ICoord) {
-    return this.getChildAt(coords.x * this.tilesAmountY + coords.y) as any
+    return this.getChildAt<ITile>(coords.x * this.tilesAmountY + coords.y)
   }
 
   public generateMap() {
