@@ -8,12 +8,12 @@
     "pixi.js": "4.8.6"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.136",
+    "@types/lodash": "4.14.137",
     "@types/pixi.js": "4.8.8",
     "@typescript-eslint/eslint-plugin": "2.0.0",
     "@typescript-eslint/parser": "2.0.0",
     "browserify": "16.5.0",
-    "eslint": "6.1.0",
+    "eslint": "6.2.2",
     "nodemon": "1.19.1",
     "supervisor": "0.12.0",
     "tsify": "4.0.1",
