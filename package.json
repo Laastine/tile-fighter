@@ -8,18 +8,18 @@
     "pixi.js": "4.8.6"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.137",
+    "@types/lodash": "4.14.149",
     "@types/pixi.js": "4.8.8",
-    "@typescript-eslint/eslint-plugin": "2.0.0",
-    "@typescript-eslint/parser": "2.0.0",
-    "browserify": "16.5.0",
-    "eslint": "6.2.2",
-    "nodemon": "1.19.1",
+    "@typescript-eslint/eslint-plugin": "2.26.0",
+    "@typescript-eslint/parser": "2.26.0",
+    "browserify": "16.5.1",
+    "eslint": "6.8.0",
+    "nodemon": "2.0.2",
     "supervisor": "0.12.0",
     "tsify": "4.0.1",
-    "typescript": "3.5.3",
+    "typescript": "3.8.3",
     "typescript-eslint-parser": "22.0.0",
-    "uglify-js": "3.6.0",
+    "uglify-js": "3.8.1",
     "watchify": "3.11.1"
   },
   "scripts": {
