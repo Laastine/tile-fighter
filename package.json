@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "lodash": "4.17.19",
+    "lodash": "4.17.21",
     "pixi.js": "4.8.6"
   },
   "devDependencies": {
