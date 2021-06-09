@@ -7,7 +7,7 @@ import Graph from './logic/graph'
 import PathFinder from './logic/path-finder'
 import Menubar from './menubar'
 import {cartesianToIsometric, LCG} from './util'
-import {ICoord, ITileStat} from './types'
+import {ICoord, ITileStat, TilemapTile} from './types'
 
 let renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer
 let container: PIXI.Container
@@ -182,8 +182,8 @@ export class Tilemap extends PIXI.Container {
     this.addTile(coords, tile)
   }
 
-  public getTile(coords: ICoord) {
-    return this.getChildAt<ITile>(coords.x * this.tilesAmountY + coords.y)
+  public getTile(coords: ICoord): TilemapTile {
+    return this.getChildAt(coords.x * this.tilesAmountY + coords.y) as TilemapTile
   }
 
   public generateMap() {
