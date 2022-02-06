@@ -8,18 +8,18 @@
     "pixi.js": "4.8.6"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.170",
+    "@types/lodash": "4.14.178",
     "@types/pixi.js": "4.8.2",
-    "@typescript-eslint/eslint-plugin": "4.26.1",
-    "@typescript-eslint/parser": "4.26.1",
+    "@typescript-eslint/eslint-plugin": "5.10.2",
+    "@typescript-eslint/parser": "5.10.2",
     "browserify": "17.0.0",
-    "eslint": "7.28.0",
-    "nodemon": "2.0.7",
+    "eslint": "8.8.0",
+    "nodemon": "2.0.15",
     "supervisor": "0.12.0",
     "tsify": "5.0.4",
-    "typescript": "4.3.2",
+    "typescript": "4.5.5",
     "typescript-eslint-parser": "22.0.0",
-    "uglify-js": "3.13.9",
+    "uglify-js": "3.15.0",
     "watchify": "4.0.0"
   },
   "scripts": {
@@ -28,6 +28,7 @@
     "build-min": "npm run init-build-dir && npm run build && node node_modules/uglify-js/bin/uglifyjs --compress -o public/bundle.js public/bundle.js",
     "watch": "npm run init-build-dir && watchify src/app.ts -p tsify --debug -v -o public/bundle.js",
     "eslint": "eslint --cache --report-unused-disable-directives --ext .ts --fix 'src' 'server/*.js'",
+    "fix-eslint": "eslint --cache --fix --report-unused-disable-directives --ext .ts --fix 'src' 'server/*.js'",
     "typecheck": "tsc -p tsconfig.json",
     "start": "node server/index.js",
     "clean": "find public -type f -name '*.js' -exec rm {} +"
