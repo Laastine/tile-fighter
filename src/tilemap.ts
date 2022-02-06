@@ -44,10 +44,14 @@ export class Tilemap extends PIXI.Container {
   public tileHeightHalf: number
   public selectedGraphics: PIXI.Graphics
   public mouseoverGraphics: PIXI.Graphics
-  public mousedown: ((arg: any) => void) | null = null
-  public touchstart: ((arg: any) => void) | null = null
-  public touchmove: ((arg: any) => void) | null = null
-  public mousemove: ((arg: any) => void) | null = null
+  // eslint-disable-next-line no-unused-vars
+  public mousedown: ((_arg: any) => void) | null = null
+  // eslint-disable-next-line no-unused-vars
+  public touchstart: ((_arg: any) => void) | null = null
+  // eslint-disable-next-line no-unused-vars
+  public touchmove: ((_arg: any) => void) | null = null
+  // eslint-disable-next-line no-unused-vars
+  public mousemove: ((_arg: any) => void) | null = null
   public selectedTileCoords: ICoord
   public mousePressPoint: ICoord
   public movie: PIXI.extras.AnimatedSprite | null = null

@@ -4,8 +4,10 @@ export interface IKey {
   isUp: boolean
   press: () => void
   release: () => void
-  downHandler: (arg: KeyboardEvent) => void
-  upHandler: (arg: KeyboardEvent) => void
+  // eslint-disable-next-line no-unused-vars
+  downHandler: (_arg: KeyboardEvent) => void
+  // eslint-disable-next-line no-unused-vars
+  upHandler: (_arg: KeyboardEvent) => void
 }
 
 export function keyboard(keyCode: number) {
